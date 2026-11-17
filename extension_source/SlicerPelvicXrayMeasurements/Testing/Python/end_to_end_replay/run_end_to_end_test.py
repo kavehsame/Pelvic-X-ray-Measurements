@@ -69,8 +69,14 @@ def run_slicer_script(
         cwd=str(BUNDLE_DIR),
         capture_output=True,
         text=True,
-        check=True,
+        check=False,
     )
+    if launcher_dump.returncode:
+        raise RuntimeError(
+            "Slicer's Python launcher could not start: "
+            + (launcher_dump.stderr.strip() or launcher_dump.stdout.strip()
+               or f"exit {launcher_dump.returncode}")
+        )
     for line in launcher_dump.stdout.splitlines():
         if "=" not in line:
             continue

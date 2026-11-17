@@ -3,6 +3,7 @@
 import hashlib
 import json
 import platform
+import subprocess
 import tarfile
 from urllib.request import urlopen
 
@@ -43,6 +44,17 @@ def main():
     candidates = list(target.glob("*/Slicer"))
     if len(candidates) != 1:
         raise ValueError("Slicer executable was not uniquely identified")
+    python_launcher = candidates[0].parent / "bin/PythonSlicer"
+    probe = subprocess.run(
+        [str(python_launcher), "--launcher-dump-environment"],
+        capture_output=True, text=True, timeout=30,
+    )
+    if probe.returncode:
+        raise RuntimeError(
+            "Slicer runtime preflight failed: "
+            + (probe.stderr.strip() or probe.stdout.strip()
+               or f"exit {probe.returncode}")
+        )
     BUILD.mkdir(exist_ok=True)
     (BUILD / "slicer_executable.txt").write_text(str(candidates[0].resolve()) + "\n")
     print("Official Slicer CI runtime verified.")
