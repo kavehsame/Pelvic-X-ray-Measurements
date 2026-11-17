@@ -158,6 +158,24 @@ class TestHost(SiteHandler):
 
 
 @contextmanager
+def socket_temp_path(directory):
+    """Keep Linux socket paths short while all files remain in the test folder."""
+    if sys.platform != "linux":
+        yield directory
+        return
+    # Unix socket addresses are much shorter than filesystem paths. A procfs
+    # descriptor aliases this exact directory without creating files elsewhere.
+    descriptor = os.open(directory, os.O_RDONLY | os.O_DIRECTORY)
+    try:
+        alias = Path(f"/proc/{os.getpid()}/fd/{descriptor}")
+        if alias.resolve() != directory.resolve():
+            raise RuntimeError("The short Chrome scratch path resolved outside its test folder.")
+        yield alias
+    finally:
+        os.close(descriptor)
+
+
+@contextmanager
 def isolated_chrome(run_dir, url, binary):
     profile = run_dir / "profile"
     temp = run_dir / "tmp"
@@ -191,7 +209,8 @@ def isolated_chrome(run_dir, url, binary):
         "--remote-debugging-port=0",
         f"--user-data-dir={profile}",
     ]
-    with (run_dir / "chrome.log").open("wb") as log:
+    with socket_temp_path(temp) as socket_temp, (run_dir / "chrome.log").open("wb") as log:
+        environment.update(TMPDIR=str(socket_temp), TMP=str(socket_temp), TEMP=str(socket_temp))
         process = subprocess.Popen(
             [str(binary), *switches, "about:blank"],
             cwd=run_dir,
@@ -207,7 +226,8 @@ def isolated_chrome(run_dir, url, binary):
             ):
                 sleep(0.08)
             if not port_file.exists():
-                raise RuntimeError("Chrome testing profile did not start.")
+                detail = (run_dir / "chrome.log").read_text(errors="replace")[-4000:]
+                raise RuntimeError("Chrome testing profile did not start.\n" + detail)
             port = int(port_file.read_text().splitlines()[0])
             with urlopen(f"http://127.0.0.1:{port}/json/list", timeout=5) as stream:
                 tabs = json.load(stream)

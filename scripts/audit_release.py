@@ -60,6 +60,10 @@ def scan_text(name, content):
 
 
 def audit_source():
+    for edition in (EXTENSION, WEB):
+        reports = edition / "test_reports"
+        if sorted(path.name for path in reports.iterdir()) != ["current"]:
+            raise ValueError("Each edition must contain exactly one selected test run: " + str(reports.relative_to(ROOT)))
     files = list(source_files())
     for path in files:
         if path.suffix in TEXT or path.name.startswith((".git", "CMake")):

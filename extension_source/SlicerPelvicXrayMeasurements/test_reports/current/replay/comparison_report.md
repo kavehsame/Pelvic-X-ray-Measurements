@@ -1,7 +1,7 @@
 # Pelvic X-ray Measurements CSV Replay Report
 
 - Expected CSV: `extension_source/SlicerPelvicXrayMeasurements/Testing/Python/end_to_end_replay/dummy_expected_full_export.csv`
-- Actual CSV: `build/publication_checks_final_native/slicer/replay/actual_export/SyntheticFullCase/SyntheticFullCase.dcm_measurements.csv`
+- Actual CSV: `build/publication_checks_release_ready/slicer/replay/actual_export/SyntheticFullCase/SyntheticFullCase.dcm_measurements.csv`
 - Comparison: `PASS`
 - Schema match: `True`
 - Schema errors: `[]`

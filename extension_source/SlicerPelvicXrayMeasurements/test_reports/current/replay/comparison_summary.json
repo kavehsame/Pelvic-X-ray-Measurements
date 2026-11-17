@@ -1,6 +1,6 @@
 {
   "expected_csv": "extension_source/SlicerPelvicXrayMeasurements/Testing/Python/end_to_end_replay/dummy_expected_full_export.csv",
-  "actual_csv": "build/publication_checks_final_native/slicer/replay/actual_export/SyntheticFullCase/SyntheticFullCase.dcm_measurements.csv",
+  "actual_csv": "build/publication_checks_release_ready/slicer/replay/actual_export/SyntheticFullCase/SyntheticFullCase.dcm_measurements.csv",
   "expected_row_count": 397,
   "actual_row_count": 397,
   "raw_byte_match": true,
