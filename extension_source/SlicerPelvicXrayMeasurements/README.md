@@ -36,7 +36,7 @@ landmark, option and export format. Tests are included under **Testing**.
 
 ## License, credit and evidence
 
-**Selected software checks: 87 unit tests; a full replay covering all 397 reference
+**Selected software checks: 116 unit tests; a full replay covering all 397 reference
 CSV rows; Smart Point Placement; and live multi-guide, morphology, leg-length,
 circle-visibility and shaft-contour workflows.** The selected results are available
 in the source tree's [interactive test review](test_reports/current/index.html),

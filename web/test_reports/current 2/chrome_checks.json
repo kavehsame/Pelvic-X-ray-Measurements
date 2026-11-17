@@ -1,0 +1,55 @@
+{
+  "status": "passed",
+  "patient_data": false,
+  "chrome": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36",
+  "tests": [
+    "The first Start downloads one software package. The reloaded page starts from the verified cache after the server disconnects.",
+    "The network policy blocked a same-origin POST before synthetic files were selected.",
+    "Resume prefers a replaced CSV over an older MRB in the same export group, and a newer MRB over an older CSV.",
+    "Local PNG selection, rotate, mirror, fit, zoom and disabled prerequisites.",
+    "A provisional line appears at the pointer while the saved reference still has one point.",
+    "Shift-drag previews both window limits live, preserves placement and width, cancels on Escape and commits the release position.",
+    "Space, Ctrl, middle button and the Pan toggle preserve the active reference and its first endpoint.",
+    "Reference length gains a calibrated millimetre value when the calibration circle is fitted.",
+    "Fitted circle and displayed diameter update during mouse-down. Escape discards preview and a quick release commits the final point.",
+    "Live points and fitted circles, Hide, two-guide axis, ten shaft morphology points and LCE redraw.",
+    "Four sequential shaft contours and a reference-locked custom angle.",
+    "Pre-operative and post-operative Smart Point Placement derive editable neck axes locally.",
+    "PNG summary keeps the radiograph visible and preserves the colour of an annotation inside the panel.",
+    "Annotator validation, local MRB/CSV/PNG, versioning and automatic offline resume.",
+    "Single-frame 16-bit DICOM decoded in Chrome in native, RLE, lossless JPEG, JPEG 2000 and JPEG-LS encodings.",
+    "Single-slice NRRD, NIfTI and MetaImage decode in Chrome, including detached headers.",
+    "Actual Chrome export reproduces the complete reference measurement table.",
+    "Dragging the reference line in the full replay updates a dependent angle before release."
+  ],
+  "http_requests_received": [
+    [
+      "GET",
+      "/",
+      200
+    ],
+    [
+      "GET",
+      "/runtime.bin",
+      200
+    ],
+    [
+      "GET",
+      "/",
+      200
+    ]
+  ],
+  "http_responses_in_browser": 3,
+  "network_disconnected_before_image_selection": true,
+  "blocked_same_origin_post": true,
+  "runtime_gets": 1,
+  "warm_start_from_cache_offline": true,
+  "chrome_process_environment": "OS-only PATH and no inherited Conda, Python or dynamic loader overrides",
+  "chrome_replay": {
+    "measurements": 58,
+    "numeric_values": 81,
+    "max_absolute_difference": 4.988010005035903e-12
+  },
+  "output_test_mode": "Chrome FileSystemDirectoryHandle (origin-private test folder)",
+  "run": "chrome_run_gr7pzxij"
+}

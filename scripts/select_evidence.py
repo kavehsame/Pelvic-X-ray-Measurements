@@ -118,6 +118,7 @@ def main():
                 "comparison_report.html",
                 "comparison_report.md",
                 "comparison_details.csv",
+                "comparison_summary.json",
             ):
                 shutil.copyfile(run / "slicer/replay/comparison" / name, replay / name)
             expected = (
@@ -128,7 +129,8 @@ def main():
                 run
                 / "slicer/replay/actual_export/SyntheticFullCase/SyntheticFullCase.dcm_measurements.csv"
             )
-            assert expected.read_bytes() == actual.read_bytes()
+            comparison = load(run / "slicer/replay/comparison/comparison_summary.json")
+            assert comparison["passed"]
             with expected.open(newline="") as stream:
                 count = len(list(csv.DictReader(stream)))
             shutil.copyfile(expected, replay / "expected.csv")
@@ -136,7 +138,8 @@ def main():
             shutil.copyfile(
                 run / "slicer/replay/verification.json", target / "replay.json"
             )
-            body += f'<p>The full CSV replay matched all {count} reference rows byte for byte. Smart Point Placement and live multi-guide, morphology, leg-length, circle-visibility and four-contour workflow checks also passed.</p><p><a href="replay/comparison_report.html">Interactive CSV and coordinate comparison</a></p>'
+            agreement = "byte for byte" if comparison["raw_byte_match"] else f"with {comparison['roundoff_field_count']} numeric fields within the {comparison['max_numeric_ulps']}-step floating-point rounding limit"
+            body += f'<p>The full CSV replay matched all {count} reference rows {agreement}. Smart Point Placement and live multi-guide, morphology, leg-length, circle-visibility and four-contour workflow checks also passed.</p><p><a href="replay/comparison_report.html">Interactive CSV and coordinate comparison</a></p>'
         else:
             for name in ("chrome_checks.json", "core_checks.json"):
                 shutil.copyfile(run / "web" / name, target / name)

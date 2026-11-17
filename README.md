@@ -64,7 +64,7 @@ The source retains one selected run for each edition:
 - [Slicer unit tests and full CSV replay](extension_source/SlicerPelvicXrayMeasurements/test_reports/current/index.html).
 - [Web unit tests and Chrome workflow replay](web/test_reports/current/index.html).
 
-The release check covers 87 Slicer unit tests, 25 web unit tests, all 397 rows of
+The release check covers 116 Slicer unit tests, 25 web unit tests, all 397 rows of
 the native synthetic CSV replay and 18 Chrome workflow groups. The web measurement
 replay compares 58 measurements and 81 numeric values with a fixed reference.
 Interactive checks include multi-guide placement, shaft morphology, four shaft

@@ -13,7 +13,7 @@ links the selected Slicer and web runs. Each edition retains one selected eviden
 folder in source. New development runs go to an ignored build folder. Generated
 results do not enter the downloadable Slicer or web bundles.
 
-- **Slicer:** 87 unit tests; a full CSV replay matching 397 reference rows; Smart
+- **Slicer:** 116 unit tests; a full CSV replay matching 397 reference rows; Smart
   Point Placement; live multi-guide axes, morphology, bilateral leg-length lines,
   circle visibility and advancement through four shaft contours.
 - **Web:** 25 unit tests covering import, image frames and editing regressions;
@@ -27,6 +27,13 @@ The reference CSV is retained rather than regenerated during routine testing.
 It was originally produced by the extension and is a regression reference, not an
 independent medical-software comparator. Independent image-frame tests compare
 NRRD, MetaImage and NIfTI coordinates with SimpleITK or NiBabel.
+
+The Slicer CSV comparison requires exact column names, row order, labels, units,
+metadata and blank values. Finite measurement values and point coordinates may
+differ by at most eight representable binary64 floating-point steps to accommodate
+rounding across operating systems. The report lists these fields separately and
+records whether the file bytes are identical. This is a numerical regression rule,
+not a clinical accuracy threshold.
 
 ## Run the checks
 

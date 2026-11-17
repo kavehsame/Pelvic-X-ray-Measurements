@@ -221,9 +221,10 @@ def main() -> None:
 
     if reference_hash is not None and sha256_of_file(original_reference) != reference_hash:
         raise RuntimeError("The input reference CSV changed during replay.")
-    (args.output_dir / "verification.json").write_text(json.dumps({"status": "passed", "reference_sha256": sha256_of_file(expected_csv), "input_reference_unchanged": True, "generated_reference": args.regenerate_expected, "clinical_validation": False, "csv_coverage": coverage}, indent=2) + "\n")
+    comparison = json.loads((comparison_output_dir / "comparison_summary.json").read_text())
+    (args.output_dir / "verification.json").write_text(json.dumps({"status": "passed", "reference_sha256": sha256_of_file(expected_csv), "input_reference_unchanged": True, "generated_reference": args.regenerate_expected, "clinical_validation": False, "csv_coverage": coverage, "comparison": comparison}, indent=2) + "\n")
     print(
-        "PASS: exact replay match confirmed.\n"
+        "PASS: replay comparison passed (see the report for exact bytes and rounding).\n"
         f"Expected CSV: {display_path(expected_csv)}\n"
         f"Actual CSV: {display_path(actual_csv)}\n"
         f"Reports: {display_path(comparison_output_dir)}"

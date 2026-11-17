@@ -115,7 +115,7 @@ def test_compare_exports_and_report_writers(tmp_path: Path) -> None:
     write_html_report(report, html_report)
 
     assert csv_report.exists()
-    assert "does not exactly match" in md_report.read_text()
+    assert "does not match" in md_report.read_text()
     assert "<table>" in html_report.read_text()
 
 

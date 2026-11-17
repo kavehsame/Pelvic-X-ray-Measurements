@@ -9,7 +9,7 @@ This folder contains the full-case CSV replay and interaction checks for the ext
 - [slicer_harness.py]: Slicer-side automation helpers for loading the extension, creating a synthetic image, populating markups, and exporting CSV.
 - [slicer_generate_dummy_expected_csv.py]: uses the real extension logic to generate the golden dummy CSV.
 - [slicer_replay_dummy_csv.py]: reads the dummy CSV, recreates the case by placing the editable points back into the extension, and exports a fresh actual CSV.
-- [compare_exports.py]: exact CSV comparison plus `csv`, `md`, and `html` reports.
+- [compare_exports.py]: ordered CSV comparison plus `csv`, `md`, and `html` reports.
 - [run_end_to_end_test.py]: the main runner.
 - **slicer_auto_place_smoke.py**: checks the Smart Point Placement dialog and derived geometry on both sides, for native and implant heads.
 - **slicer_workflow_smoke.py**: checks multi-guide advancement, morphology, bilateral leg-length lines, circle visibility and advancement through four shaft contours in a live Slicer widget.
@@ -76,6 +76,7 @@ The runner writes:
 - `logs/generate_expected.stdout.txt` and `logs/generate_expected.stderr.txt` when regenerating the golden CSV
 - `logs/replay.stdout.txt` and `logs/replay.stderr.txt`
 - `logs/compare.stdout.txt` and `logs/compare.stderr.txt`
+- `comparison/comparison_summary.json`
 - `comparison/comparison_details.csv`
 - `comparison/comparison_report.md`
 - `comparison/comparison_report.html`
@@ -83,7 +84,7 @@ The runner writes:
 ## Notes
 
 - The bundle currently uses a synthetic volume named `SyntheticFullCase.dcm`, so the extension exports into a case folder named `SyntheticFullCase`.
-- The comparison is intentionally strict. It checks raw file bytes as well as ordered parsed CSV rows.
+- The comparison requires identical column names, row order, labels, units, metadata and blank values. Finite measurement values and point coordinates may differ by at most eight representable binary64 floating-point steps. The reports identify accepted rounding separately from mismatches and retain the raw-byte comparison and both checksums. This accommodates machine rounding; it is not a clinical accuracy threshold.
 - The golden CSV is produced by the extension itself, which keeps the oracle aligned with the current export schema and row order.
 
 The four-stage **Testing/Python/verify.py** runner performs unit tests, the full

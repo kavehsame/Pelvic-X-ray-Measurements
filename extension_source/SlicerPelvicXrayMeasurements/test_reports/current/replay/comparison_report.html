@@ -18,14 +18,16 @@
   <h1>Pelvic X-ray Measurements CSV Replay Report</h1>
   <table>
     <tbody>
-      <tr><th>Expected CSV</th><td>extension_source/SlicerPelvicXrayMeasurements/Testing/Python/end_to_end_replay/dummy_expected_full_export.csv</td></tr><tr><th>Actual CSV</th><td>build/publication_checks/slicer/replay/actual_export/SyntheticFullCase/SyntheticFullCase.dcm_measurements.csv</td></tr><tr><th>Raw byte match</th><td>PASS</td></tr><tr><th>Expected rows</th><td>397</td></tr><tr><th>Actual rows</th><td>397</td></tr><tr><th>Matching rows</th><td>397</td></tr><tr><th>Mismatched rows</th><td>0</td></tr><tr><th>Missing rows</th><td>0</td></tr><tr><th>Unexpected rows</th><td>0</td></tr><tr><th>Expected SHA-256</th><td>7b895d9b221aa39ac01f60165905c07693becaff96092210ec43a4321cd40682</td></tr><tr><th>Actual SHA-256</th><td>7b895d9b221aa39ac01f60165905c07693becaff96092210ec43a4321cd40682</td></tr>
+      <tr><th>Expected CSV</th><td>extension_source/SlicerPelvicXrayMeasurements/Testing/Python/end_to_end_replay/dummy_expected_full_export.csv</td></tr><tr><th>Actual CSV</th><td>build/publication_checks_final_native/slicer/replay/actual_export/SyntheticFullCase/SyntheticFullCase.dcm_measurements.csv</td></tr><tr><th>Comparison</th><td>PASS</td></tr><tr><th>Schema match</th><td>Yes</td></tr><tr><th>Schema errors</th><td>None</td></tr><tr><th>Raw byte match</th><td>Yes</td></tr><tr><th>Numeric rounding limit (binary64 steps)</th><td>8</td></tr><tr><th>Rows with accepted numeric rounding</th><td>0</td></tr><tr><th>Fields with accepted numeric rounding</th><td>0</td></tr><tr><th>Expected rows</th><td>397</td></tr><tr><th>Actual rows</th><td>397</td></tr><tr><th>Exact rows</th><td>397</td></tr><tr><th>Mismatched rows</th><td>0</td></tr><tr><th>Missing rows</th><td>0</td></tr><tr><th>Unexpected rows</th><td>0</td></tr><tr><th>Expected SHA-256</th><td>7b895d9b221aa39ac01f60165905c07693becaff96092210ec43a4321cd40682</td></tr><tr><th>Actual SHA-256</th><td>7b895d9b221aa39ac01f60165905c07693becaff96092210ec43a4321cd40682</td></tr>
     </tbody>
   </table>
   <h2>Outcome</h2>
   <p class="pass">
-    The replay export matches the dummy expected CSV exactly.
+    The replay export matches the reference CSV byte for byte.
   </p>
-  <h2>First Differences</h2>
+  <p>The rounding allowance applies only to finite measurement values and point coordinates.
+  Column names, row order, labels, units, metadata and blank values must match exactly.</p>
+  <h2>First differences (including accepted rounding)</h2>
   <table>
     <thead>
       <tr>
@@ -35,11 +37,12 @@
         <th>Name</th>
         <th>Index</th>
         <th>Label</th>
-        <th>Fields</th>
+        <th>Changed fields</th>
+        <th>Rounded fields</th>
       </tr>
     </thead>
     <tbody>
-      <tr><td colspan="7">No differences.</td></tr>
+      <tr><td colspan="8">No differences.</td></tr>
     </tbody>
   </table>
 </body>

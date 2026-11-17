@@ -1,0 +1,19 @@
+{
+  "expected_csv": "extension_source/SlicerPelvicXrayMeasurements/Testing/Python/end_to_end_replay/dummy_expected_full_export.csv",
+  "actual_csv": "build/publication_checks_final_native/slicer/replay/actual_export/SyntheticFullCase/SyntheticFullCase.dcm_measurements.csv",
+  "expected_row_count": 397,
+  "actual_row_count": 397,
+  "raw_byte_match": true,
+  "schema_match": true,
+  "schema_errors": [],
+  "passed": true,
+  "max_numeric_ulps": 8,
+  "expected_sha256": "7b895d9b221aa39ac01f60165905c07693becaff96092210ec43a4321cd40682",
+  "actual_sha256": "7b895d9b221aa39ac01f60165905c07693becaff96092210ec43a4321cd40682",
+  "match_count": 397,
+  "roundoff_count": 0,
+  "mismatch_count": 0,
+  "missing_count": 0,
+  "unexpected_count": 0,
+  "roundoff_field_count": 0
+}
