@@ -1,0 +1,47 @@
+{
+  "status": "passed",
+  "mode": "full",
+  "live_slicer": true,
+  "clinical_validation_completed": false,
+  "validation_study": "in progress; comparison with established medical software",
+  "started_utc": "20261117T155603Z",
+  "platform": "Darwin",
+  "machine": "arm64",
+  "python": "3.13.9",
+  "checks": [
+    {
+      "stage": "assets",
+      "exit_code": 0
+    },
+    {
+      "stage": "static",
+      "exit_code": 0
+    },
+    {
+      "stage": "web_unit",
+      "exit_code": 0
+    },
+    {
+      "stage": "slicer",
+      "exit_code": 0
+    },
+    {
+      "stage": "core_replay",
+      "exit_code": 0
+    },
+    {
+      "stage": "build",
+      "exit_code": 0
+    },
+    {
+      "stage": "chrome",
+      "exit_code": 0
+    }
+  ],
+  "source_unchanged": true,
+  "edition": "web",
+  "unit_tests": 25,
+  "runtime": {
+    "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36"
+  }
+}

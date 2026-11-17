@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+message: "Please cite this software, its repository and the version used when reporting research results."
+title: "Pelvic X-ray Measurements"
+type: software
+authors:
+  - family-names: Same
+    given-names: Kaveh
+    affiliation: "Michael Ogon Laboratory for Orthopedic Research, Orthopedic Hospital Speising, Vienna, Austria"
+version: 1.6.0
+license: Apache-2.0
+repository-code: "https://github.com/kavehsame/Pelvic-X-ray-Measurements"
+url: "https://github.com/kavehsame/Pelvic-X-ray-Measurements"
+abstract: "An editable, calibrated pelvic radiograph measurement tool for research, provided as a 3D Slicer extension and a browser-based web application. Not intended for clinical decision-making."

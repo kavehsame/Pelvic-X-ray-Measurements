@@ -1,0 +1,78 @@
+{
+  "pyodide.js": {
+    "sha256": "d4e1e0f06c29162eadf0c3f323c746884242b257d1faa94760442a4ac929e9a1",
+    "bytes": 18726
+  },
+  "pyodide.asm.mjs": {
+    "sha256": "22514b8be6980e28a02c8b1d6387ce8dfe666fc4edf8d547cff5dce29ff4d972",
+    "bytes": 1250259
+  },
+  "pyodide.asm.wasm": {
+    "sha256": "e14d49ceca9b4a0e274ea918f3a898de2d3880b6e5573a6cfe1a2267ecc70329",
+    "bytes": 9597892
+  },
+  "pyodide-lock.json": {
+    "sha256": "4ac5daff3e358be63d04a1d0a4cb2bfad1024076cb61d42aefe368fdb906b067",
+    "bytes": 768
+  },
+  "python_stdlib.zip": {
+    "sha256": "2bd3394a145bfbbe5bbc9d9d6ab9136abbb986c6fef6c142b3a2962227aa5c28",
+    "bytes": 2545550
+  },
+  "numpy-2.4.6-cp314-cp314-pyemscripten_2026_0_wasm32.whl": {
+    "sha256": "a292c1f5d7d8a2208cd5e94fc467604c131cabcd2fc14fed6eefde121e7fabdf",
+    "bytes": 2960568
+  },
+  "pillow-12.2.0-cp314-cp314-pyemscripten_2026_0_wasm32.whl": {
+    "sha256": "e29838b7a756e4ee0f27a9cfa9a387ee0dfa2e9dd44be2dd595130b9f9d93ac3",
+    "bytes": 1037806
+  },
+  "pydicom-3.0.2-py3-none-any.whl": {
+    "sha256": "abf971a5440f84dbaf42c4b6758e30e62480902584f8b270b9a5d146e278a07b",
+    "bytes": 2376822
+  },
+  "jpeg-lossless.cjs": {
+    "sha256": "93db46abb1cd74fd3e556c1c79e8b9ac36bbfa0e092067c9e4aa674c7ef248c3",
+    "bytes": 31272
+  },
+  "JPEG-LOSSLESS-LICENSE.txt": {
+    "sha256": "35d89c5827cb1f9685ffc3fb6ebcc9532f75663554ed6efddadad95071bae5c9",
+    "bytes": 1054
+  },
+  "PYODIDE-LICENSE.txt": {
+    "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5",
+    "bytes": 16725
+  },
+  "CPYTHON-LICENSE.txt": {
+    "sha256": "b0e25a78cffb43f4d92de8b61ccfa1f1f98ecbc22330b54b5251e7b6ba010231",
+    "bytes": 13804
+  },
+  "openjpeg.js": {
+    "sha256": "8e6d4ea409ed817ee08aed0c440048616091781fce5b22b81c7cd850d80937b5",
+    "bytes": 55759
+  },
+  "openjpeg.wasm": {
+    "sha256": "5aff4e65444480a402898fe7369a9d2bc77e8181f858fc0d10150b2dabf07dee",
+    "bytes": 260334
+  },
+  "charls.js": {
+    "sha256": "c8ef100ac02552c692d59e60f61ab9dc84f355a62386d571e3db2c1046aa1f5a",
+    "bytes": 53905
+  },
+  "charls.wasm": {
+    "sha256": "7e3696ecffee534d7c188ff91790812710c0a267fcbf78620b19da6bc78979f4",
+    "bytes": 145438
+  },
+  "CHARLS-1-LICENSE.txt": {
+    "sha256": "a9cc2e879aafe18f40cae21bd4b6c8b78d81ca2a09b103607d192000c04ad65f",
+    "bytes": 1068
+  },
+  "OPENJPEG-UPSTREAM-LICENSE.txt": {
+    "sha256": "a6af136f3e15038a666b61f376612a07d9a4e48cb7c01adbf3e33b3f14ab49b6",
+    "bytes": 2112
+  },
+  "CHARLS-UPSTREAM-LICENSE.txt": {
+    "sha256": "e293ccc327ee42f4e723e73aac39b23ffc40655cc6f8baec5c046f2e7d093695",
+    "bytes": 1536
+  }
+}

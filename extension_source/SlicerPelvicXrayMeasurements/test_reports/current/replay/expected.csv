@@ -1,0 +1,398 @@
+﻿section,name,index,label,x_ras,y_ras,z_ras,curve_type,curve_points_per_segment,raw_value,corrected_value_mm,units,details
+metadata,CaseName,,,,,,,,,,,SyntheticFullCase.dcm
+metadata,ImageNode,,,,,,,,,,,SyntheticFullCase.dcm
+metadata,Annotator,,,,,,,,,,,Automated Test
+metadata,Timestamp,,,,,,,,,,,2026-07-09 11:31:49
+metadata,Comments,,,,,,,,,,,Automated replay reference case.
+metadata,CalibrationBall_NotPresent,,,,,,,,0,,flag,"1 means no calibration ball was present, so measurements are reported in su only."
+metadata,FemoralNeckAxis_Left_LockToCenter,,,,,,,,1,,flag,1 means the left FemoralNeckAxis is forced to pass through the fitted head center.
+metadata,FemoralNeckAxis_Left_UseSingleGuide,,,,,,,,1,,flag,1 means the left FemoralNeckAxis is derived from only the first guide line.
+metadata,FemoralNeckAxis_Right_LockToCenter,,,,,,,,0,,flag,1 means the right FemoralNeckAxis is forced to pass through the fitted head center.
+metadata,FemoralNeckAxis_Right_UseSingleGuide,,,,,,,,0,,flag,1 means the right FemoralNeckAxis is derived from only the first guide line.
+metadata,ImplantNeckAxis_Left_LockToCenter,,,,,,,,1,,flag,1 means the left ImplantNeckAxis is forced to pass through the fitted head center.
+metadata,ImplantNeckAxis_Left_UseSingleGuide,,,,,,,,0,,flag,1 means the left ImplantNeckAxis is derived from only the first guide line.
+metadata,ImplantNeckAxis_Right_LockToCenter,,,,,,,,0,,flag,1 means the right ImplantNeckAxis is forced to pass through the fitted head center.
+metadata,ImplantNeckAxis_Right_UseSingleGuide,,,,,,,,1,,flag,1 means the right ImplantNeckAxis is derived from only the first guide line.
+measurement,CalibrationBall_KnownDiameter,,,,,,,,,25.0,mm,Known physical diameter of the calibration ball when available.
+measurement,CalibrationBall_MeasuredDiameter,,,,,,,,25.0,25.0,su -> mm,Circle fitted from 3 calibration ball points.
+measurement,CalibrationScaleFactor,,,,,,,,1.0,,mm per scene unit,Applied automatically to corrected measurements when the calibration ball is present.
+measurement,ReferenceLine_Length,,,,,,,,500.0,500.0,su -> mm,
+measurement,Left_FemurHead_Diameter,,,,,,,,56.0,56.0,su -> mm,
+measurement,Left_CCDAngle,,,,,,,,146.75506275969948,,degrees,"Angle between the femoral shaft axis and femoral neck axis, reported on the medial side of the intersection."
+measurement,Left_AcetabularIndexTonnis,,,,,,,,-20.973493421320804,,degrees,Signed angle between the user-defined Acetabular Index (Tönnis) line and the side-specific lateral horizontal arm; values above the reference arm are positive and below it are negative.
+measurement,Left_SharpAngle,,,,,,,,-21.104838584929638,,degrees,Signed angle between the user-defined Sharp line and the side-specific lateral horizontal arm; values above the reference arm are positive and below it are negative.
+measurement,Left_LCEAngle,,,,,,,,-24.77514056883192,,degrees,Signed angle from the femur head center to the LCE point against the superior line perpendicular to the reference line; medial points are negative.
+measurement,Left_FemoralHeadExtrusionIndex,,,,,,,,54.83870967741935,,percent,Signed percent ratio of uncovered lateral femoral head width over total femoral head width; negative values indicate overcoverage beyond the lateral head margin.
+measurement,Left_CCR,,,,,,,,0.5121951219512195,,ratio,Canal-calcar ratio (B/A): width between the two inner 10 cm-below morphology points divided by the mid-LT guide-cap width.
+measurement,Left_CTI,,,,,,,,0.625,,ratio,"Canal thickness index: outer 10 cm-below width minus inner 10 cm-below width, divided by outer 10 cm-below width."
+measurement,Left_CFI,,,,,,,,1.6666666666666667,,ratio,Canal flare index: 2 cm-above width divided by the width between the two inner 10 cm-below morphology points.
+measurement,Left_FemoralShaftAxis_DeviationGuideA,,,,,,,,0.0,,degrees,
+measurement,Left_FemoralShaftAxis_DeviationGuideB,,,,,,,,0.0,,degrees,
+measurement,Left_PreOp_AcetabularOffset,,,,,,,,58.0,58.0,su -> mm,
+measurement,Left_PreOp_FemoralOffset,,,,,,,,53.0,53.0,su -> mm,
+measurement,Left_PreOp_GlobalOffset,,,,,,,,111.0,111.0,su -> mm,Numerical sum of the pre-operative acetabular offset and femoral offset.
+measurement,Left_AcetabularInclinationAngle_FreeHand_PostOp,,,,,,,,25.769327624338704,,degrees,Acute angle between the side-specific free-hand inclination line and the reference line.
+measurement,Left_CupOpeningEllipseFit_Inclination_PostOp,,,,,,,,33.00000000000002,,degrees,Acute angle between the fitted cup opening ellipse major diameter and the reference line.
+measurement,Left_CupAnteversionRetroversionAngle_PostOp,,,,,,,,32.23095263550207,,degrees,Theta = asin(minor diameter / major diameter) from the fitted cup opening ellipse diameters.
+measurement,Left_ImplantFemoralCCD_PostOp,,,,,,,,23.498565675952097,,degrees,Obtuse medial-side angle between the femoral shaft axis and the implant neck axis.
+measurement,Left_PostOp_ImplantHead_Diameter,,,,,,,,38.0,38.0,su -> mm,
+measurement,Left_PostOp_AcetabularOffset,,,,,,,,58.0,58.0,su -> mm,
+measurement,Left_PostOp_FemoralOffset,,,,,,,,48.0,48.0,su -> mm,
+measurement,Left_PostOp_GlobalOffset,,,,,,,,106.0,106.0,su -> mm,Numerical sum of the post-operative acetabular offset and femoral offset.
+measurement,Left_StemAlignment,,,,,,,,6.74005609794693,,degrees,Acute angle difference between the derived stem axis and the femoral shaft axis.
+measurement,Right_FemurHead_Diameter,,,,,,,,60.0,60.0,su -> mm,
+measurement,Right_CCDAngle,,,,,,,,143.13010235415598,,degrees,"Angle between the femoral shaft axis and femoral neck axis, reported on the medial side of the intersection."
+measurement,Right_AcetabularIndexTonnis,,,,,,,,160.0168934781,,degrees,Signed angle between the user-defined Acetabular Index (Tönnis) line and the side-specific lateral horizontal arm; values above the reference arm are positive and below it are negative.
+measurement,Right_SharpAngle,,,,,,,,150.75117366345305,,degrees,Signed angle between the user-defined Sharp line and the side-specific lateral horizontal arm; values above the reference arm are positive and below it are negative.
+measurement,Right_LCEAngle,,,,,,,,38.65980825409009,,degrees,Signed angle from the femur head center to the LCE point against the superior line perpendicular to the reference line; medial points are negative.
+measurement,Right_FemoralHeadExtrusionIndex,,,,,,,,53.84615384615385,,percent,Signed percent ratio of uncovered lateral femoral head width over total femoral head width; negative values indicate overcoverage beyond the lateral head margin.
+measurement,Right_CCR,,,,,,,,0.5121951219512197,,ratio,Canal-calcar ratio (B/A): width between the two inner 10 cm-below morphology points divided by the mid-LT guide-cap width.
+measurement,Right_CTI,,,,,,,,0.625,,ratio,"Canal thickness index: outer 10 cm-below width minus inner 10 cm-below width, divided by outer 10 cm-below width."
+measurement,Right_CFI,,,,,,,,1.6666666666666667,,ratio,Canal flare index: 2 cm-above width divided by the width between the two inner 10 cm-below morphology points.
+measurement,Right_FemoralShaftAxis_DeviationGuideA,,,,,,,,0.0,,degrees,
+measurement,Right_FemoralShaftAxis_DeviationGuideB,,,,,,,,0.0,,degrees,
+measurement,Right_PreOp_AcetabularOffset,,,,,,,,65.0,65.0,su -> mm,
+measurement,Right_PreOp_FemoralOffset,,,,,,,,60.0,60.0,su -> mm,
+measurement,Right_PreOp_GlobalOffset,,,,,,,,125.0,125.0,su -> mm,Numerical sum of the pre-operative acetabular offset and femoral offset.
+measurement,Right_AcetabularInclinationAngle_FreeHand_PostOp,,,,,,,,32.47119229084848,,degrees,Acute angle between the side-specific free-hand inclination line and the reference line.
+measurement,Right_CupOpeningEllipseFit_Inclination_PostOp,,,,,,,,17.999999999999968,,degrees,Acute angle between the fitted cup opening ellipse major diameter and the reference line.
+measurement,Right_CupAnteversionRetroversionAngle_PostOp,,,,,,,,36.03187907247056,,degrees,Theta = asin(minor diameter / major diameter) from the fitted cup opening ellipse diameters.
+measurement,Right_ImplantFemoralCCD_PostOp,,,,,,,,153.43494882292202,,degrees,Obtuse medial-side angle between the femoral shaft axis and the implant neck axis.
+measurement,Right_PostOp_ImplantHead_Diameter,,,,,,,,36.0,36.0,su -> mm,
+measurement,Right_PostOp_AcetabularOffset,,,,,,,,60.0,60.0,su -> mm,
+measurement,Right_PostOp_FemoralOffset,,,,,,,,52.0,52.0,su -> mm,
+measurement,Right_PostOp_GlobalOffset,,,,,,,,112.0,112.0,su -> mm,Numerical sum of the post-operative acetabular offset and femoral offset.
+measurement,Right_StemAlignment,,,,,,,,5.710593137499633,,degrees,Acute angle difference between the derived stem axis and the femoral shaft axis.
+measurement,Line_1_Length,,,,,,,,67.08203932499369,67.08203932499369,su -> mm,Custom line measurement created from two placed points.
+measurement,Line_2_Length,,,,,,,,55.0,55.0,su -> mm,Custom line measurement created from two placed points. Orientation locked parallel to the reference line.
+measurement,Line_3_Length,,,,,,,,60.0,60.0,su -> mm,Custom line measurement created from two placed points. Orientation locked perpendicular to the reference line.
+measurement,Angle_1,,,,,,,,104.62087398863166,,degrees,Custom three-point angle measurement.
+measurement,Angle_2,,,,,,,,124.50852298766841,,degrees,Custom three-point angle measurement. First arm locked parallel to the reference line.
+measurement,Angle_3,,,,,,,,124.50852298766841,,degrees,Custom three-point angle measurement. First arm locked perpendicular to the reference line.
+measurement,LLD,,,,,,,,13.0,13.0,su -> mm,Absolute height difference measured perpendicular to the reference line.
+measurement,LLD_Signed_LeftMinusRight,,,,,,,,-13.0,-13.0,su -> mm,
+point,Hip Measurements - Calibration Ball Points,0,CalibrationBall_P1,-60.5,-347.0,0.0,,,,,,calibrationPoints
+point,Hip Measurements - Calibration Ball Points,1,CalibrationBall_P2,-48.0,-334.5,0.0,,,,,,calibrationPoints
+point,Hip Measurements - Calibration Ball Points,2,CalibrationBall_P3,-35.5,-347.0,0.0,,,,,,calibrationPoints
+point,Hip Measurements - Reference Line,0,ReferenceLine_Start,-298.0,-47.0,0.0,,,,,,referenceLine
+point,Hip Measurements - Reference Line,1,ReferenceLine_End,202.0,-47.0,0.0,,,,,,referenceLine
+point,Hip Measurements - Minor Trochanter Points,0,MinorTrochanter_Right,-163.0,48.0,0.0,,,,,,lldPoints
+point,Hip Measurements - Minor Trochanter Points,1,MinorTrochanter_Left,77.0,35.0,0.0,,,,,,lldPoints
+point,Hip Measurements - LLD Left Parallel Line,0,LLD_LeftParallel_Start,77.0,35.0,0.0,,,,,,lldLeftParallel
+point,Hip Measurements - LLD Left Parallel Line,1,LLD_LeftParallel_End,-223.0,35.0,0.0,,,,,,lldLeftParallel
+point,Hip Measurements - LLD Right Parallel Line,0,LLD_RightParallel_Start,-163.0,48.0,0.0,,,,,,lldRightParallel
+point,Hip Measurements - LLD Right Parallel Line,1,LLD_RightParallel_End,137.0,48.0,0.0,,,,,,lldRightParallel
+point,Hip Measurements - LLD Height Difference,0,LLD_Difference_Start,-43.0,35.0,0.0,,,,,,lldHeightDifference
+point,Hip Measurements - LLD Height Difference,1,LLD_Difference_End,-43.0,48.0,0.0,,,,,,lldHeightDifference
+point,Hip Measurements - Point 1,0,Point_1,-303.0,178.0,0.0,,,,,,otherPoint_1
+point,Hip Measurements - Point 2,0,Point_2,200.0,171.0,0.0,,,,,,otherPoint_2
+point,Hip Measurements - Line 1,0,Line_1_Start,-268.0,93.0,0.0,,,,,,otherLine_1
+point,Hip Measurements - Line 1,1,Line_1_End,-208.0,123.0,0.0,,,,,,otherLine_1
+point,Hip Measurements - Line 2,0,Line_2_Start,112.0,103.0,0.0,,,,,,otherLine_2
+point,Hip Measurements - Line 2,1,Line_2_End,167.0,103.0,0.0,,,,,,otherLine_2
+point,Hip Measurements - Line 3,0,Line_3_Start,182.0,63.0,0.0,,,,,,otherLine_3
+point,Hip Measurements - Line 3,1,Line_3_End,182.0,123.0,0.0,,,,,,otherLine_3
+point,Hip Measurements - Angle 1 Points,0,Angle_1_ArmA,-268.0,-247.0,0.0,,,,,,otherAngle_1_points
+point,Hip Measurements - Angle 1 Points,1,Angle_1_Vertex,-228.0,-227.0,0.0,,,,,,otherAngle_1_points
+point,Hip Measurements - Angle 1 Points,2,Angle_1_ArmB,-193.0,-267.0,0.0,,,,,,otherAngle_1_points
+point,Hip Measurements - Angle 1 Reference Arm,0,Angle_1_ArmA_Start,-228.0,-227.0,0.0,,,,,,otherAngle_1_referenceArm
+point,Hip Measurements - Angle 1 Reference Arm,1,Angle_1_ArmA_End,-268.0,-247.0,0.0,,,,,,otherAngle_1_referenceArm
+point,Hip Measurements - Angle 1 Free Arm,0,Angle_1_ArmB_Start,-228.0,-227.0,0.0,,,,,,otherAngle_1_freeArm
+point,Hip Measurements - Angle 1 Free Arm,1,Angle_1_ArmB_End,-193.0,-267.0,0.0,,,,,,otherAngle_1_freeArm
+point,Hip Measurements - Angle 2 Points,0,Angle_2_ArmA,-88.0,113.0,0.0,,,,,,otherAngle_2_points
+point,Hip Measurements - Angle 2 Points,1,Angle_2_Vertex,-48.0,113.0,0.0,,,,,,otherAngle_2_points
+point,Hip Measurements - Angle 2 Points,2,Angle_2_ArmB,-26.0,81.0,0.0,,,,,,otherAngle_2_points
+point,Hip Measurements - Angle 2 Reference Arm,0,Angle_2_ArmA_Start,-48.0,113.0,0.0,,,,,,otherAngle_2_referenceArm
+point,Hip Measurements - Angle 2 Reference Arm,1,Angle_2_ArmA_End,-88.0,113.0,0.0,,,,,,otherAngle_2_referenceArm
+point,Hip Measurements - Angle 2 Free Arm,0,Angle_2_ArmB_Start,-48.0,113.0,0.0,,,,,,otherAngle_2_freeArm
+point,Hip Measurements - Angle 2 Free Arm,1,Angle_2_ArmB_End,-26.0,81.0,0.0,,,,,,otherAngle_2_freeArm
+point,Hip Measurements - Angle 3 Points,0,Angle_3_ArmA,12.0,93.0,0.0,,,,,,otherAngle_3_points
+point,Hip Measurements - Angle 3 Points,1,Angle_3_Vertex,12.0,133.0,0.0,,,,,,otherAngle_3_points
+point,Hip Measurements - Angle 3 Points,2,Angle_3_ArmB,44.0,155.0,0.0,,,,,,otherAngle_3_points
+point,Hip Measurements - Angle 3 Reference Arm,0,Angle_3_ArmA_Start,12.0,133.0,0.0,,,,,,otherAngle_3_referenceArm
+point,Hip Measurements - Angle 3 Reference Arm,1,Angle_3_ArmA_End,12.0,93.0,0.0,,,,,,otherAngle_3_referenceArm
+point,Hip Measurements - Angle 3 Free Arm,0,Angle_3_ArmB_Start,12.0,133.0,0.0,,,,,,otherAngle_3_freeArm
+point,Hip Measurements - Angle 3 Free Arm,1,Angle_3_ArmB_End,44.0,155.0,0.0,,,,,,otherAngle_3_freeArm
+point,Hip Measurements - Left Femoral Head Extrusion Index Medial Line,0,FemoralHeadExtrusionIndex_Left_Medial_Start,32.0,-197.0,0.0,,,,,,left_extrusionIndexMedialLine
+point,Hip Measurements - Left Femoral Head Extrusion Index Medial Line,1,FemoralHeadExtrusionIndex_Left_Medial_End,32.0,-102.0,0.0,,,,,,left_extrusionIndexMedialLine
+point,Hip Measurements - Left Femoral Head Extrusion Index Middle Line,0,FemoralHeadExtrusionIndex_Left_Middle_Start,60.0,-197.0,0.0,,,,,,left_extrusionIndexMiddleLine
+point,Hip Measurements - Left Femoral Head Extrusion Index Middle Line,1,FemoralHeadExtrusionIndex_Left_Middle_End,60.0,-102.0,0.0,,,,,,left_extrusionIndexMiddleLine
+point,Hip Measurements - Left Femoral Head Extrusion Index Lateral Line,0,FemoralHeadExtrusionIndex_Left_Lateral_Start,94.0,-197.0,0.0,,,,,,left_extrusionIndexLateralLine
+point,Hip Measurements - Left Femoral Head Extrusion Index Lateral Line,1,FemoralHeadExtrusionIndex_Left_Lateral_End,94.0,-102.0,0.0,,,,,,left_extrusionIndexLateralLine
+point,Hip Measurements - Left Femur Shaft Morphology Lesser Trochanter Points,0,FemurShaftMorphology_Left_LT_Proximal,74.0,-27.0,0.0,,,,,,left_shaftMorphologyLTPoints
+point,Hip Measurements - Left Femur Shaft Morphology Lesser Trochanter Points,1,FemurShaftMorphology_Left_LT_Distal,80.0,-7.0,0.0,,,,,,left_shaftMorphologyLTPoints
+point,Hip Measurements - Left Femur Shaft Morphology LT Midline,0,FemurShaftMorphology_Left_Midline_A,45.0,-17.0,0.0,,,,,,left_shaftMorphologyMidline
+point,Hip Measurements - Left Femur Shaft Morphology LT Midline,1,FemurShaftMorphology_Left_Midline_B,109.0,-17.0,0.0,,,,,,left_shaftMorphologyMidline
+point,Hip Measurements - Left Femur Shaft Morphology Control Points,0,FemurShaftMorphology_Left_2cmAbove_A,57.0,-37.0,0.0,,,,,,left_shaftMorphologyPoints
+point,Hip Measurements - Left Femur Shaft Morphology Control Points,1,FemurShaftMorphology_Left_2cmAbove_B,97.0,-37.0,0.0,,,,,,left_shaftMorphologyPoints
+point,Hip Measurements - Left Femur Shaft Morphology Control Points,2,FemurShaftMorphology_Left_3cmBelow_A,57.0,13.0,0.0,,,,,,left_shaftMorphologyPoints
+point,Hip Measurements - Left Femur Shaft Morphology Control Points,3,FemurShaftMorphology_Left_3cmBelow_B,97.0,13.0,0.0,,,,,,left_shaftMorphologyPoints
+point,Hip Measurements - Left Femur Shaft Morphology Control Points,4,FemurShaftMorphology_Left_10cmBelow_OuterA,45.0,83.0,0.0,,,,,,left_shaftMorphologyPoints
+point,Hip Measurements - Left Femur Shaft Morphology Control Points,5,FemurShaftMorphology_Left_10cmBelow_InnerA,65.0,83.0,0.0,,,,,,left_shaftMorphologyPoints
+point,Hip Measurements - Left Femur Shaft Morphology Control Points,6,FemurShaftMorphology_Left_10cmBelow_InnerB,89.0,83.0,0.0,,,,,,left_shaftMorphologyPoints
+point,Hip Measurements - Left Femur Shaft Morphology Control Points,7,FemurShaftMorphology_Left_10cmBelow_OuterB,109.0,83.0,0.0,,,,,,left_shaftMorphologyPoints
+point,Hip Measurements - Left Femur Shaft Morphology Control Points,8,FemurShaftMorphology_Left_11cmBelow_A,57.0,93.0,0.0,,,,,,left_shaftMorphologyPoints
+point,Hip Measurements - Left Femur Shaft Morphology Control Points,9,FemurShaftMorphology_Left_11cmBelow_B,97.0,93.0,0.0,,,,,,left_shaftMorphologyPoints
+point,Hip Measurements - Left Femur Shaft Morphology Guide Line A,0,FemurShaftMorphology_Left_GuideA_Start,53.57142857142857,-17.0,0.0,,,,,,left_shaftMorphologyGuideLineA
+point,Hip Measurements - Left Femur Shaft Morphology Guide Line A,1,FemurShaftMorphology_Left_GuideA_End,65.0,83.0,0.0,,,,,,left_shaftMorphologyGuideLineA
+point,Hip Measurements - Left Femur Shaft Morphology Guide Line B,0,FemurShaftMorphology_Left_GuideB_Start,100.42857142857143,-17.0,0.0,,,,,,left_shaftMorphologyGuideLineB
+point,Hip Measurements - Left Femur Shaft Morphology Guide Line B,1,FemurShaftMorphology_Left_GuideB_End,89.0,83.0,0.0,,,,,,left_shaftMorphologyGuideLineB
+point,Hip Measurements - Left Acetabular Index (Tönnis) Line,0,AcetabularIndexTonnis_Left_Base,42.0,-75.0,0.0,,,,,,left_tonnisAngleLine
+point,Hip Measurements - Left Acetabular Index (Tönnis) Line,1,AcetabularIndexTonnis_Left_Roof,102.0,-52.0,0.0,,,,,,left_tonnisAngleLine
+point,Hip Measurements - Left Acetabular Index (Tönnis) Reference Arm,0,AcetabularIndexTonnis_Left_Reference_Start,42.0,-75.0,0.0,,,,,,left_tonnisAngleReferenceArm
+point,Hip Measurements - Left Acetabular Index (Tönnis) Reference Arm,1,AcetabularIndexTonnis_Left_Reference_End,106.25729530566937,-75.0,0.0,,,,,,left_tonnisAngleReferenceArm
+point,Hip Measurements - Left Sharp Angle Line,0,SharpAngle_Left_Base,40.0,-39.0,0.0,,,,,,left_sharpAngleLine
+point,Hip Measurements - Left Sharp Angle Line,1,SharpAngle_Left_Lateral,97.0,-17.0,0.0,,,,,,left_sharpAngleLine
+point,Hip Measurements - Left Sharp Angle Reference Arm,0,SharpAngle_Left_Reference_Start,40.0,-39.0,0.0,,,,,,left_sharpAngleReferenceArm
+point,Hip Measurements - Left Sharp Angle Reference Arm,1,SharpAngle_Left_Reference_End,101.09828148156052,-39.0,0.0,,,,,,left_sharpAngleReferenceArm
+point,Hip Measurements - Left LCE Angle Point,0,LCEAngle_Left_Point,50.0,-185.0,0.0,,,,,,left_lceAnglePoint
+point,Hip Measurements - Left LCE Angle Reference Arm,0,LCEAngle_Left_Center,62.0,-159.0,0.0,,,,,,left_lceAngleVisual
+point,Hip Measurements - Left LCE Angle Reference Arm,1,LCEAngle_Left_Reference_End,62.0,-187.6356421265527,0.0,,,,,,left_lceAngleVisual
+point,Hip Measurements - Left LCE Angle Radial Arm,0,LCEAngle_Left_Center,62.0,-159.0,0.0,,,,,,left_lceAngleRadialArm
+point,Hip Measurements - Left LCE Angle Radial Arm,1,LCEAngle_Left_Point,50.0,-185.0,0.0,,,,,,left_lceAngleRadialArm
+point,Hip Measurements - Left Femur Head Points,0,FemurHead_Left_P1,90.0,-159.0,0.0,,,,,,left_femurHeadPoints
+point,Hip Measurements - Left Femur Head Points,1,FemurHead_Left_P2,62.0,-131.0,0.0,,,,,,left_femurHeadPoints
+point,Hip Measurements - Left Femur Head Points,2,FemurHead_Left_P3,37.75128869403572,-173.0,0.0,,,,,,left_femurHeadPoints
+point,Hip Measurements - Left Femur Head Center,0,FemurHead_Left_Center,62.0,-159.0,0.0,,,,,,left_femurHeadCenter
+point,Hip Measurements - Left Implant Head Points,0,ImplantHead_Left_P1,89.0,-157.0,0.0,,,,,,left_implantHeadPoints
+point,Hip Measurements - Left Implant Head Points,1,ImplantHead_Left_P2,70.0,-138.0,0.0,,,,,,left_implantHeadPoints
+point,Hip Measurements - Left Implant Head Points,2,ImplantHead_Left_P3,53.54551732809567,-166.5,0.0,,,,,,left_implantHeadPoints
+point,Hip Measurements - Left Implant Head Center,0,ImplantHead_Left_Center,70.0,-157.0,0.0,,,,,,left_implantHeadCenter
+point,Hip Measurements - Left Cup Opening Ellipse Points,0,CupOpeningEllipse_Left_P1,112.16011703836273,-60.660828949549185,0.0,,,,,,left_cupOpeningEllipsePoints
+point,Hip Measurements - Left Cup Opening Ellipse Points,1,CupOpeningEllipse_Left_P2,92.03331867573087,-57.209454198821625,0.0,,,,,,left_cupOpeningEllipsePoints
+point,Hip Measurements - Left Cup Opening Ellipse Points,2,CupOpeningEllipse_Left_P3,66.87320163736815,-73.54862524927243,0.0,,,,,,left_cupOpeningEllipsePoints
+point,Hip Measurements - Left Cup Opening Ellipse Points,3,CupOpeningEllipse_Left_P4,61.83988296163727,-93.33917105045082,0.0,,,,,,left_cupOpeningEllipsePoints
+point,Hip Measurements - Left Cup Opening Ellipse Points,4,CupOpeningEllipse_Left_P5,81.9666813242691,-96.79054580117838,0.0,,,,,,left_cupOpeningEllipsePoints
+point,Hip Measurements - Left Cup Opening Ellipse Points,5,CupOpeningEllipse_Left_P6,107.12679836263186,-80.45137475072755,0.0,,,,,,left_cupOpeningEllipsePoints
+point,Hip Measurements - Left Femoral Shaft Guide Line Proximal,0,FemoralShaftGuide_Left_Proximal_Start,27.0,-87.0,0.0,,,,,,left_shaftGuideProximal
+point,Hip Measurements - Left Femoral Shaft Guide Line Proximal,1,FemoralShaftGuide_Left_Proximal_End,127.0,-87.0,0.0,,,,,,left_shaftGuideProximal
+point,Hip Measurements - Left Femoral Shaft Guide Line Distal,0,FemoralShaftGuide_Left_Distal_Start,26.0,53.0,0.0,,,,,,left_shaftGuideDistal
+point,Hip Measurements - Left Femoral Shaft Guide Line Distal,1,FemoralShaftGuide_Left_Distal_End,128.0,53.0,0.0,,,,,,left_shaftGuideDistal
+point,Hip Measurements - Left Femoral Shaft Axis,0,FemoralShaftAxis_Left_Start,77.0,-737.0,0.0,,,,,,left_shaftAxis
+point,Hip Measurements - Left Femoral Shaft Axis,1,FemoralShaftAxis_Left_End,77.0,703.0,0.0,,,,,,left_shaftAxis
+point,Hip Measurements - Left Femoral Neck Guide Line Proximal,0,FemoralNeckGuide_Left_Proximal_Start,46.099999999999994,-121.3,0.0,,,,,,left_neckGuideProximal
+point,Hip Measurements - Left Femoral Neck Guide Line Proximal,1,FemoralNeckGuide_Left_Proximal_End,87.9,-148.7,0.0,,,,,,left_neckGuideProximal
+point,Hip Measurements - Left Femoral Neck Axis,0,FemoralNeckAxis_Left_Start,-36.6794796893934,-309.54022813929373,0.0,,,,,,left_neckAxis
+point,Hip Measurements - Left Femoral Neck Axis,1,FemoralNeckAxis_Left_End,160.67947968939342,-8.459771860706297,0.0,,,,,,left_neckAxis
+point,Hip Measurements - Left Implant Neck Guide Line Proximal,0,ImplantNeckGuide_Left_Proximal_Start,52.0,-130.0,0.0,,,,,,left_implantNeckGuideProximal
+point,Hip Measurements - Left Implant Neck Guide Line Proximal,1,ImplantNeckGuide_Left_Proximal_End,98.0,-110.0,0.0,,,,,,left_implantNeckGuideProximal
+point,Hip Measurements - Left Implant Neck Guide Line Distal,0,ImplantNeckGuide_Left_Distal_Start,64.0,-95.0,0.0,,,,,,left_implantNeckGuideDistal
+point,Hip Measurements - Left Implant Neck Guide Line Distal,1,ImplantNeckGuide_Left_Distal_End,110.0,-75.0,0.0,,,,,,left_implantNeckGuideDistal
+point,Hip Measurements - Left Implant Neck Axis,0,ImplantNeckAxis_Left_Start,141.770700054601,-322.0726101255823,0.0,,,,,,left_implantNeckAxis
+point,Hip Measurements - Left Implant Neck Axis,1,ImplantNeckAxis_Left_End,-1.7707000546010079,8.072610125582315,0.0,,,,,,left_implantNeckAxis
+point,Hip Measurements - Left Acetabular Offset Line A,0,AcetabularOffset_Left_LineA_Start,42.0,-105.0,0.0,,,,,,left_acetabularOffsetLineA
+point,Hip Measurements - Left Acetabular Offset Line A,1,AcetabularOffset_Left_LineA_End,42.0,-5.0,0.0,,,,,,left_acetabularOffsetLineA
+point,Hip Measurements - Left Acetabular Offset Line B,0,AcetabularOffset_Left_LineB_Start,100.0,-102.0,0.0,,,,,,left_acetabularOffsetLineB
+point,Hip Measurements - Left Acetabular Offset Line B,1,AcetabularOffset_Left_LineB_End,100.0,-2.0,0.0,,,,,,left_acetabularOffsetLineB
+point,Hip Measurements - Left Femoral Offset Line,0,FemoralOffset_Left_Start,130.0,-92.0,0.0,,,,,,left_femoralOffsetLine
+point,Hip Measurements - Left Femoral Offset Line,1,FemoralOffset_Left_End,130.0,23.0,0.0,,,,,,left_femoralOffsetLine
+point,Hip Measurements - Left Acetabular Inclination Angle Line,0,AcetabularInclinationAngle_Left_Start,40.0,-129.0,0.0,,,,,,left_acetabularInclinationLine
+point,Hip Measurements - Left Acetabular Inclination Angle Line,1,AcetabularInclinationAngle_Left_End,98.0,-157.0,0.0,,,,,,left_acetabularInclinationLine
+point,Hip Measurements - Left Post-Op Acetabular Offset Line A,0,PostOpAcetabularOffset_Left_LineA_Start,34.0,-109.0,0.0,,,,,,left_postOpAcetabularOffsetLineA
+point,Hip Measurements - Left Post-Op Acetabular Offset Line A,1,PostOpAcetabularOffset_Left_LineA_End,34.0,-9.0,0.0,,,,,,left_postOpAcetabularOffsetLineA
+point,Hip Measurements - Left Post-Op Acetabular Offset Line B,0,PostOpAcetabularOffset_Left_LineB_Start,92.0,-107.0,0.0,,,,,,left_postOpAcetabularOffsetLineB
+point,Hip Measurements - Left Post-Op Acetabular Offset Line B,1,PostOpAcetabularOffset_Left_LineB_End,92.0,-7.0,0.0,,,,,,left_postOpAcetabularOffsetLineB
+point,Hip Measurements - Left Post-Op Femoral Offset Line,0,PostOpFemoralOffset_Left_Start,125.0,-95.0,0.0,,,,,,left_postOpFemoralOffsetLine
+point,Hip Measurements - Left Post-Op Femoral Offset Line,1,PostOpFemoralOffset_Left_End,125.0,18.0,0.0,,,,,,left_postOpFemoralOffsetLine
+point,Hip Measurements - Left Stem Alignment Guide Line Proximal,0,StemAlignmentGuide_Left_Proximal_Start,53.0,-59.4,0.0,,,,,,left_implantAlignmentGuideProximal
+point,Hip Measurements - Left Stem Alignment Guide Line Proximal,1,StemAlignmentGuide_Left_Proximal_End,97.0,-64.6,0.0,,,,,,left_implantAlignmentGuideProximal
+point,Hip Measurements - Left Stem Alignment Guide Line Distal,0,StemAlignmentGuide_Left_Distal_Start,53.0,60.599999999999994,0.0,,,,,,left_implantAlignmentGuideDistal
+point,Hip Measurements - Left Stem Alignment Guide Line Distal,1,StemAlignmentGuide_Left_Distal_End,97.0,55.400000000000006,0.0,,,,,,left_implantAlignmentGuideDistal
+point,Hip Measurements - Left Stem Alignment Axis,0,StemAlignment_Left_Start,-9.50283229420721,-717.0239655663697,0.0,,,,,,left_implantAlignmentLine
+point,Hip Measurements - Left Stem Alignment Axis,1,StemAlignment_Left_End,159.50283229420722,713.0239655663697,0.0,,,,,,left_implantAlignmentLine
+point,Hip Measurements - Left Iliopectineal Line,0,IliopectinealLine_Left_1,34.0,-177.0,0.0,spline,30,,,,left_iliopectinealLine
+point,Hip Measurements - Left Iliopectineal Line,1,IliopectinealLine_Left_2,60.0,-145.0,0.0,spline,30,,,,left_iliopectinealLine
+point,Hip Measurements - Left Iliopectineal Line,2,IliopectinealLine_Left_3,85.0,-112.0,0.0,spline,30,,,,left_iliopectinealLine
+point,Hip Measurements - Left Iliopectineal Line,3,IliopectinealLine_Left_4,112.0,-79.0,0.0,spline,30,,,,left_iliopectinealLine
+point,Hip Measurements - Left Ilioischial Line,0,IlioischialLine_Left_1,64.0,-165.0,0.0,spline,30,,,,left_ilioischialLine
+point,Hip Measurements - Left Ilioischial Line,1,IlioischialLine_Left_2,76.0,-115.0,0.0,spline,30,,,,left_ilioischialLine
+point,Hip Measurements - Left Ilioischial Line,2,IlioischialLine_Left_3,86.0,-65.0,0.0,spline,30,,,,left_ilioischialLine
+point,Hip Measurements - Left Ilioischial Line,3,IlioischialLine_Left_4,94.0,-9.0,0.0,spline,30,,,,left_ilioischialLine
+point,Hip Measurements - Left Shenton Line,0,ShentonLine_Left_1,28.0,-103.0,0.0,spline,30,,,,left_shentonLine
+point,Hip Measurements - Left Shenton Line,1,ShentonLine_Left_2,55.0,-115.0,0.0,spline,30,,,,left_shentonLine
+point,Hip Measurements - Left Shenton Line,2,ShentonLine_Left_3,82.0,-113.0,0.0,spline,30,,,,left_shentonLine
+point,Hip Measurements - Left Shenton Line,3,ShentonLine_Left_4,108.0,-99.0,0.0,spline,30,,,,left_shentonLine
+point,Hip Measurements - Left Acetabular Roof (Sourcil),0,AcetabularRoofSourcil_Left_1,40.0,-133.0,0.0,spline,30,,,,left_acetabularRoofSourcil
+point,Hip Measurements - Left Acetabular Roof (Sourcil),1,AcetabularRoofSourcil_Left_2,64.0,-151.0,0.0,spline,30,,,,left_acetabularRoofSourcil
+point,Hip Measurements - Left Acetabular Roof (Sourcil),2,AcetabularRoofSourcil_Left_3,88.0,-153.0,0.0,spline,30,,,,left_acetabularRoofSourcil
+point,Hip Measurements - Left Acetabular Roof (Sourcil),3,AcetabularRoofSourcil_Left_4,110.0,-139.0,0.0,spline,30,,,,left_acetabularRoofSourcil
+point,Hip Measurements - Left Linea Terminalis,0,LineaTerminalis_Left_1,24.0,-87.0,0.0,spline,30,,,,left_lineaTerminalis
+point,Hip Measurements - Left Linea Terminalis,1,LineaTerminalis_Left_2,53.0,-59.0,0.0,spline,30,,,,left_lineaTerminalis
+point,Hip Measurements - Left Linea Terminalis,2,LineaTerminalis_Left_3,84.0,-37.0,0.0,spline,30,,,,left_lineaTerminalis
+point,Hip Measurements - Left Linea Terminalis,3,LineaTerminalis_Left_4,116.0,-15.0,0.0,spline,30,,,,left_lineaTerminalis
+point,Hip Measurements - Left Femoral Shaft Contour 1,0,FemoralShaft_MedialOuterCortex_1,30.0,-51.0,0.0,spline,30,,,,left_femoralShaftContour1; femoral_shaft_contour_class=medialOuter (Medial Outer Cortex)
+point,Hip Measurements - Left Femoral Shaft Contour 1,1,FemoralShaft_MedialOuterCortex_2,29.0,-16.0,0.0,spline,30,,,,left_femoralShaftContour1; femoral_shaft_contour_class=medialOuter (Medial Outer Cortex)
+point,Hip Measurements - Left Femoral Shaft Contour 1,2,FemoralShaft_MedialOuterCortex_3,28.0,28.0,0.0,spline,30,,,,left_femoralShaftContour1; femoral_shaft_contour_class=medialOuter (Medial Outer Cortex)
+point,Hip Measurements - Left Femoral Shaft Contour 1,3,FemoralShaft_MedialOuterCortex_4,27.0,71.0,0.0,spline,30,,,,left_femoralShaftContour1; femoral_shaft_contour_class=medialOuter (Medial Outer Cortex)
+point,Hip Measurements - Left Femoral Shaft Contour 2,0,FemoralShaft_MedialInnerCortex_1,56.0,-52.0,0.0,spline,30,,,,left_femoralShaftContour2; femoral_shaft_contour_class=medialInner (Medial Inner Cortex)
+point,Hip Measurements - Left Femoral Shaft Contour 2,1,FemoralShaft_MedialInnerCortex_2,56.0,-17.0,0.0,spline,30,,,,left_femoralShaftContour2; femoral_shaft_contour_class=medialInner (Medial Inner Cortex)
+point,Hip Measurements - Left Femoral Shaft Contour 2,2,FemoralShaft_MedialInnerCortex_3,57.0,26.0,0.0,spline,30,,,,left_femoralShaftContour2; femoral_shaft_contour_class=medialInner (Medial Inner Cortex)
+point,Hip Measurements - Left Femoral Shaft Contour 2,3,FemoralShaft_MedialInnerCortex_4,58.0,69.0,0.0,spline,30,,,,left_femoralShaftContour2; femoral_shaft_contour_class=medialInner (Medial Inner Cortex)
+point,Hip Measurements - Left Femoral Shaft Contour 3,0,FemoralShaft_LateralInnerCortex_1,89.0,-53.0,0.0,spline,30,,,,left_femoralShaftContour3; femoral_shaft_contour_class=lateralInner (Lateral Inner Cortex)
+point,Hip Measurements - Left Femoral Shaft Contour 3,1,FemoralShaft_LateralInnerCortex_2,91.0,-18.0,0.0,spline,30,,,,left_femoralShaftContour3; femoral_shaft_contour_class=lateralInner (Lateral Inner Cortex)
+point,Hip Measurements - Left Femoral Shaft Contour 3,2,FemoralShaft_LateralInnerCortex_3,93.0,25.0,0.0,spline,30,,,,left_femoralShaftContour3; femoral_shaft_contour_class=lateralInner (Lateral Inner Cortex)
+point,Hip Measurements - Left Femoral Shaft Contour 3,3,FemoralShaft_LateralInnerCortex_4,95.0,68.0,0.0,spline,30,,,,left_femoralShaftContour3; femoral_shaft_contour_class=lateralInner (Lateral Inner Cortex)
+point,Hip Measurements - Left Femoral Shaft Contour 4,0,FemoralShaft_LateralOuterCortex_1,116.0,-52.0,0.0,spline,30,,,,left_femoralShaftContour4; femoral_shaft_contour_class=lateralOuter (Lateral Outer Cortex)
+point,Hip Measurements - Left Femoral Shaft Contour 4,1,FemoralShaft_LateralOuterCortex_2,118.0,-17.0,0.0,spline,30,,,,left_femoralShaftContour4; femoral_shaft_contour_class=lateralOuter (Lateral Outer Cortex)
+point,Hip Measurements - Left Femoral Shaft Contour 4,2,FemoralShaft_LateralOuterCortex_3,120.0,27.0,0.0,spline,30,,,,left_femoralShaftContour4; femoral_shaft_contour_class=lateralOuter (Lateral Outer Cortex)
+point,Hip Measurements - Left Femoral Shaft Contour 4,3,FemoralShaft_LateralOuterCortex_4,122.0,71.0,0.0,spline,30,,,,left_femoralShaftContour4; femoral_shaft_contour_class=lateralOuter (Lateral Outer Cortex)
+point,Hip Measurements - Right Femoral Head Extrusion Index Medial Line,0,FemoralHeadExtrusionIndex_Right_Medial_Start,-123.0,-207.0,0.0,,,,,,right_extrusionIndexMedialLine
+point,Hip Measurements - Right Femoral Head Extrusion Index Medial Line,1,FemoralHeadExtrusionIndex_Right_Medial_End,-123.0,-107.0,0.0,,,,,,right_extrusionIndexMedialLine
+point,Hip Measurements - Right Femoral Head Extrusion Index Middle Line,0,FemoralHeadExtrusionIndex_Right_Middle_Start,-153.0,-207.0,0.0,,,,,,right_extrusionIndexMiddleLine
+point,Hip Measurements - Right Femoral Head Extrusion Index Middle Line,1,FemoralHeadExtrusionIndex_Right_Middle_End,-153.0,-107.0,0.0,,,,,,right_extrusionIndexMiddleLine
+point,Hip Measurements - Right Femoral Head Extrusion Index Lateral Line,0,FemoralHeadExtrusionIndex_Right_Lateral_Start,-188.0,-207.0,0.0,,,,,,right_extrusionIndexLateralLine
+point,Hip Measurements - Right Femoral Head Extrusion Index Lateral Line,1,FemoralHeadExtrusionIndex_Right_Lateral_End,-188.0,-107.0,0.0,,,,,,right_extrusionIndexLateralLine
+point,Hip Measurements - Right Femur Shaft Morphology Lesser Trochanter Points,0,FemurShaftMorphology_Right_LT_Proximal,-166.0,-29.0,0.0,,,,,,right_shaftMorphologyLTPoints
+point,Hip Measurements - Right Femur Shaft Morphology Lesser Trochanter Points,1,FemurShaftMorphology_Right_LT_Distal,-170.0,-9.0,0.0,,,,,,right_shaftMorphologyLTPoints
+point,Hip Measurements - Right Femur Shaft Morphology LT Midline,0,FemurShaftMorphology_Right_Midline_A,-200.0,-19.0,0.0,,,,,,right_shaftMorphologyMidline
+point,Hip Measurements - Right Femur Shaft Morphology LT Midline,1,FemurShaftMorphology_Right_Midline_B,-136.0,-19.0,0.0,,,,,,right_shaftMorphologyMidline
+point,Hip Measurements - Right Femur Shaft Morphology Control Points,0,FemurShaftMorphology_Right_2cmAbove_A,-188.0,-39.0,0.0,,,,,,right_shaftMorphologyPoints
+point,Hip Measurements - Right Femur Shaft Morphology Control Points,1,FemurShaftMorphology_Right_2cmAbove_B,-148.0,-39.0,0.0,,,,,,right_shaftMorphologyPoints
+point,Hip Measurements - Right Femur Shaft Morphology Control Points,2,FemurShaftMorphology_Right_3cmBelow_A,-188.0,11.0,0.0,,,,,,right_shaftMorphologyPoints
+point,Hip Measurements - Right Femur Shaft Morphology Control Points,3,FemurShaftMorphology_Right_3cmBelow_B,-148.0,11.0,0.0,,,,,,right_shaftMorphologyPoints
+point,Hip Measurements - Right Femur Shaft Morphology Control Points,4,FemurShaftMorphology_Right_10cmBelow_OuterA,-200.0,81.0,0.0,,,,,,right_shaftMorphologyPoints
+point,Hip Measurements - Right Femur Shaft Morphology Control Points,5,FemurShaftMorphology_Right_10cmBelow_InnerA,-180.0,81.0,0.0,,,,,,right_shaftMorphologyPoints
+point,Hip Measurements - Right Femur Shaft Morphology Control Points,6,FemurShaftMorphology_Right_10cmBelow_InnerB,-156.0,81.0,0.0,,,,,,right_shaftMorphologyPoints
+point,Hip Measurements - Right Femur Shaft Morphology Control Points,7,FemurShaftMorphology_Right_10cmBelow_OuterB,-136.0,81.0,0.0,,,,,,right_shaftMorphologyPoints
+point,Hip Measurements - Right Femur Shaft Morphology Control Points,8,FemurShaftMorphology_Right_11cmBelow_A,-188.0,91.0,0.0,,,,,,right_shaftMorphologyPoints
+point,Hip Measurements - Right Femur Shaft Morphology Control Points,9,FemurShaftMorphology_Right_11cmBelow_B,-148.0,91.0,0.0,,,,,,right_shaftMorphologyPoints
+point,Hip Measurements - Right Femur Shaft Morphology Guide Line A,0,FemurShaftMorphology_Right_GuideA_Start,-191.42857142857142,-19.0,0.0,,,,,,right_shaftMorphologyGuideLineA
+point,Hip Measurements - Right Femur Shaft Morphology Guide Line A,1,FemurShaftMorphology_Right_GuideA_End,-180.0,81.0,0.0,,,,,,right_shaftMorphologyGuideLineA
+point,Hip Measurements - Right Femur Shaft Morphology Guide Line B,0,FemurShaftMorphology_Right_GuideB_Start,-144.57142857142858,-19.0,0.0,,,,,,right_shaftMorphologyGuideLineB
+point,Hip Measurements - Right Femur Shaft Morphology Guide Line B,1,FemurShaftMorphology_Right_GuideB_End,-156.0,81.0,0.0,,,,,,right_shaftMorphologyGuideLineB
+point,Hip Measurements - Right Acetabular Index (Tönnis) Line,0,AcetabularIndexTonnis_Right_Base,-198.0,-77.0,0.0,,,,,,right_tonnisAngleLine
+point,Hip Measurements - Right Acetabular Index (Tönnis) Line,1,AcetabularIndexTonnis_Right_Roof,-143.0,-97.0,0.0,,,,,,right_tonnisAngleLine
+point,Hip Measurements - Right Acetabular Index (Tönnis) Reference Arm,0,AcetabularIndexTonnis_Right_Reference_Start,-198.0,-77.0,0.0,,,,,,right_tonnisAngleReferenceArm
+point,Hip Measurements - Right Acetabular Index (Tönnis) Reference Arm,1,AcetabularIndexTonnis_Right_Reference_End,-256.5234995535981,-77.0,0.0,,,,,,right_tonnisAngleReferenceArm
+point,Hip Measurements - Right Sharp Angle Line,0,SharpAngle_Right_Base,-198.0,-37.0,0.0,,,,,,right_sharpAngleLine
+point,Hip Measurements - Right Sharp Angle Line,1,SharpAngle_Right_Lateral,-148.0,-65.0,0.0,,,,,,right_sharpAngleLine
+point,Hip Measurements - Right Sharp Angle Reference Arm,0,SharpAngle_Right_Reference_Start,-198.0,-37.0,0.0,,,,,,right_sharpAngleReferenceArm
+point,Hip Measurements - Right Sharp Angle Reference Arm,1,SharpAngle_Right_Reference_End,-255.3061951275776,-37.0,0.0,,,,,,right_sharpAngleReferenceArm
+point,Hip Measurements - Right LCE Angle Point,0,LCEAngle_Right_Point,-153.0,-192.0,0.0,,,,,,right_lceAnglePoint
+point,Hip Measurements - Right LCE Angle Reference Arm,0,LCEAngle_Right_Center,-133.0,-167.0,0.0,,,,,,right_lceAngleVisual
+point,Hip Measurements - Right LCE Angle Reference Arm,1,LCEAngle_Right_Reference_End,-133.0,-199.01562118716424,0.0,,,,,,right_lceAngleVisual
+point,Hip Measurements - Right LCE Angle Radial Arm,0,LCEAngle_Right_Center,-133.0,-167.0,0.0,,,,,,right_lceAngleRadialArm
+point,Hip Measurements - Right LCE Angle Radial Arm,1,LCEAngle_Right_Point,-153.0,-192.0,0.0,,,,,,right_lceAngleRadialArm
+point,Hip Measurements - Right Femur Head Points,0,FemurHead_Right_P1,-163.0,-167.0,0.0,,,,,,right_femurHeadPoints
+point,Hip Measurements - Right Femur Head Points,1,FemurHead_Right_P2,-133.0,-137.0,0.0,,,,,,right_femurHeadPoints
+point,Hip Measurements - Right Femur Head Points,2,FemurHead_Right_P3,-107.01923788646684,-152.0,0.0,,,,,,right_femurHeadPoints
+point,Hip Measurements - Right Femur Head Center,0,FemurHead_Right_Center,-133.0,-167.0,0.0,,,,,,right_femurHeadCenter
+point,Hip Measurements - Right Implant Head Points,0,ImplantHead_Right_P1,-146.0,-165.0,0.0,,,,,,right_implantHeadPoints
+point,Hip Measurements - Right Implant Head Points,1,ImplantHead_Right_P2,-128.0,-147.0,0.0,,,,,,right_implantHeadPoints
+point,Hip Measurements - Right Implant Head Points,2,ImplantHead_Right_P3,-112.4115427318801,-156.0,0.0,,,,,,right_implantHeadPoints
+point,Hip Measurements - Right Implant Head Center,0,ImplantHead_Right_Center,-128.0,-165.0,0.0,,,,,,right_implantHeadCenter
+point,Hip Measurements - Right Cup Opening Ellipse Points,0,CupOpeningEllipse_Right_P1,-140.66407844596478,-76.4934221912518,0.0,,,,,,right_cupOpeningEllipsePoints
+point,Hip Measurements - Right Cup Opening Ellipse Points,1,CupOpeningEllipse_Right_P2,-162.18437056957873,-65.27392902469926,0.0,,,,,,right_cupOpeningEllipsePoints
+point,Hip Measurements - Right Cup Opening Ellipse Points,2,CupOpeningEllipse_Right_P3,-194.52029212361396,-75.78050683344746,0.0,,,,,,right_cupOpeningEllipsePoints
+point,Hip Measurements - Right Cup Opening Ellipse Points,3,CupOpeningEllipse_Right_P4,-205.33592155403522,-97.5065778087482,0.0,,,,,,right_cupOpeningEllipsePoints
+point,Hip Measurements - Right Cup Opening Ellipse Points,4,CupOpeningEllipse_Right_P5,-183.81562943042127,-108.72607097530074,0.0,,,,,,right_cupOpeningEllipsePoints
+point,Hip Measurements - Right Cup Opening Ellipse Points,5,CupOpeningEllipse_Right_P6,-151.47970787638604,-98.21949316655254,0.0,,,,,,right_cupOpeningEllipsePoints
+point,Hip Measurements - Right Femoral Shaft Guide Line Proximal,0,FemoralShaftGuide_Right_Proximal_Start,-213.0,-82.0,0.0,,,,,,right_shaftGuideProximal
+point,Hip Measurements - Right Femoral Shaft Guide Line Proximal,1,FemoralShaftGuide_Right_Proximal_End,-123.0,-82.0,0.0,,,,,,right_shaftGuideProximal
+point,Hip Measurements - Right Femoral Shaft Guide Line Distal,0,FemoralShaftGuide_Right_Distal_Start,-216.0,48.0,0.0,,,,,,right_shaftGuideDistal
+point,Hip Measurements - Right Femoral Shaft Guide Line Distal,1,FemoralShaftGuide_Right_Distal_End,-120.0,48.0,0.0,,,,,,right_shaftGuideDistal
+point,Hip Measurements - Right Femoral Shaft Axis,0,FemoralShaftAxis_Right_Start,-168.0,-737.0,0.0,,,,,,right_shaftAxis
+point,Hip Measurements - Right Femoral Shaft Axis,1,FemoralShaftAxis_Right_End,-168.0,703.0,0.0,,,,,,right_shaftAxis
+point,Hip Measurements - Right Femoral Neck Guide Line Proximal,0,FemoralNeckGuide_Right_Proximal_Start,-173.0,-157.0,0.0,,,,,,right_neckGuideProximal
+point,Hip Measurements - Right Femoral Neck Guide Line Proximal,1,FemoralNeckGuide_Right_Proximal_End,-133.0,-127.0,0.0,,,,,,right_neckGuideProximal
+point,Hip Measurements - Right Femoral Neck Guide Line Distal,0,FemoralNeckGuide_Right_Distal_Start,-160.0,-127.0,0.0,,,,,,right_neckGuideDistal
+point,Hip Measurements - Right Femoral Neck Guide Line Distal,1,FemoralNeckGuide_Right_Distal_End,-120.0,-97.0,0.0,,,,,,right_neckGuideDistal
+point,Hip Measurements - Right Femoral Neck Axis,0,FemoralNeckAxis_Right_Start,-38.5,-271.0,0.0,,,,,,right_neckAxis
+point,Hip Measurements - Right Femoral Neck Axis,1,FemoralNeckAxis_Right_End,-254.5,17.0,0.0,,,,,,right_neckAxis
+point,Hip Measurements - Right Implant Neck Guide Line Proximal,0,ImplantNeckGuide_Right_Proximal_Start,-170.0,-163.0,0.0,,,,,,right_implantNeckGuideProximal
+point,Hip Measurements - Right Implant Neck Guide Line Proximal,1,ImplantNeckGuide_Right_Proximal_End,-126.0,-141.0,0.0,,,,,,right_implantNeckGuideProximal
+point,Hip Measurements - Right Implant Neck Axis,0,ImplantNeckAxis_Right_Start,-67.50155281000757,-312.99689437998484,0.0,,,,,,right_implantNeckAxis
+point,Hip Measurements - Right Implant Neck Axis,1,ImplantNeckAxis_Right_End,-228.49844718999242,8.996894379984866,0.0,,,,,,right_implantNeckAxis
+point,Hip Measurements - Right Acetabular Offset Line A,0,AcetabularOffset_Right_LineA_Start,-218.0,-107.0,0.0,,,,,,right_acetabularOffsetLineA
+point,Hip Measurements - Right Acetabular Offset Line A,1,AcetabularOffset_Right_LineA_End,-218.0,-7.0,0.0,,,,,,right_acetabularOffsetLineA
+point,Hip Measurements - Right Acetabular Offset Line B,0,AcetabularOffset_Right_LineB_Start,-153.0,-102.0,0.0,,,,,,right_acetabularOffsetLineB
+point,Hip Measurements - Right Acetabular Offset Line B,1,AcetabularOffset_Right_LineB_End,-153.0,-2.0,0.0,,,,,,right_acetabularOffsetLineB
+point,Hip Measurements - Right Femoral Offset Line,0,FemoralOffset_Right_Start,-108.0,-92.0,0.0,,,,,,right_femoralOffsetLine
+point,Hip Measurements - Right Femoral Offset Line,1,FemoralOffset_Right_End,-108.0,13.0,0.0,,,,,,right_femoralOffsetLine
+point,Hip Measurements - Right Acetabular Inclination Angle Line,0,AcetabularInclinationAngle_Right_Start,-213.0,-117.0,0.0,,,,,,right_acetabularInclinationLine
+point,Hip Measurements - Right Acetabular Inclination Angle Line,1,AcetabularInclinationAngle_Right_End,-158.0,-152.0,0.0,,,,,,right_acetabularInclinationLine
+point,Hip Measurements - Right Post-Op Acetabular Offset Line A,0,PostOpAcetabularOffset_Right_LineA_Start,-228.0,-109.0,0.0,,,,,,right_postOpAcetabularOffsetLineA
+point,Hip Measurements - Right Post-Op Acetabular Offset Line A,1,PostOpAcetabularOffset_Right_LineA_End,-228.0,-9.0,0.0,,,,,,right_postOpAcetabularOffsetLineA
+point,Hip Measurements - Right Post-Op Acetabular Offset Line B,0,PostOpAcetabularOffset_Right_LineB_Start,-168.0,-107.0,0.0,,,,,,right_postOpAcetabularOffsetLineB
+point,Hip Measurements - Right Post-Op Acetabular Offset Line B,1,PostOpAcetabularOffset_Right_LineB_End,-168.0,-7.0,0.0,,,,,,right_postOpAcetabularOffsetLineB
+point,Hip Measurements - Right Post-Op Femoral Offset Line,0,PostOpFemoralOffset_Right_Start,-116.0,-97.0,0.0,,,,,,right_postOpFemoralOffsetLine
+point,Hip Measurements - Right Post-Op Femoral Offset Line,1,PostOpFemoralOffset_Right_End,-116.0,11.0,0.0,,,,,,right_postOpFemoralOffsetLine
+point,Hip Measurements - Right Stem Alignment Guide Line Proximal,0,StemAlignmentGuide_Right_Proximal_Start,-188.0,-59.2,0.0,,,,,,right_implantAlignmentGuideProximal
+point,Hip Measurements - Right Stem Alignment Guide Line Proximal,1,StemAlignmentGuide_Right_Proximal_End,-144.0,-54.8,0.0,,,,,,right_implantAlignmentGuideProximal
+point,Hip Measurements - Right Stem Alignment Guide Line Distal,0,StemAlignmentGuide_Right_Distal_Start,-186.0,60.8,0.0,,,,,,right_implantAlignmentGuideDistal
+point,Hip Measurements - Right Stem Alignment Guide Line Distal,1,StemAlignmentGuide_Right_Distal_End,-142.0,65.2,0.0,,,,,,right_implantAlignmentGuideDistal
+point,Hip Measurements - Right Stem Alignment Axis,0,StemAlignment_Right_Start,-93.35732230488068,-713.4267769511922,0.0,,,,,,right_implantAlignmentLine
+point,Hip Measurements - Right Stem Alignment Axis,1,StemAlignment_Right_End,-236.64267769511932,719.4267769511922,0.0,,,,,,right_implantAlignmentLine
+point,Hip Measurements - Right Iliopectineal Line,0,IliopectinealLine_Right_1,-218.0,-182.0,0.0,spline,30,,,,right_iliopectinealLine
+point,Hip Measurements - Right Iliopectineal Line,1,IliopectinealLine_Right_2,-194.0,-153.0,0.0,spline,30,,,,right_iliopectinealLine
+point,Hip Measurements - Right Iliopectineal Line,2,IliopectinealLine_Right_3,-171.0,-125.0,0.0,spline,30,,,,right_iliopectinealLine
+point,Hip Measurements - Right Iliopectineal Line,3,IliopectinealLine_Right_4,-144.0,-99.0,0.0,spline,30,,,,right_iliopectinealLine
+point,Hip Measurements - Right Ilioischial Line,0,IlioischialLine_Right_1,-152.0,-167.0,0.0,spline,30,,,,right_ilioischialLine
+point,Hip Measurements - Right Ilioischial Line,1,IlioischialLine_Right_2,-166.0,-117.0,0.0,spline,30,,,,right_ilioischialLine
+point,Hip Measurements - Right Ilioischial Line,2,IlioischialLine_Right_3,-172.0,-67.0,0.0,spline,30,,,,right_ilioischialLine
+point,Hip Measurements - Right Ilioischial Line,3,IlioischialLine_Right_4,-178.0,-12.0,0.0,spline,30,,,,right_ilioischialLine
+point,Hip Measurements - Right Shenton Line,0,ShentonLine_Right_1,-203.0,-105.0,0.0,spline,30,,,,right_shentonLine
+point,Hip Measurements - Right Shenton Line,1,ShentonLine_Right_2,-180.0,-117.0,0.0,spline,30,,,,right_shentonLine
+point,Hip Measurements - Right Shenton Line,2,ShentonLine_Right_3,-153.0,-119.0,0.0,spline,30,,,,right_shentonLine
+point,Hip Measurements - Right Shenton Line,3,ShentonLine_Right_4,-126.0,-109.0,0.0,spline,30,,,,right_shentonLine
+point,Hip Measurements - Right Acetabular Roof (Sourcil),0,AcetabularRoofSourcil_Right_1,-206.0,-131.0,0.0,spline,30,,,,right_acetabularRoofSourcil
+point,Hip Measurements - Right Acetabular Roof (Sourcil),1,AcetabularRoofSourcil_Right_2,-186.0,-149.0,0.0,spline,30,,,,right_acetabularRoofSourcil
+point,Hip Measurements - Right Acetabular Roof (Sourcil),2,AcetabularRoofSourcil_Right_3,-163.0,-155.0,0.0,spline,30,,,,right_acetabularRoofSourcil
+point,Hip Measurements - Right Acetabular Roof (Sourcil),3,AcetabularRoofSourcil_Right_4,-142.0,-145.0,0.0,spline,30,,,,right_acetabularRoofSourcil
+point,Hip Measurements - Right Linea Terminalis,0,LineaTerminalis_Right_1,-240.0,-89.0,0.0,spline,30,,,,right_lineaTerminalis
+point,Hip Measurements - Right Linea Terminalis,1,LineaTerminalis_Right_2,-214.0,-63.0,0.0,spline,30,,,,right_lineaTerminalis
+point,Hip Measurements - Right Linea Terminalis,2,LineaTerminalis_Right_3,-186.0,-41.0,0.0,spline,30,,,,right_lineaTerminalis
+point,Hip Measurements - Right Linea Terminalis,3,LineaTerminalis_Right_4,-156.0,-19.0,0.0,spline,30,,,,right_lineaTerminalis
+point,Hip Measurements - Right Femoral Shaft Contour 1,0,FemoralShaft_LateralOuterCortex_1,-206.0,-53.0,0.0,spline,30,,,,right_femoralShaftContour1; femoral_shaft_contour_class=lateralOuter (Lateral Outer Cortex)
+point,Hip Measurements - Right Femoral Shaft Contour 1,1,FemoralShaft_LateralOuterCortex_2,-208.0,-19.0,0.0,spline,30,,,,right_femoralShaftContour1; femoral_shaft_contour_class=lateralOuter (Lateral Outer Cortex)
+point,Hip Measurements - Right Femoral Shaft Contour 1,2,FemoralShaft_LateralOuterCortex_3,-210.0,25.0,0.0,spline,30,,,,right_femoralShaftContour1; femoral_shaft_contour_class=lateralOuter (Lateral Outer Cortex)
+point,Hip Measurements - Right Femoral Shaft Contour 1,3,FemoralShaft_LateralOuterCortex_4,-212.0,69.0,0.0,spline,30,,,,right_femoralShaftContour1; femoral_shaft_contour_class=lateralOuter (Lateral Outer Cortex)
+point,Hip Measurements - Right Femoral Shaft Contour 2,0,FemoralShaft_LateralInnerCortex_1,-182.0,-52.0,0.0,spline,30,,,,right_femoralShaftContour2; femoral_shaft_contour_class=lateralInner (Lateral Inner Cortex)
+point,Hip Measurements - Right Femoral Shaft Contour 2,1,FemoralShaft_LateralInnerCortex_2,-184.0,-18.0,0.0,spline,30,,,,right_femoralShaftContour2; femoral_shaft_contour_class=lateralInner (Lateral Inner Cortex)
+point,Hip Measurements - Right Femoral Shaft Contour 2,2,FemoralShaft_LateralInnerCortex_3,-186.0,25.0,0.0,spline,30,,,,right_femoralShaftContour2; femoral_shaft_contour_class=lateralInner (Lateral Inner Cortex)
+point,Hip Measurements - Right Femoral Shaft Contour 2,3,FemoralShaft_LateralInnerCortex_4,-188.0,68.0,0.0,spline,30,,,,right_femoralShaftContour2; femoral_shaft_contour_class=lateralInner (Lateral Inner Cortex)
+point,Hip Measurements - Right Femoral Shaft Contour 3,0,FemoralShaft_MedialInnerCortex_1,-149.0,-51.0,0.0,spline,30,,,,right_femoralShaftContour3; femoral_shaft_contour_class=medialInner (Medial Inner Cortex)
+point,Hip Measurements - Right Femoral Shaft Contour 3,1,FemoralShaft_MedialInnerCortex_2,-149.0,-17.0,0.0,spline,30,,,,right_femoralShaftContour3; femoral_shaft_contour_class=medialInner (Medial Inner Cortex)
+point,Hip Measurements - Right Femoral Shaft Contour 3,2,FemoralShaft_MedialInnerCortex_3,-150.0,27.0,0.0,spline,30,,,,right_femoralShaftContour3; femoral_shaft_contour_class=medialInner (Medial Inner Cortex)
+point,Hip Measurements - Right Femoral Shaft Contour 3,3,FemoralShaft_MedialInnerCortex_4,-151.0,69.0,0.0,spline,30,,,,right_femoralShaftContour3; femoral_shaft_contour_class=medialInner (Medial Inner Cortex)
+point,Hip Measurements - Right Femoral Shaft Contour 4,0,FemoralShaft_MedialOuterCortex_1,-122.0,-52.0,0.0,spline,30,,,,right_femoralShaftContour4; femoral_shaft_contour_class=medialOuter (Medial Outer Cortex)
+point,Hip Measurements - Right Femoral Shaft Contour 4,1,FemoralShaft_MedialOuterCortex_2,-121.0,-17.0,0.0,spline,30,,,,right_femoralShaftContour4; femoral_shaft_contour_class=medialOuter (Medial Outer Cortex)
+point,Hip Measurements - Right Femoral Shaft Contour 4,2,FemoralShaft_MedialOuterCortex_3,-120.0,28.0,0.0,spline,30,,,,right_femoralShaftContour4; femoral_shaft_contour_class=medialOuter (Medial Outer Cortex)
+point,Hip Measurements - Right Femoral Shaft Contour 4,3,FemoralShaft_MedialOuterCortex_4,-119.0,70.0,0.0,spline,30,,,,right_femoralShaftContour4; femoral_shaft_contour_class=medialOuter (Medial Outer Cortex)
+derived_point,CalibrationBall_Center,0,CalibrationBall_Center,-48.0,-347.0,0.0,,,,,,
+derived_point,Left_FemoralShaftAxis,0,FemoralShaftAxis_Left_Start,77.0,-737.0,0.0,,,,,,
+derived_point,Left_FemoralShaftAxis,1,FemoralShaftAxis_Left_End,77.0,703.0,0.0,,,,,,
+derived_point,Left_FemoralShaftAxis_Origin,0,FemoralShaftAxis_Left_Origin,77.0,-17.0,0.0,,,,,,
+derived_point,Left_FemoralNeckAxis,0,FemoralNeckAxis_Left_Start,-36.6794796893934,-309.54022813929373,0.0,,,,,,
+derived_point,Left_FemoralNeckAxis,1,FemoralNeckAxis_Left_End,160.67947968939342,-8.459771860706297,0.0,,,,,,
+derived_point,Left_FemoralNeckAxis_Origin,0,FemoralNeckAxis_Left_Origin,62.0,-159.0,0.0,,,,,,
+derived_point,Left_ImplantNeckAxis,0,ImplantNeckAxis_Left_Start,141.770700054601,-322.0726101255823,0.0,,,,,,
+derived_point,Left_ImplantNeckAxis,1,ImplantNeckAxis_Left_End,-1.7707000546010079,8.072610125582315,0.0,,,,,,
+derived_point,Left_ImplantNeckAxis_Origin,0,ImplantNeckAxis_Left_Origin,70.0,-157.0,0.0,,,,,,
+derived_point,Left_StemAlignmentAxis,0,StemAlignment_Left_Start,-9.50283229420721,-717.0239655663697,0.0,,,,,,
+derived_point,Left_StemAlignmentAxis,1,StemAlignment_Left_End,159.50283229420722,713.0239655663697,0.0,,,,,,
+derived_point,Left_StemAlignmentAxis_Origin,0,StemAlignment_Left_Origin,75.0,-2.0,0.0,,,,,,
+derived_point,Left_CupOpeningEllipse_Center,0,CupOpeningEllipse_Left_Center,87.0,-77.0,0.0,,,,,,
+derived_point,Left_CupOpeningEllipse_MajorAxis,0,CupOpeningEllipse_Left_MajorAxis_Start,112.16011703836273,-60.66082894954917,0.0,,,,,,
+derived_point,Left_CupOpeningEllipse_MajorAxis,1,CupOpeningEllipse_Left_MajorAxis_End,61.83988296163727,-93.33917105045083,0.0,,,,,,
+derived_point,Left_CupOpeningEllipse_MinorAxis,0,CupOpeningEllipse_Left_MinorAxis_Start,95.71422456024044,-90.41872908712678,0.0,,,,,,
+derived_point,Left_CupOpeningEllipse_MinorAxis,1,CupOpeningEllipse_Left_MinorAxis_End,78.28577543975956,-63.58127091287322,0.0,,,,,,
+derived_point,Right_FemoralShaftAxis,0,FemoralShaftAxis_Right_Start,-168.0,-737.0,0.0,,,,,,
+derived_point,Right_FemoralShaftAxis,1,FemoralShaftAxis_Right_End,-168.0,703.0,0.0,,,,,,
+derived_point,Right_FemoralShaftAxis_Origin,0,FemoralShaftAxis_Right_Origin,-168.0,-17.0,0.0,,,,,,
+derived_point,Right_FemoralNeckAxis,0,FemoralNeckAxis_Right_Start,-38.5,-271.0,0.0,,,,,,
+derived_point,Right_FemoralNeckAxis,1,FemoralNeckAxis_Right_End,-254.5,17.0,0.0,,,,,,
+derived_point,Right_FemoralNeckAxis_Origin,0,FemoralNeckAxis_Right_Origin,-146.5,-127.0,0.0,,,,,,
+derived_point,Right_ImplantNeckAxis,0,ImplantNeckAxis_Right_Start,-67.50155281000757,-312.99689437998484,0.0,,,,,,
+derived_point,Right_ImplantNeckAxis,1,ImplantNeckAxis_Right_End,-228.49844718999242,8.996894379984866,0.0,,,,,,
+derived_point,Right_ImplantNeckAxis_Origin,0,ImplantNeckAxis_Right_Origin,-148.0,-152.0,0.0,,,,,,
+derived_point,Right_StemAlignmentAxis,0,StemAlignment_Right_Start,-93.35732230488068,-713.4267769511922,0.0,,,,,,
+derived_point,Right_StemAlignmentAxis,1,StemAlignment_Right_End,-236.64267769511932,719.4267769511922,0.0,,,,,,
+derived_point,Right_StemAlignmentAxis_Origin,0,StemAlignment_Right_Origin,-165.0,3.0,0.0,,,,,,
+derived_point,Right_CupOpeningEllipse_Center,0,CupOpeningEllipse_Right_Center,-173.0,-87.0,0.0,,,,,,
+derived_point,Right_CupOpeningEllipse_MajorAxis,0,CupOpeningEllipse_Right_MajorAxis_Start,-140.66407844596478,-76.4934221912518,0.0,,,,,,
+derived_point,Right_CupOpeningEllipse_MajorAxis,1,CupOpeningEllipse_Right_MajorAxis_End,-205.33592155403522,-97.5065778087482,0.0,,,,,,
+derived_point,Right_CupOpeningEllipse_MinorAxis,0,CupOpeningEllipse_Right_MinorAxis_Start,-166.81966011250105,-106.02113032590307,0.0,,,,,,
+derived_point,Right_CupOpeningEllipse_MinorAxis,1,CupOpeningEllipse_Right_MinorAxis_End,-179.18033988749895,-67.97886967409693,0.0,,,,,,
+derived_point,LLD_LeftProjection,0,LLD_LeftProjection,77.0,-47.0,0.0,,,,,,
+derived_point,LLD_RightProjection,0,LLD_RightProjection,-163.0,-47.0,0.0,,,,,,

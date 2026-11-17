@@ -1,0 +1,36 @@
+# Generated products, caches and local configuration
+/build/
+/.cache/
+/.venv/
+/.env
+/.env.*
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.DS_Store
+**/test_runs/
+**/Testing/Python/test_runs/
+
+# Versioned aggregate weights are GitHub Release assets.
+auto_point_model.json
+auto_point_image_model.npz
+
+# Pinned upstream browser assets are restored during the build.
+/web/runtime/*
+!/web/runtime/manifest.json
+
+# Local images and annotations never belong in source history.
+*.dcm
+*.dicom
+*.nrrd
+*.nii
+*.nii.gz
+*.mrb
+!web/tests/fixtures/SyntheticFullCase.mrb
+*.log
+
+# Authentication and operating-system metadata
+*.pem
+*.key
+hosts.yml

@@ -1,0 +1,527 @@
+﻿section,name,index,label,x_ras,y_ras,z_ras,curve_type,curve_points_per_segment,raw_value,corrected_value_mm,units,details,role,point_index,r,a,s,annotator
+metadata,CaseName,,,,,,,,,,,SyntheticFullCase.png,,,,,,Automated Test
+metadata,ImageNode,,,,,,,,,,,SyntheticFullCase.png,,,,,,Automated Test
+metadata,Annotator,,,,,,,,,,,Automated Test,,,,,,Automated Test
+metadata,Comments,,,,,,,,,,,"Case comment, with ""quotes"" and Unicode: é
+Second line.",,,,,,Automated Test
+metadata,CalibrationBall_NotPresent,,,,,,,,0,,flag,False,,,,,,Automated Test
+metadata,Timestamp,,,,,,,,,,,2026-10-09T11:11:01.548151+00:00,,,,,,Automated Test
+metadata,BrowserCSVSchema,,,,,,,,,,,2,,,,,,Automated Test
+metadata,CalibrationBall_KnownDiameter,,,,,,,,,,,25.0,,,,,,Automated Test
+metadata,ActiveSide,,,,,,,,,,,left,,,,,,Automated Test
+metadata,ImageIJKToRAS,,,,,,,,,,,"[[1.0, 0.0, 0.0, -1000.0], [0.0, 1.0, 0.0, -1000.0], [0.0, 0.0, 1.0, 0.0], [0.0, 0.0, 0.0, 1.0]]",,,,,,Automated Test
+metadata,left_neck_options,,,,,,,,,,,"{""lockToCenter"": true, ""useSingleGuide"": true}",,,,,,Automated Test
+metadata,FemoralNeckAxis_Left_LockToCenter,,,,,,,,1,,flag,True,,,,,,Automated Test
+metadata,FemoralNeckAxis_Left_UseSingleGuide,,,,,,,,1,,flag,True,,,,,,Automated Test
+metadata,left_implant_neck_options,,,,,,,,,,,"{""lockToCenter"": true, ""useSingleGuide"": false}",,,,,,Automated Test
+metadata,ImplantNeckAxis_Left_LockToCenter,,,,,,,,1,,flag,True,,,,,,Automated Test
+metadata,ImplantNeckAxis_Left_UseSingleGuide,,,,,,,,0,,flag,False,,,,,,Automated Test
+measurement,Left_FemurHead_Diameter,,,,,,,,56.000000000000014,56.000000000000014,su -> mm,,,,,,,Automated Test
+measurement,Left_CCDAngle,,,,,,,,146.75506275969948,,degrees,,,,,,,Automated Test
+measurement,Left_AcetabularIndexTonnis,,,,,,,,-20.973493421320804,,degrees,,,,,,,Automated Test
+measurement,Left_SharpAngle,,,,,,,,-21.104838584929638,,degrees,,,,,,,Automated Test
+measurement,Left_LCEAngle,,,,,,,,-24.775140568831908,,degrees,,,,,,,Automated Test
+measurement,Left_FemoralHeadExtrusionIndex,,,,,,,,54.83870967741935,,percent,,,,,,,Automated Test
+measurement,Left_CCR,,,,,,,,0.5121951219512195,,ratio,Canal-calcar ratio (B/A): distal inner-canal width at 10 cm divided by proximal mid-LT guide-cap width.,,,,,,Automated Test
+measurement,Left_CTI,,,,,,,,0.625,,ratio,,,,,,,Automated Test
+measurement,Left_CFI,,,,,,,,1.6666666666666667,,ratio,,,,,,,Automated Test
+measurement,Left_PreOp_AcetabularOffset,,,,,,,,58.0,58.0,su -> mm,,,,,,,Automated Test
+measurement,Left_PreOp_FemoralOffset,,,,,,,,53.0,53.0,su -> mm,,,,,,,Automated Test
+measurement,Left_PreOp_GlobalOffset,,,,,,,,111.0,111.0,su -> mm,,,,,,,Automated Test
+measurement,Left_AcetabularInclinationAngle_FreeHand_PostOp,,,,,,,,25.769327624338704,,degrees,,,,,,,Automated Test
+measurement,Left_CupOpeningEllipseFit_Inclination_PostOp,,,,,,,,32.99999999999998,,degrees,,,,,,,Automated Test
+measurement,Left_CupAnteversionRetroversionAngle_PostOp,,,,,,,,32.2309526355021,,degrees,,,,,,,Automated Test
+measurement,Left_ImplantFemoralCCD_PostOp,,,,,,,,23.498565675952097,,degrees,,,,,,,Automated Test
+measurement,Left_PostOp_ImplantHead_Diameter,,,,,,,,37.99999999999999,37.99999999999999,su -> mm,,,,,,,Automated Test
+measurement,Left_PostOp_AcetabularOffset,,,,,,,,58.0,58.0,su -> mm,,,,,,,Automated Test
+measurement,Left_PostOp_FemoralOffset,,,,,,,,48.0,48.0,su -> mm,,,,,,,Automated Test
+measurement,Left_PostOp_GlobalOffset,,,,,,,,106.0,106.0,su -> mm,,,,,,,Automated Test
+measurement,Left_StemAlignment,,,,,,,,6.74005609794693,,degrees,,,,,,,Automated Test
+measurement,Left_FemoralShaftAxis_DeviationGuideA,,,,,,,,0.0,,degrees,,,,,,,Automated Test
+measurement,Left_FemoralShaftAxis_DeviationGuideB,,,,,,,,0.0,,degrees,,,,,,,Automated Test
+metadata,right_neck_options,,,,,,,,,,,"{""lockToCenter"": false, ""useSingleGuide"": false}",,,,,,Automated Test
+metadata,FemoralNeckAxis_Right_LockToCenter,,,,,,,,0,,flag,False,,,,,,Automated Test
+metadata,FemoralNeckAxis_Right_UseSingleGuide,,,,,,,,0,,flag,False,,,,,,Automated Test
+metadata,right_implant_neck_options,,,,,,,,,,,"{""lockToCenter"": false, ""useSingleGuide"": true}",,,,,,Automated Test
+metadata,ImplantNeckAxis_Right_LockToCenter,,,,,,,,0,,flag,False,,,,,,Automated Test
+metadata,ImplantNeckAxis_Right_UseSingleGuide,,,,,,,,1,,flag,True,,,,,,Automated Test
+measurement,Right_FemurHead_Diameter,,,,,,,,59.99999999999994,59.99999999999994,su -> mm,,,,,,,Automated Test
+measurement,Right_CCDAngle,,,,,,,,143.13010235415598,,degrees,,,,,,,Automated Test
+measurement,Right_AcetabularIndexTonnis,,,,,,,,160.01689347810003,,degrees,,,,,,,Automated Test
+measurement,Right_SharpAngle,,,,,,,,150.75117366345305,,degrees,,,,,,,Automated Test
+measurement,Right_LCEAngle,,,,,,,,38.659808254090024,,degrees,,,,,,,Automated Test
+measurement,Right_FemoralHeadExtrusionIndex,,,,,,,,53.84615384615385,,percent,,,,,,,Automated Test
+measurement,Right_CCR,,,,,,,,0.5121951219512195,,ratio,Canal-calcar ratio (B/A): distal inner-canal width at 10 cm divided by proximal mid-LT guide-cap width.,,,,,,Automated Test
+measurement,Right_CTI,,,,,,,,0.625,,ratio,,,,,,,Automated Test
+measurement,Right_CFI,,,,,,,,1.6666666666666667,,ratio,,,,,,,Automated Test
+measurement,Right_PreOp_AcetabularOffset,,,,,,,,65.0,65.0,su -> mm,,,,,,,Automated Test
+measurement,Right_PreOp_FemoralOffset,,,,,,,,60.0,60.0,su -> mm,,,,,,,Automated Test
+measurement,Right_PreOp_GlobalOffset,,,,,,,,125.0,125.0,su -> mm,,,,,,,Automated Test
+measurement,Right_AcetabularInclinationAngle_FreeHand_PostOp,,,,,,,,32.47119229084848,,degrees,,,,,,,Automated Test
+measurement,Right_CupOpeningEllipseFit_Inclination_PostOp,,,,,,,,17.999999999999986,,degrees,,,,,,,Automated Test
+measurement,Right_CupAnteversionRetroversionAngle_PostOp,,,,,,,,36.03187907247055,,degrees,,,,,,,Automated Test
+measurement,Right_ImplantFemoralCCD_PostOp,,,,,,,,153.434948822922,,degrees,,,,,,,Automated Test
+measurement,Right_PostOp_ImplantHead_Diameter,,,,,,,,36.0,36.0,su -> mm,,,,,,,Automated Test
+measurement,Right_PostOp_AcetabularOffset,,,,,,,,60.0,60.0,su -> mm,,,,,,,Automated Test
+measurement,Right_PostOp_FemoralOffset,,,,,,,,52.0,52.0,su -> mm,,,,,,,Automated Test
+measurement,Right_PostOp_GlobalOffset,,,,,,,,112.0,112.0,su -> mm,,,,,,,Automated Test
+measurement,Right_StemAlignment,,,,,,,,5.710593137499633,,degrees,,,,,,,Automated Test
+measurement,Right_FemoralShaftAxis_DeviationGuideA,,,,,,,,0.0,,degrees,,,,,,,Automated Test
+measurement,Right_FemoralShaftAxis_DeviationGuideB,,,,,,,,0.0,,degrees,,,,,,,Automated Test
+measurement,CalibrationBall_MeasuredDiameter,,,,,,,,25.0,25.0,su -> mm,,,,,,,Automated Test
+measurement,CalibrationBall_KnownDiameter,,,,,,,,,25.0,mm,,,,,,,Automated Test
+measurement,CalibrationScaleFactor,,,,,,,,1.0,,mm per scene unit,,,,,,,Automated Test
+measurement,ReferenceLine_Length,,,,,,,,500.0,500.0,su -> mm,,,,,,,Automated Test
+measurement,LLD,,,,,,,,13.0,13.0,su -> mm,,,,,,,Automated Test
+measurement,LLD_Signed_LeftMinusRight,,,,,,,,13.0,13.0,su -> mm,,,,,,,Automated Test
+metadata,otherLine_1_lock,,,,,,,,,,,none,,,,,,Automated Test
+measurement,Line_1_Length,,,,,,,,67.08203932499369,67.08203932499369,su -> mm,Custom line measurement created from two placed points.,,,,,,Automated Test
+metadata,otherLine_2_lock,,,,,,,,,,,parallel,,,,,,Automated Test
+measurement,Line_2_Length,,,,,,,,55.0,55.0,su -> mm,Custom line measurement created from two placed points. Orientation locked parallel to the reference line.,,,,,,Automated Test
+metadata,otherLine_3_lock,,,,,,,,,,,perpendicular,,,,,,Automated Test
+measurement,Line_3_Length,,,,,,,,60.0,60.0,su -> mm,Custom line measurement created from two placed points. Orientation locked perpendicular to the reference line.,,,,,,Automated Test
+metadata,otherAngle_1_points_lock,,,,,,,,,,,none,,,,,,Automated Test
+measurement,Angle_1,,,,,,,,104.62087398863166,,degrees,Custom three-point angle measurement.,,,,,,Automated Test
+metadata,otherAngle_2_points_lock,,,,,,,,,,,parallel,,,,,,Automated Test
+measurement,Angle_2,,,,,,,,124.50852298766841,,degrees,Custom three-point angle measurement. First arm locked parallel to the reference line.,,,,,,Automated Test
+metadata,otherAngle_3_points_lock,,,,,,,,,,,perpendicular,,,,,,Automated Test
+measurement,Angle_3,,,,,,,,124.50852298766841,,degrees,Custom three-point angle measurement. First arm locked perpendicular to the reference line.,,,,,,Automated Test
+metadata,calibrationPoints_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""calibrationPoints""}",,,,,,Automated Test
+point,Hip Measurements - Calibration Ball Points,0,CalibrationBall_P1,-129.5,-330,0,,,,,,calibrationPoints,calibrationPoints,1,-129.5,-330,0,Automated Test
+point,Hip Measurements - Calibration Ball Points,1,CalibrationBall_P2,-117,-317.5,0,,,,,,calibrationPoints,calibrationPoints,2,-117,-317.5,0,Automated Test
+point,Hip Measurements - Calibration Ball Points,2,CalibrationBall_P3,-104.5,-330,0,,,,,,calibrationPoints,calibrationPoints,3,-104.5,-330,0,Automated Test
+metadata,left_acetabularInclinationLine_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_acetabularInclinationLine""}",,,,,,Automated Test
+point,Hip Measurements - Left Acetabular Inclination Angle Line,0,AcetabularInclinationAngle_Left_Start,-29,-112,0,,,,,,left_acetabularInclinationLine,left_acetabularInclinationLine,1,-29,-112,0,Automated Test
+point,Hip Measurements - Left Acetabular Inclination Angle Line,1,AcetabularInclinationAngle_Left_End,29,-140,0,,,,,,left_acetabularInclinationLine,left_acetabularInclinationLine,2,29,-140,0,Automated Test
+metadata,left_acetabularOffsetLineA_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_acetabularOffsetLineA""}",,,,,,Automated Test
+point,Hip Measurements - Left Acetabular Offset Line A,0,AcetabularOffset_LineA_Left_Start,-27,12,0,,,,,,left_acetabularOffsetLineA,left_acetabularOffsetLineA,1,-27,12,0,Automated Test
+point,Hip Measurements - Left Acetabular Offset Line A,1,AcetabularOffset_LineA_Left_End,-27,-88,0,,,,,,left_acetabularOffsetLineA,left_acetabularOffsetLineA,2,-27,-88,0,Automated Test
+metadata,left_acetabularOffsetLineB_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_acetabularOffsetLineB""}",,,,,,Automated Test
+point,Hip Measurements - Left Acetabular Offset Line B,0,AcetabularOffset_LineB_Left_Start,31,15,0,,,,,,left_acetabularOffsetLineB,left_acetabularOffsetLineB,1,31,15,0,Automated Test
+point,Hip Measurements - Left Acetabular Offset Line B,1,AcetabularOffset_LineB_Left_End,31,-85,0,,,,,,left_acetabularOffsetLineB,left_acetabularOffsetLineB,2,31,-85,0,Automated Test
+metadata,left_acetabularRoofSourcil_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_acetabularRoofSourcil""}",,,,,,Automated Test
+point,Hip Measurements - Left Acetabular Roof (Sourcil),0,Hip Measurements - Left Acetabular Roof (Sourcil)-1,-29,-116,0,1,30,,,,left_acetabularRoofSourcil,left_acetabularRoofSourcil,1,-29,-116,0,Automated Test
+point,Hip Measurements - Left Acetabular Roof (Sourcil),1,Hip Measurements - Left Acetabular Roof (Sourcil)-2,-5,-134,0,1,30,,,,left_acetabularRoofSourcil,left_acetabularRoofSourcil,2,-5,-134,0,Automated Test
+point,Hip Measurements - Left Acetabular Roof (Sourcil),2,Hip Measurements - Left Acetabular Roof (Sourcil)-3,19,-136,0,1,30,,,,left_acetabularRoofSourcil,left_acetabularRoofSourcil,3,19,-136,0,Automated Test
+point,Hip Measurements - Left Acetabular Roof (Sourcil),3,Hip Measurements - Left Acetabular Roof (Sourcil)-4,41,-122,0,1,30,,,,left_acetabularRoofSourcil,left_acetabularRoofSourcil,4,41,-122,0,Automated Test
+metadata,left_cupOpeningEllipsePoints_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_cupOpeningEllipsePoints""}",,,,,,Automated Test
+point,Hip Measurements - Left Cup Opening Ellipse Points,0,CupOpeningEllipse_Left_P1,43.160117038362728,-43.660828949549185,0,,,,,,left_cupOpeningEllipsePoints,left_cupOpeningEllipsePoints,1,43.160117038362728,-43.660828949549185,0,Automated Test
+point,Hip Measurements - Left Cup Opening Ellipse Points,1,CupOpeningEllipse_Left_P2,23.033318675730868,-40.209454198821625,0,,,,,,left_cupOpeningEllipsePoints,left_cupOpeningEllipsePoints,2,23.033318675730868,-40.209454198821625,0,Automated Test
+point,Hip Measurements - Left Cup Opening Ellipse Points,2,CupOpeningEllipse_Left_P3,-2.1267983626318596,-56.548625249272433,0,,,,,,left_cupOpeningEllipsePoints,left_cupOpeningEllipsePoints,3,-2.1267983626318596,-56.548625249272433,0,Automated Test
+point,Hip Measurements - Left Cup Opening Ellipse Points,3,CupOpeningEllipse_Left_P4,-7.1601170383627277,-76.339171050450815,0,,,,,,left_cupOpeningEllipsePoints,left_cupOpeningEllipsePoints,4,-7.1601170383627277,-76.339171050450815,0,Automated Test
+point,Hip Measurements - Left Cup Opening Ellipse Points,4,CupOpeningEllipse_Left_P5,12.966681324269103,-79.790545801178382,0,,,,,,left_cupOpeningEllipsePoints,left_cupOpeningEllipsePoints,5,12.966681324269103,-79.790545801178382,0,Automated Test
+point,Hip Measurements - Left Cup Opening Ellipse Points,5,CupOpeningEllipse_Left_P6,38.12679836263186,-63.45137475072756,0,,,,,,left_cupOpeningEllipsePoints,left_cupOpeningEllipsePoints,6,38.12679836263186,-63.45137475072756,0,Automated Test
+metadata,left_extrusionIndexLateralLine_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_extrusionIndexLateralLine""}",,,,,,Automated Test
+point,Hip Measurements - Left Femoral Head Extrusion Index Lateral Line,0,FemoralHeadExtrusionIndex_Lateral_Left_Start,25,-85,0,,,,,,left_extrusionIndexLateralLine,left_extrusionIndexLateralLine,1,25,-85,0,Automated Test
+point,Hip Measurements - Left Femoral Head Extrusion Index Lateral Line,1,FemoralHeadExtrusionIndex_Lateral_Left_End,25,-180,0,,,,,,left_extrusionIndexLateralLine,left_extrusionIndexLateralLine,2,25,-180,0,Automated Test
+metadata,left_extrusionIndexMedialLine_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_extrusionIndexMedialLine""}",,,,,,Automated Test
+point,Hip Measurements - Left Femoral Head Extrusion Index Medial Line,0,FemoralHeadExtrusionIndex_Medial_Left_Start,-37,-85,0,,,,,,left_extrusionIndexMedialLine,left_extrusionIndexMedialLine,1,-37,-85,0,Automated Test
+point,Hip Measurements - Left Femoral Head Extrusion Index Medial Line,1,FemoralHeadExtrusionIndex_Medial_Left_End,-37,-180,0,,,,,,left_extrusionIndexMedialLine,left_extrusionIndexMedialLine,2,-37,-180,0,Automated Test
+metadata,left_extrusionIndexMiddleLine_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_extrusionIndexMiddleLine""}",,,,,,Automated Test
+point,Hip Measurements - Left Femoral Head Extrusion Index Middle Line,0,FemoralHeadExtrusionIndex_Middle_Left_Start,-9,-85,0,,,,,,left_extrusionIndexMiddleLine,left_extrusionIndexMiddleLine,1,-9,-85,0,Automated Test
+point,Hip Measurements - Left Femoral Head Extrusion Index Middle Line,1,FemoralHeadExtrusionIndex_Middle_Left_End,-9,-180,0,,,,,,left_extrusionIndexMiddleLine,left_extrusionIndexMiddleLine,2,-9,-180,0,Automated Test
+metadata,left_femoralOffsetLine_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_femoralOffsetLine""}",,,,,,Automated Test
+point,Hip Measurements - Left Femoral Offset Line,0,FemoralOffset_Left_Start,61,-75,0,,,,,,left_femoralOffsetLine,left_femoralOffsetLine,1,61,-75,0,Automated Test
+point,Hip Measurements - Left Femoral Offset Line,1,FemoralOffset_Left_End,61,40,0,,,,,,left_femoralOffsetLine,left_femoralOffsetLine,2,61,40,0,Automated Test
+metadata,left_femoralShaftContour1_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.FemoralShaftContourClass"": ""medialOuter"", ""PelvicXrayMeasurements.Role"": ""left_femoralShaftContour1""}",,,,,,Automated Test
+point,Hip Measurements - Left Femoral Shaft Contour 1,0,FemoralShaft_MedialOuter_1,-39,-34,0,1,30,,,,left_femoralShaftContour1,left_femoralShaftContour1,1,-39,-34,0,Automated Test
+point,Hip Measurements - Left Femoral Shaft Contour 1,1,FemoralShaft_MedialOuter_2,-40,1,0,1,30,,,,left_femoralShaftContour1,left_femoralShaftContour1,2,-40,1,0,Automated Test
+point,Hip Measurements - Left Femoral Shaft Contour 1,2,FemoralShaft_MedialOuter_3,-41,45,0,1,30,,,,left_femoralShaftContour1,left_femoralShaftContour1,3,-41,45,0,Automated Test
+point,Hip Measurements - Left Femoral Shaft Contour 1,3,FemoralShaft_MedialOuter_4,-42,88,0,1,30,,,,left_femoralShaftContour1,left_femoralShaftContour1,4,-42,88,0,Automated Test
+metadata,left_femoralShaftContour2_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.FemoralShaftContourClass"": ""medialInner"", ""PelvicXrayMeasurements.Role"": ""left_femoralShaftContour2""}",,,,,,Automated Test
+point,Hip Measurements - Left Femoral Shaft Contour 2,0,FemoralShaft_MedialInner_1,-13,-35,0,1,30,,,,left_femoralShaftContour2,left_femoralShaftContour2,1,-13,-35,0,Automated Test
+point,Hip Measurements - Left Femoral Shaft Contour 2,1,FemoralShaft_MedialInner_2,-13,0,0,1,30,,,,left_femoralShaftContour2,left_femoralShaftContour2,2,-13,0,0,Automated Test
+point,Hip Measurements - Left Femoral Shaft Contour 2,2,FemoralShaft_MedialInner_3,-12,43,0,1,30,,,,left_femoralShaftContour2,left_femoralShaftContour2,3,-12,43,0,Automated Test
+point,Hip Measurements - Left Femoral Shaft Contour 2,3,FemoralShaft_MedialInner_4,-11,86,0,1,30,,,,left_femoralShaftContour2,left_femoralShaftContour2,4,-11,86,0,Automated Test
+metadata,left_femoralShaftContour3_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.FemoralShaftContourClass"": ""lateralInner"", ""PelvicXrayMeasurements.Role"": ""left_femoralShaftContour3""}",,,,,,Automated Test
+point,Hip Measurements - Left Femoral Shaft Contour 3,0,FemoralShaft_LateralInner_1,20,-36,0,1,30,,,,left_femoralShaftContour3,left_femoralShaftContour3,1,20,-36,0,Automated Test
+point,Hip Measurements - Left Femoral Shaft Contour 3,1,FemoralShaft_LateralInner_2,22,-1,0,1,30,,,,left_femoralShaftContour3,left_femoralShaftContour3,2,22,-1,0,Automated Test
+point,Hip Measurements - Left Femoral Shaft Contour 3,2,FemoralShaft_LateralInner_3,24,42,0,1,30,,,,left_femoralShaftContour3,left_femoralShaftContour3,3,24,42,0,Automated Test
+point,Hip Measurements - Left Femoral Shaft Contour 3,3,FemoralShaft_LateralInner_4,26,85,0,1,30,,,,left_femoralShaftContour3,left_femoralShaftContour3,4,26,85,0,Automated Test
+metadata,left_femoralShaftContour4_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.FemoralShaftContourClass"": ""lateralOuter"", ""PelvicXrayMeasurements.Role"": ""left_femoralShaftContour4""}",,,,,,Automated Test
+point,Hip Measurements - Left Femoral Shaft Contour 4,0,FemoralShaft_LateralOuter_1,47,-35,0,1,30,,,,left_femoralShaftContour4,left_femoralShaftContour4,1,47,-35,0,Automated Test
+point,Hip Measurements - Left Femoral Shaft Contour 4,1,FemoralShaft_LateralOuter_2,49,0,0,1,30,,,,left_femoralShaftContour4,left_femoralShaftContour4,2,49,0,0,Automated Test
+point,Hip Measurements - Left Femoral Shaft Contour 4,2,FemoralShaft_LateralOuter_3,51,44,0,1,30,,,,left_femoralShaftContour4,left_femoralShaftContour4,3,51,44,0,Automated Test
+point,Hip Measurements - Left Femoral Shaft Contour 4,3,FemoralShaft_LateralOuter_4,53,88,0,1,30,,,,left_femoralShaftContour4,left_femoralShaftContour4,4,53,88,0,Automated Test
+metadata,left_femurHeadCenter_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_femurHeadCenter""}",,,,,,Automated Test
+derived_point,Hip Measurements - Left Femur Head Center,0,FemurHead_Left_Center,-7.000000000000008,-142,0,,,,,,left_femurHeadCenter,left_femurHeadCenter,1,-7.000000000000008,-142,0,Automated Test
+metadata,left_femurHeadPoints_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_femurHeadPoints""}",,,,,,Automated Test
+point,Hip Measurements - Left Femur Head Points,0,FemurHead_Left_P1,21,-142,0,,,,,,left_femurHeadPoints,left_femurHeadPoints,1,21,-142,0,Automated Test
+point,Hip Measurements - Left Femur Head Points,1,FemurHead_Left_P2,-7,-114,0,,,,,,left_femurHeadPoints,left_femurHeadPoints,2,-7,-114,0,Automated Test
+point,Hip Measurements - Left Femur Head Points,2,FemurHead_Left_P3,-31.248711305964278,-156,0,,,,,,left_femurHeadPoints,left_femurHeadPoints,3,-31.248711305964278,-156,0,Automated Test
+metadata,left_ilioischialLine_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_ilioischialLine""}",,,,,,Automated Test
+point,Hip Measurements - Left Ilioischial Line,0,Hip Measurements - Left Ilioischial Line-1,-5,-148,0,1,30,,,,left_ilioischialLine,left_ilioischialLine,1,-5,-148,0,Automated Test
+point,Hip Measurements - Left Ilioischial Line,1,Hip Measurements - Left Ilioischial Line-2,7,-98,0,1,30,,,,left_ilioischialLine,left_ilioischialLine,2,7,-98,0,Automated Test
+point,Hip Measurements - Left Ilioischial Line,2,Hip Measurements - Left Ilioischial Line-3,17,-48,0,1,30,,,,left_ilioischialLine,left_ilioischialLine,3,17,-48,0,Automated Test
+point,Hip Measurements - Left Ilioischial Line,3,Hip Measurements - Left Ilioischial Line-4,25,8,0,1,30,,,,left_ilioischialLine,left_ilioischialLine,4,25,8,0,Automated Test
+metadata,left_iliopectinealLine_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_iliopectinealLine""}",,,,,,Automated Test
+point,Hip Measurements - Left Iliopectineal Line,0,Hip Measurements - Left Iliopectineal Line-1,-35,-160,0,1,30,,,,left_iliopectinealLine,left_iliopectinealLine,1,-35,-160,0,Automated Test
+point,Hip Measurements - Left Iliopectineal Line,1,Hip Measurements - Left Iliopectineal Line-2,-9,-128,0,1,30,,,,left_iliopectinealLine,left_iliopectinealLine,2,-9,-128,0,Automated Test
+point,Hip Measurements - Left Iliopectineal Line,2,Hip Measurements - Left Iliopectineal Line-3,16,-95,0,1,30,,,,left_iliopectinealLine,left_iliopectinealLine,3,16,-95,0,Automated Test
+point,Hip Measurements - Left Iliopectineal Line,3,Hip Measurements - Left Iliopectineal Line-4,43,-62,0,1,30,,,,left_iliopectinealLine,left_iliopectinealLine,4,43,-62,0,Automated Test
+metadata,left_implantAlignmentGuideDistal_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_implantAlignmentGuideDistal""}",,,,,,Automated Test
+point,Hip Measurements - Left Stem Alignment Guide Line Distal,0,StemAlignmentGuide_Distal_Left_Start,-16,77.599999999999994,0,,,,,,left_implantAlignmentGuideDistal,left_implantAlignmentGuideDistal,1,-16,77.599999999999994,0,Automated Test
+point,Hip Measurements - Left Stem Alignment Guide Line Distal,1,StemAlignmentGuide_Distal_Left_End,28,72.400000000000006,0,,,,,,left_implantAlignmentGuideDistal,left_implantAlignmentGuideDistal,2,28,72.400000000000006,0,Automated Test
+metadata,left_implantAlignmentGuideProximal_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_implantAlignmentGuideProximal""}",,,,,,Automated Test
+point,Hip Measurements - Left Stem Alignment Guide Line Proximal,0,StemAlignmentGuide_Proximal_Left_Start,-16,-42.399999999999999,0,,,,,,left_implantAlignmentGuideProximal,left_implantAlignmentGuideProximal,1,-16,-42.399999999999999,0,Automated Test
+point,Hip Measurements - Left Stem Alignment Guide Line Proximal,1,StemAlignmentGuide_Proximal_Left_End,28,-47.600000000000001,0,,,,,,left_implantAlignmentGuideProximal,left_implantAlignmentGuideProximal,2,28,-47.600000000000001,0,Automated Test
+metadata,left_implantAlignmentLine_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_implantAlignmentLine""}",,,,,,Automated Test
+derived_point,Hip Measurements - Left Stem Alignment Axis,0,StemAlignment_Left_Start,-78.502832294207266,-700.02396556636972,0,,,,,,left_implantAlignmentLine,left_implantAlignmentLine,1,-78.502832294207266,-700.02396556636972,0,Automated Test
+derived_point,Hip Measurements - Left Stem Alignment Axis,1,StemAlignment_Left_End,90.502832294207266,730.02396556636972,0,,,,,,left_implantAlignmentLine,left_implantAlignmentLine,2,90.502832294207266,730.02396556636972,0,Automated Test
+metadata,left_implantHeadCenter_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_implantHeadCenter""}",,,,,,Automated Test
+derived_point,Hip Measurements - Left Implant Head Center,0,ImplantHead_Left_Center,1.0000000000000049,-139.99999999999997,0,,,,,,left_implantHeadCenter,left_implantHeadCenter,1,1.0000000000000049,-139.99999999999997,0,Automated Test
+metadata,left_implantHeadPoints_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_implantHeadPoints""}",,,,,,Automated Test
+point,Hip Measurements - Left Implant Head Points,0,ImplantHead_Left_P1,20,-140,0,,,,,,left_implantHeadPoints,left_implantHeadPoints,1,20,-140,0,Automated Test
+point,Hip Measurements - Left Implant Head Points,1,ImplantHead_Left_P2,1,-121,0,,,,,,left_implantHeadPoints,left_implantHeadPoints,2,1,-121,0,Automated Test
+point,Hip Measurements - Left Implant Head Points,2,ImplantHead_Left_P3,-15.45448267190433,-149.5,0,,,,,,left_implantHeadPoints,left_implantHeadPoints,3,-15.45448267190433,-149.5,0,Automated Test
+metadata,left_implantNeckAxis_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_implantNeckAxis""}",,,,,,Automated Test
+derived_point,Hip Measurements - Left Implant Neck Axis,0,ImplantNeckAxis_Left_Start,72.770700054601008,-305.07261012558229,0,,,,,,left_implantNeckAxis,left_implantNeckAxis,1,72.770700054601008,-305.07261012558229,0,Automated Test
+derived_point,Hip Measurements - Left Implant Neck Axis,1,ImplantNeckAxis_Left_End,-70.770700054601008,25.072610125582344,0,,,,,,left_implantNeckAxis,left_implantNeckAxis,2,-70.770700054601008,25.072610125582344,0,Automated Test
+metadata,left_implantNeckGuideDistal_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_implantNeckGuideDistal""}",,,,,,Automated Test
+point,Hip Measurements - Left Implant Neck Guide Line Distal,0,ImplantNeckGuide_Distal_Left_Start,-5,-78,0,,,,,,left_implantNeckGuideDistal,left_implantNeckGuideDistal,1,-5,-78,0,Automated Test
+point,Hip Measurements - Left Implant Neck Guide Line Distal,1,ImplantNeckGuide_Distal_Left_End,41,-58,0,,,,,,left_implantNeckGuideDistal,left_implantNeckGuideDistal,2,41,-58,0,Automated Test
+metadata,left_implantNeckGuideProximal_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.LockToCenter"": ""1"", ""PelvicXrayMeasurements.Role"": ""left_implantNeckGuideProximal"", ""PelvicXrayMeasurements.UseSingleGuide"": ""0""}",,,,,,Automated Test
+point,Hip Measurements - Left Implant Neck Guide Line Proximal,0,ImplantNeckGuide_Proximal_Left_Start,-17,-113,0,,,,,,left_implantNeckGuideProximal,left_implantNeckGuideProximal,1,-17,-113,0,Automated Test
+point,Hip Measurements - Left Implant Neck Guide Line Proximal,1,ImplantNeckGuide_Proximal_Left_End,29,-93,0,,,,,,left_implantNeckGuideProximal,left_implantNeckGuideProximal,2,29,-93,0,Automated Test
+metadata,left_lceAnglePoint_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_lceAnglePoint""}",,,,,,Automated Test
+point,Hip Measurements - Left LCE Angle Point,0,LCEAngle_Left_Point,-19,-168,0,,,,,,left_lceAnglePoint,left_lceAnglePoint,1,-19,-168,0,Automated Test
+metadata,left_lceAngleRadialArm_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_lceAngleRadialArm""}",,,,,,Automated Test
+derived_point,Hip Measurements - Left LCE Angle Radial Arm,0,LCEAngleRadial_Left_Start,-7.000000000000008,-142,0,,,,,,left_lceAngleRadialArm,left_lceAngleRadialArm,1,-7.000000000000008,-142,0,Automated Test
+derived_point,Hip Measurements - Left LCE Angle Radial Arm,1,LCEAngleRadial_Left_End,-19,-168,0,,,,,,left_lceAngleRadialArm,left_lceAngleRadialArm,2,-19,-168,0,Automated Test
+metadata,left_lceAngleVisual_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_lceAngleVisual""}",,,,,,Automated Test
+derived_point,Hip Measurements - Left LCE Angle Reference Arm,0,LCEAngleReference_Left_Start,-7.000000000000008,-142,0,,,,,,left_lceAngleVisual,left_lceAngleVisual,1,-7.000000000000008,-142,0,Automated Test
+derived_point,Hip Measurements - Left LCE Angle Reference Arm,1,LCEAngleReference_Left_End,-7.000000000000008,-170.63564212655271,0,,,,,,left_lceAngleVisual,left_lceAngleVisual,2,-7.000000000000008,-170.63564212655271,0,Automated Test
+metadata,left_lineaTerminalis_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_lineaTerminalis""}",,,,,,Automated Test
+point,Hip Measurements - Left Linea Terminalis,0,Hip Measurements - Left Linea Terminalis-1,-45,-70,0,1,30,,,,left_lineaTerminalis,left_lineaTerminalis,1,-45,-70,0,Automated Test
+point,Hip Measurements - Left Linea Terminalis,1,Hip Measurements - Left Linea Terminalis-2,-16,-42,0,1,30,,,,left_lineaTerminalis,left_lineaTerminalis,2,-16,-42,0,Automated Test
+point,Hip Measurements - Left Linea Terminalis,2,Hip Measurements - Left Linea Terminalis-3,15,-20,0,1,30,,,,left_lineaTerminalis,left_lineaTerminalis,3,15,-20,0,Automated Test
+point,Hip Measurements - Left Linea Terminalis,3,Hip Measurements - Left Linea Terminalis-4,47,2,0,1,30,,,,left_lineaTerminalis,left_lineaTerminalis,4,47,2,0,Automated Test
+metadata,left_neckAxis_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_neckAxis""}",,,,,,Automated Test
+derived_point,Hip Measurements - Left Femoral Neck Axis,0,FemoralNeckAxis_Left_Start,-105.67947968939342,-292.54022813929373,0,,,,,,left_neckAxis,left_neckAxis,1,-105.67947968939342,-292.54022813929373,0,Automated Test
+derived_point,Hip Measurements - Left Femoral Neck Axis,1,FemoralNeckAxis_Left_End,91.679479689393389,8.5402281392937027,0,,,,,,left_neckAxis,left_neckAxis,2,91.679479689393389,8.5402281392937027,0,Automated Test
+metadata,left_neckGuideProximal_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.LockToCenter"": ""1"", ""PelvicXrayMeasurements.Role"": ""left_neckGuideProximal"", ""PelvicXrayMeasurements.UseSingleGuide"": ""1""}",,,,,,Automated Test
+point,Hip Measurements - Left Femoral Neck Guide Line Proximal,0,FemoralNeckGuide_Proximal_Left_Start,-22.900000000000006,-104.3,0,,,,,,left_neckGuideProximal,left_neckGuideProximal,1,-22.900000000000006,-104.3,0,Automated Test
+point,Hip Measurements - Left Femoral Neck Guide Line Proximal,1,FemoralNeckGuide_Proximal_Left_End,18.900000000000006,-131.69999999999999,0,,,,,,left_neckGuideProximal,left_neckGuideProximal,2,18.900000000000006,-131.69999999999999,0,Automated Test
+metadata,left_postOpAcetabularOffsetLineA_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_postOpAcetabularOffsetLineA""}",,,,,,Automated Test
+point,Hip Measurements - Left Post-Op Acetabular Offset Line A,0,PostOpAcetabularOffset_LineA_Left_Start,-35,8,0,,,,,,left_postOpAcetabularOffsetLineA,left_postOpAcetabularOffsetLineA,1,-35,8,0,Automated Test
+point,Hip Measurements - Left Post-Op Acetabular Offset Line A,1,PostOpAcetabularOffset_LineA_Left_End,-35,-92,0,,,,,,left_postOpAcetabularOffsetLineA,left_postOpAcetabularOffsetLineA,2,-35,-92,0,Automated Test
+metadata,left_postOpAcetabularOffsetLineB_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_postOpAcetabularOffsetLineB""}",,,,,,Automated Test
+point,Hip Measurements - Left Post-Op Acetabular Offset Line B,0,PostOpAcetabularOffset_LineB_Left_Start,23,10,0,,,,,,left_postOpAcetabularOffsetLineB,left_postOpAcetabularOffsetLineB,1,23,10,0,Automated Test
+point,Hip Measurements - Left Post-Op Acetabular Offset Line B,1,PostOpAcetabularOffset_LineB_Left_End,23,-90,0,,,,,,left_postOpAcetabularOffsetLineB,left_postOpAcetabularOffsetLineB,2,23,-90,0,Automated Test
+metadata,left_postOpFemoralOffsetLine_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_postOpFemoralOffsetLine""}",,,,,,Automated Test
+point,Hip Measurements - Left Post-Op Femoral Offset Line,0,PostOpFemoralOffset_Left_Start,56,-78,0,,,,,,left_postOpFemoralOffsetLine,left_postOpFemoralOffsetLine,1,56,-78,0,Automated Test
+point,Hip Measurements - Left Post-Op Femoral Offset Line,1,PostOpFemoralOffset_Left_End,56,35,0,,,,,,left_postOpFemoralOffsetLine,left_postOpFemoralOffsetLine,2,56,35,0,Automated Test
+metadata,left_shaftAxis_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_shaftAxis""}",,,,,,Automated Test
+derived_point,Hip Measurements - Left Femoral Shaft Axis,0,FemoralShaftAxis_Left_Start,8,-720,0,,,,,,left_shaftAxis,left_shaftAxis,1,8,-720,0,Automated Test
+derived_point,Hip Measurements - Left Femoral Shaft Axis,1,FemoralShaftAxis_Left_End,8,720,0,,,,,,left_shaftAxis,left_shaftAxis,2,8,720,0,Automated Test
+metadata,left_shaftGuideDistal_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_shaftGuideDistal""}",,,,,,Automated Test
+point,Hip Measurements - Left Femoral Shaft Guide Line Distal,0,FemoralShaftGuide_Distal_Left_Start,-43,70,0,,,,,,left_shaftGuideDistal,left_shaftGuideDistal,1,-43,70,0,Automated Test
+point,Hip Measurements - Left Femoral Shaft Guide Line Distal,1,FemoralShaftGuide_Distal_Left_End,59,70,0,,,,,,left_shaftGuideDistal,left_shaftGuideDistal,2,59,70,0,Automated Test
+metadata,left_shaftGuideProximal_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_shaftGuideProximal""}",,,,,,Automated Test
+point,Hip Measurements - Left Femoral Shaft Guide Line Proximal,0,FemoralShaftGuide_Proximal_Left_Start,-42,-70,0,,,,,,left_shaftGuideProximal,left_shaftGuideProximal,1,-42,-70,0,Automated Test
+point,Hip Measurements - Left Femoral Shaft Guide Line Proximal,1,FemoralShaftGuide_Proximal_Left_End,58,-70,0,,,,,,left_shaftGuideProximal,left_shaftGuideProximal,2,58,-70,0,Automated Test
+metadata,left_shaftMorphologyGuideLineA_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_shaftMorphologyGuideLineA""}",,,,,,Automated Test
+derived_point,Hip Measurements - Left Femur Shaft Morphology Guide Line A,0,FemurShaftMorphology_GuideA_Left_Start,-15.428571428571429,0,0,,,,,,left_shaftMorphologyGuideLineA,left_shaftMorphologyGuideLineA,1,-15.428571428571429,0,0,Automated Test
+derived_point,Hip Measurements - Left Femur Shaft Morphology Guide Line A,1,FemurShaftMorphology_GuideA_Left_End,-4,100,0,,,,,,left_shaftMorphologyGuideLineA,left_shaftMorphologyGuideLineA,2,-4,100,0,Automated Test
+metadata,left_shaftMorphologyGuideLineB_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_shaftMorphologyGuideLineB""}",,,,,,Automated Test
+derived_point,Hip Measurements - Left Femur Shaft Morphology Guide Line B,0,FemurShaftMorphology_GuideB_Left_Start,31.428571428571431,0,0,,,,,,left_shaftMorphologyGuideLineB,left_shaftMorphologyGuideLineB,1,31.428571428571431,0,0,Automated Test
+derived_point,Hip Measurements - Left Femur Shaft Morphology Guide Line B,1,FemurShaftMorphology_GuideB_Left_End,20,100,0,,,,,,left_shaftMorphologyGuideLineB,left_shaftMorphologyGuideLineB,2,20,100,0,Automated Test
+metadata,left_shaftMorphologyLTPoints_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_shaftMorphologyLTPoints""}",,,,,,Automated Test
+point,Hip Measurements - Left Femur Shaft Morphology Lesser Trochanter Points,0,FemurShaftMorphology_Left_LT_Proximal,5,-10,0,,,,,,left_shaftMorphologyLTPoints,left_shaftMorphologyLTPoints,1,5,-10,0,Automated Test
+point,Hip Measurements - Left Femur Shaft Morphology Lesser Trochanter Points,1,FemurShaftMorphology_Left_LT_Distal,11,10,0,,,,,,left_shaftMorphologyLTPoints,left_shaftMorphologyLTPoints,2,11,10,0,Automated Test
+metadata,left_shaftMorphologyMidline_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_shaftMorphologyMidline""}",,,,,,Automated Test
+derived_point,Hip Measurements - Left Femur Shaft Morphology LT Midline,0,FemurShaftMorphology_Midline_Left_Start,-24,0,0,,,,,,left_shaftMorphologyMidline,left_shaftMorphologyMidline,1,-24,0,0,Automated Test
+derived_point,Hip Measurements - Left Femur Shaft Morphology LT Midline,1,FemurShaftMorphology_Midline_Left_End,40,0,0,,,,,,left_shaftMorphologyMidline,left_shaftMorphologyMidline,2,40,0,0,Automated Test
+metadata,left_shaftMorphologyPoints_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_shaftMorphologyPoints""}",,,,,,Automated Test
+point,Hip Measurements - Left Femur Shaft Morphology Control Points,0,FemurShaftMorphology_Left_P1,-12,-20,0,,,,,,left_shaftMorphologyPoints,left_shaftMorphologyPoints,1,-12,-20,0,Automated Test
+point,Hip Measurements - Left Femur Shaft Morphology Control Points,1,FemurShaftMorphology_Left_P2,28,-20,0,,,,,,left_shaftMorphologyPoints,left_shaftMorphologyPoints,2,28,-20,0,Automated Test
+point,Hip Measurements - Left Femur Shaft Morphology Control Points,2,FemurShaftMorphology_Left_P3,-12,30,0,,,,,,left_shaftMorphologyPoints,left_shaftMorphologyPoints,3,-12,30,0,Automated Test
+point,Hip Measurements - Left Femur Shaft Morphology Control Points,3,FemurShaftMorphology_Left_P4,28,30,0,,,,,,left_shaftMorphologyPoints,left_shaftMorphologyPoints,4,28,30,0,Automated Test
+point,Hip Measurements - Left Femur Shaft Morphology Control Points,4,FemurShaftMorphology_Left_P5,-24,100,0,,,,,,left_shaftMorphologyPoints,left_shaftMorphologyPoints,5,-24,100,0,Automated Test
+point,Hip Measurements - Left Femur Shaft Morphology Control Points,5,FemurShaftMorphology_Left_P6,-4,100,0,,,,,,left_shaftMorphologyPoints,left_shaftMorphologyPoints,6,-4,100,0,Automated Test
+point,Hip Measurements - Left Femur Shaft Morphology Control Points,6,FemurShaftMorphology_Left_P7,20,100,0,,,,,,left_shaftMorphologyPoints,left_shaftMorphologyPoints,7,20,100,0,Automated Test
+point,Hip Measurements - Left Femur Shaft Morphology Control Points,7,FemurShaftMorphology_Left_P8,40,100,0,,,,,,left_shaftMorphologyPoints,left_shaftMorphologyPoints,8,40,100,0,Automated Test
+point,Hip Measurements - Left Femur Shaft Morphology Control Points,8,FemurShaftMorphology_Left_P9,-12,110,0,,,,,,left_shaftMorphologyPoints,left_shaftMorphologyPoints,9,-12,110,0,Automated Test
+point,Hip Measurements - Left Femur Shaft Morphology Control Points,9,FemurShaftMorphology_Left_P10,28,110,0,,,,,,left_shaftMorphologyPoints,left_shaftMorphologyPoints,10,28,110,0,Automated Test
+metadata,left_sharpAngleLine_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_sharpAngleLine""}",,,,,,Automated Test
+point,Hip Measurements - Left Sharp Angle Line,0,SharpAngle_Left_Start,-29,-22,0,,,,,,left_sharpAngleLine,left_sharpAngleLine,1,-29,-22,0,Automated Test
+point,Hip Measurements - Left Sharp Angle Line,1,SharpAngle_Left_End,28,0,0,,,,,,left_sharpAngleLine,left_sharpAngleLine,2,28,0,0,Automated Test
+metadata,left_sharpAngleReferenceArm_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_sharpAngleReferenceArm""}",,,,,,Automated Test
+derived_point,Hip Measurements - Left Sharp Angle Reference Arm,0,SharpAngleReference_Left_Start,-29,-22,0,,,,,,left_sharpAngleReferenceArm,left_sharpAngleReferenceArm,1,-29,-22,0,Automated Test
+derived_point,Hip Measurements - Left Sharp Angle Reference Arm,1,SharpAngleReference_Left_End,32.098281481560512,-22,0,,,,,,left_sharpAngleReferenceArm,left_sharpAngleReferenceArm,2,32.098281481560512,-22,0,Automated Test
+metadata,left_shentonLine_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_shentonLine""}",,,,,,Automated Test
+point,Hip Measurements - Left Shenton Line,0,Hip Measurements - Left Shenton Line-1,-41,-86,0,1,30,,,,left_shentonLine,left_shentonLine,1,-41,-86,0,Automated Test
+point,Hip Measurements - Left Shenton Line,1,Hip Measurements - Left Shenton Line-2,-14,-98,0,1,30,,,,left_shentonLine,left_shentonLine,2,-14,-98,0,Automated Test
+point,Hip Measurements - Left Shenton Line,2,Hip Measurements - Left Shenton Line-3,13,-96,0,1,30,,,,left_shentonLine,left_shentonLine,3,13,-96,0,Automated Test
+point,Hip Measurements - Left Shenton Line,3,Hip Measurements - Left Shenton Line-4,39,-82,0,1,30,,,,left_shentonLine,left_shentonLine,4,39,-82,0,Automated Test
+metadata,left_tonnisAngleLine_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_tonnisAngleLine""}",,,,,,Automated Test
+point,Hip Measurements - Left Acetabular Index (Tönnis) Line,0,TonnisAngle_Left_Start,-27,-58,0,,,,,,left_tonnisAngleLine,left_tonnisAngleLine,1,-27,-58,0,Automated Test
+point,Hip Measurements - Left Acetabular Index (Tönnis) Line,1,TonnisAngle_Left_End,33,-35,0,,,,,,left_tonnisAngleLine,left_tonnisAngleLine,2,33,-35,0,Automated Test
+metadata,left_tonnisAngleReferenceArm_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_tonnisAngleReferenceArm""}",,,,,,Automated Test
+derived_point,Hip Measurements - Left Acetabular Index (Tönnis) Reference Arm,0,TonnisAngleReference_Left_Start,-27,-58,0,,,,,,left_tonnisAngleReferenceArm,left_tonnisAngleReferenceArm,1,-27,-58,0,Automated Test
+derived_point,Hip Measurements - Left Acetabular Index (Tönnis) Reference Arm,1,TonnisAngleReference_Left_End,37.257295305669373,-58,0,,,,,,left_tonnisAngleReferenceArm,left_tonnisAngleReferenceArm,2,37.257295305669373,-58,0,Automated Test
+metadata,lldHeightDifference_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""lldHeightDifference""}",,,,,,Automated Test
+derived_point,Hip Measurements - LLD Height Difference,0,LLD_Difference_Start,-112,52,0,,,,,,lldHeightDifference,lldHeightDifference,1,-112,52,0,Automated Test
+derived_point,Hip Measurements - LLD Height Difference,1,LLD_Difference_End,-112,65,0,,,,,,lldHeightDifference,lldHeightDifference,2,-112,65,0,Automated Test
+metadata,lldLeftParallel_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""lldLeftParallel""}",,,,,,Automated Test
+derived_point,Hip Measurements - LLD Left Parallel Line,0,LLD_LeftParallel_Start,8,52,0,,,,,,lldLeftParallel,lldLeftParallel,1,8,52,0,Automated Test
+derived_point,Hip Measurements - LLD Left Parallel Line,1,LLD_LeftParallel_End,-292,52,0,,,,,,lldLeftParallel,lldLeftParallel,2,-292,52,0,Automated Test
+metadata,lldPoints_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""lldPoints""}",,,,,,Automated Test
+point,Hip Measurements - Minor Trochanter Points,0,MinorTrochanter_P1,-232,65,0,,,,,,lldPoints,lldPoints,1,-232,65,0,Automated Test
+point,Hip Measurements - Minor Trochanter Points,1,MinorTrochanter_P2,8,52,0,,,,,,lldPoints,lldPoints,2,8,52,0,Automated Test
+metadata,lldRightParallel_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""lldRightParallel""}",,,,,,Automated Test
+derived_point,Hip Measurements - LLD Right Parallel Line,0,LLD_RightParallel_Start,-232,65,0,,,,,,lldRightParallel,lldRightParallel,1,-232,65,0,Automated Test
+derived_point,Hip Measurements - LLD Right Parallel Line,1,LLD_RightParallel_End,68,65,0,,,,,,lldRightParallel,lldRightParallel,2,68,65,0,Automated Test
+metadata,otherAngle_1_freeArm_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""otherAngle_1_freeArm""}",,,,,,Automated Test
+derived_point,Hip Measurements - Angle 1 Free Arm,0,Angle_1_FreeArm_Start,-297,-210,0,,,,,,otherAngle_1_freeArm,otherAngle_1_freeArm,1,-297,-210,0,Automated Test
+derived_point,Hip Measurements - Angle 1 Free Arm,1,Angle_1_FreeArm_End,-262,-250,0,,,,,,otherAngle_1_freeArm,otherAngle_1_freeArm,2,-262,-250,0,Automated Test
+metadata,otherAngle_1_points_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.OtherAngleLockToReference"": ""none"", ""PelvicXrayMeasurements.Role"": ""otherAngle_1_points""}",,,,,,Automated Test
+point,Hip Measurements - Angle 1 Points,0,Angle_1_ArmA,-337,-230,0,,,,,,otherAngle_1_points,otherAngle_1_points,1,-337,-230,0,Automated Test
+point,Hip Measurements - Angle 1 Points,1,Angle_1_Vertex,-297,-210,0,,,,,,otherAngle_1_points,otherAngle_1_points,2,-297,-210,0,Automated Test
+point,Hip Measurements - Angle 1 Points,2,Angle_1_ArmB,-262,-250,0,,,,,,otherAngle_1_points,otherAngle_1_points,3,-262,-250,0,Automated Test
+metadata,otherAngle_1_referenceArm_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""otherAngle_1_referenceArm""}",,,,,,Automated Test
+derived_point,Hip Measurements - Angle 1 Reference Arm,0,Angle_1_Reference_Start,-297,-210,0,,,,,,otherAngle_1_referenceArm,otherAngle_1_referenceArm,1,-297,-210,0,Automated Test
+derived_point,Hip Measurements - Angle 1 Reference Arm,1,Angle_1_Reference_End,-337,-230,0,,,,,,otherAngle_1_referenceArm,otherAngle_1_referenceArm,2,-337,-230,0,Automated Test
+metadata,otherAngle_2_freeArm_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""otherAngle_2_freeArm""}",,,,,,Automated Test
+derived_point,Hip Measurements - Angle 2 Free Arm,0,Angle_2_FreeArm_Start,-117,130,0,,,,,,otherAngle_2_freeArm,otherAngle_2_freeArm,1,-117,130,0,Automated Test
+derived_point,Hip Measurements - Angle 2 Free Arm,1,Angle_2_FreeArm_End,-95,98,0,,,,,,otherAngle_2_freeArm,otherAngle_2_freeArm,2,-95,98,0,Automated Test
+metadata,otherAngle_2_points_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.OtherAngleLockToReference"": ""parallel"", ""PelvicXrayMeasurements.Role"": ""otherAngle_2_points""}",,,,,,Automated Test
+point,Hip Measurements - Angle 2 Points,0,Angle_2_ArmA,-157,130,0,,,,,,otherAngle_2_points,otherAngle_2_points,1,-157,130,0,Automated Test
+point,Hip Measurements - Angle 2 Points,1,Angle_2_Vertex,-117,130,0,,,,,,otherAngle_2_points,otherAngle_2_points,2,-117,130,0,Automated Test
+point,Hip Measurements - Angle 2 Points,2,Angle_2_ArmB,-95,98,0,,,,,,otherAngle_2_points,otherAngle_2_points,3,-95,98,0,Automated Test
+metadata,otherAngle_2_referenceArm_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""otherAngle_2_referenceArm""}",,,,,,Automated Test
+derived_point,Hip Measurements - Angle 2 Reference Arm,0,Angle_2_Reference_Start,-117,130,0,,,,,,otherAngle_2_referenceArm,otherAngle_2_referenceArm,1,-117,130,0,Automated Test
+derived_point,Hip Measurements - Angle 2 Reference Arm,1,Angle_2_Reference_End,-157,130,0,,,,,,otherAngle_2_referenceArm,otherAngle_2_referenceArm,2,-157,130,0,Automated Test
+metadata,otherAngle_3_freeArm_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""otherAngle_3_freeArm""}",,,,,,Automated Test
+derived_point,Hip Measurements - Angle 3 Free Arm,0,Angle_3_FreeArm_Start,-57,150,0,,,,,,otherAngle_3_freeArm,otherAngle_3_freeArm,1,-57,150,0,Automated Test
+derived_point,Hip Measurements - Angle 3 Free Arm,1,Angle_3_FreeArm_End,-25,172,0,,,,,,otherAngle_3_freeArm,otherAngle_3_freeArm,2,-25,172,0,Automated Test
+metadata,otherAngle_3_points_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.OtherAngleLockToReference"": ""perpendicular"", ""PelvicXrayMeasurements.Role"": ""otherAngle_3_points""}",,,,,,Automated Test
+point,Hip Measurements - Angle 3 Points,0,Angle_3_ArmA,-57,110,0,,,,,,otherAngle_3_points,otherAngle_3_points,1,-57,110,0,Automated Test
+point,Hip Measurements - Angle 3 Points,1,Angle_3_Vertex,-57,150,0,,,,,,otherAngle_3_points,otherAngle_3_points,2,-57,150,0,Automated Test
+point,Hip Measurements - Angle 3 Points,2,Angle_3_ArmB,-25,172,0,,,,,,otherAngle_3_points,otherAngle_3_points,3,-25,172,0,Automated Test
+metadata,otherAngle_3_referenceArm_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""otherAngle_3_referenceArm""}",,,,,,Automated Test
+derived_point,Hip Measurements - Angle 3 Reference Arm,0,Angle_3_Reference_Start,-57,150,0,,,,,,otherAngle_3_referenceArm,otherAngle_3_referenceArm,1,-57,150,0,Automated Test
+derived_point,Hip Measurements - Angle 3 Reference Arm,1,Angle_3_Reference_End,-57,110,0,,,,,,otherAngle_3_referenceArm,otherAngle_3_referenceArm,2,-57,110,0,Automated Test
+metadata,otherLine_1_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.OtherLineLockToReference"": ""none"", ""PelvicXrayMeasurements.Role"": ""otherLine_1""}",,,,,,Automated Test
+point,Hip Measurements - Line 1,0,Line_1_Start,-337,110,0,,,,,,otherLine_1,otherLine_1,1,-337,110,0,Automated Test
+point,Hip Measurements - Line 1,1,Line_1_End,-277,140,0,,,,,,otherLine_1,otherLine_1,2,-277,140,0,Automated Test
+metadata,otherLine_2_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.OtherLineLockToReference"": ""parallel"", ""PelvicXrayMeasurements.Role"": ""otherLine_2""}",,,,,,Automated Test
+point,Hip Measurements - Line 2,0,Line_2_Start,43,120,0,,,,,,otherLine_2,otherLine_2,1,43,120,0,Automated Test
+point,Hip Measurements - Line 2,1,Line_2_End,98,120,0,,,,,,otherLine_2,otherLine_2,2,98,120,0,Automated Test
+metadata,otherLine_3_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.OtherLineLockToReference"": ""perpendicular"", ""PelvicXrayMeasurements.Role"": ""otherLine_3""}",,,,,,Automated Test
+point,Hip Measurements - Line 3,0,Line_3_Start,113,80,0,,,,,,otherLine_3,otherLine_3,1,113,80,0,Automated Test
+point,Hip Measurements - Line 3,1,Line_3_End,113,140,0,,,,,,otherLine_3,otherLine_3,2,113,140,0,Automated Test
+metadata,otherPoint_1_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""otherPoint_1""}",,,,,,Automated Test
+point,Hip Measurements - Point 1,0,Point_1,-372,195,0,,,,,,otherPoint_1,otherPoint_1,1,-372,195,0,Automated Test
+metadata,otherPoint_2_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""otherPoint_2""}",,,,,,Automated Test
+point,Hip Measurements - Point 2,0,Point_2,131,188,0,,,,,,otherPoint_2,otherPoint_2,1,131,188,0,Automated Test
+metadata,referenceLine_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""referenceLine""}",,,,,,Automated Test
+point,Hip Measurements - Reference Line,0,ReferenceLine_Start,-367,-30,0,,,,,,referenceLine,referenceLine,1,-367,-30,0,Automated Test
+point,Hip Measurements - Reference Line,1,ReferenceLine_End,133,-30,0,,,,,,referenceLine,referenceLine,2,133,-30,0,Automated Test
+metadata,right_acetabularInclinationLine_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""right_acetabularInclinationLine""}",,,,,,Automated Test
+point,Hip Measurements - Right Acetabular Inclination Angle Line,0,AcetabularInclinationAngle_Right_Start,-282,-100,0,,,,,,right_acetabularInclinationLine,right_acetabularInclinationLine,1,-282,-100,0,Automated Test
+point,Hip Measurements - Right Acetabular Inclination Angle Line,1,AcetabularInclinationAngle_Right_End,-227,-135,0,,,,,,right_acetabularInclinationLine,right_acetabularInclinationLine,2,-227,-135,0,Automated Test
+metadata,right_acetabularOffsetLineA_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""right_acetabularOffsetLineA""}",,,,,,Automated Test
+point,Hip Measurements - Right Acetabular Offset Line A,0,AcetabularOffset_LineA_Right_Start,-287,10,0,,,,,,right_acetabularOffsetLineA,right_acetabularOffsetLineA,1,-287,10,0,Automated Test
+point,Hip Measurements - Right Acetabular Offset Line A,1,AcetabularOffset_LineA_Right_End,-287,-90,0,,,,,,right_acetabularOffsetLineA,right_acetabularOffsetLineA,2,-287,-90,0,Automated Test
+metadata,right_acetabularOffsetLineB_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""right_acetabularOffsetLineB""}",,,,,,Automated Test
+point,Hip Measurements - Right Acetabular Offset Line B,0,AcetabularOffset_LineB_Right_Start,-222,15,0,,,,,,right_acetabularOffsetLineB,right_acetabularOffsetLineB,1,-222,15,0,Automated Test
+point,Hip Measurements - Right Acetabular Offset Line B,1,AcetabularOffset_LineB_Right_End,-222,-85,0,,,,,,right_acetabularOffsetLineB,right_acetabularOffsetLineB,2,-222,-85,0,Automated Test
+metadata,right_acetabularRoofSourcil_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""right_acetabularRoofSourcil""}",,,,,,Automated Test
+point,Hip Measurements - Right Acetabular Roof (Sourcil),0,Hip Measurements - Right Acetabular Roof (Sourcil)-1,-275,-114,0,1,30,,,,right_acetabularRoofSourcil,right_acetabularRoofSourcil,1,-275,-114,0,Automated Test
+point,Hip Measurements - Right Acetabular Roof (Sourcil),1,Hip Measurements - Right Acetabular Roof (Sourcil)-2,-255,-132,0,1,30,,,,right_acetabularRoofSourcil,right_acetabularRoofSourcil,2,-255,-132,0,Automated Test
+point,Hip Measurements - Right Acetabular Roof (Sourcil),2,Hip Measurements - Right Acetabular Roof (Sourcil)-3,-232,-138,0,1,30,,,,right_acetabularRoofSourcil,right_acetabularRoofSourcil,3,-232,-138,0,Automated Test
+point,Hip Measurements - Right Acetabular Roof (Sourcil),3,Hip Measurements - Right Acetabular Roof (Sourcil)-4,-211,-128,0,1,30,,,,right_acetabularRoofSourcil,right_acetabularRoofSourcil,4,-211,-128,0,Automated Test
+metadata,right_cupOpeningEllipsePoints_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""right_cupOpeningEllipsePoints""}",,,,,,Automated Test
+point,Hip Measurements - Right Cup Opening Ellipse Points,0,CupOpeningEllipse_Right_P1,-209.66407844596478,-59.493422191251788,0,,,,,,right_cupOpeningEllipsePoints,right_cupOpeningEllipsePoints,1,-209.66407844596478,-59.493422191251788,0,Automated Test
+point,Hip Measurements - Right Cup Opening Ellipse Points,1,CupOpeningEllipse_Right_P2,-231.18437056957873,-48.273929024699257,0,,,,,,right_cupOpeningEllipsePoints,right_cupOpeningEllipsePoints,2,-231.18437056957873,-48.273929024699257,0,Automated Test
+point,Hip Measurements - Right Cup Opening Ellipse Points,2,CupOpeningEllipse_Right_P3,-263.52029212361396,-58.780506833447461,0,,,,,,right_cupOpeningEllipsePoints,right_cupOpeningEllipsePoints,3,-263.52029212361396,-58.780506833447461,0,Automated Test
+point,Hip Measurements - Right Cup Opening Ellipse Points,3,CupOpeningEllipse_Right_P4,-274.33592155403522,-80.506577808748204,0,,,,,,right_cupOpeningEllipsePoints,right_cupOpeningEllipsePoints,4,-274.33592155403522,-80.506577808748204,0,Automated Test
+point,Hip Measurements - Right Cup Opening Ellipse Points,4,CupOpeningEllipse_Right_P5,-252.81562943042127,-91.726070975300743,0,,,,,,right_cupOpeningEllipsePoints,right_cupOpeningEllipsePoints,5,-252.81562943042127,-91.726070975300743,0,Automated Test
+point,Hip Measurements - Right Cup Opening Ellipse Points,5,CupOpeningEllipse_Right_P6,-220.47970787638604,-81.219493166552525,0,,,,,,right_cupOpeningEllipsePoints,right_cupOpeningEllipsePoints,6,-220.47970787638604,-81.219493166552525,0,Automated Test
+metadata,right_extrusionIndexLateralLine_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""right_extrusionIndexLateralLine""}",,,,,,Automated Test
+point,Hip Measurements - Right Femoral Head Extrusion Index Lateral Line,0,FemoralHeadExtrusionIndex_Lateral_Right_Start,-257,-90,0,,,,,,right_extrusionIndexLateralLine,right_extrusionIndexLateralLine,1,-257,-90,0,Automated Test
+point,Hip Measurements - Right Femoral Head Extrusion Index Lateral Line,1,FemoralHeadExtrusionIndex_Lateral_Right_End,-257,-190,0,,,,,,right_extrusionIndexLateralLine,right_extrusionIndexLateralLine,2,-257,-190,0,Automated Test
+metadata,right_extrusionIndexMedialLine_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""right_extrusionIndexMedialLine""}",,,,,,Automated Test
+point,Hip Measurements - Right Femoral Head Extrusion Index Medial Line,0,FemoralHeadExtrusionIndex_Medial_Right_Start,-192,-90,0,,,,,,right_extrusionIndexMedialLine,right_extrusionIndexMedialLine,1,-192,-90,0,Automated Test
+point,Hip Measurements - Right Femoral Head Extrusion Index Medial Line,1,FemoralHeadExtrusionIndex_Medial_Right_End,-192,-190,0,,,,,,right_extrusionIndexMedialLine,right_extrusionIndexMedialLine,2,-192,-190,0,Automated Test
+metadata,right_extrusionIndexMiddleLine_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""right_extrusionIndexMiddleLine""}",,,,,,Automated Test
+point,Hip Measurements - Right Femoral Head Extrusion Index Middle Line,0,FemoralHeadExtrusionIndex_Middle_Right_Start,-222,-90,0,,,,,,right_extrusionIndexMiddleLine,right_extrusionIndexMiddleLine,1,-222,-90,0,Automated Test
+point,Hip Measurements - Right Femoral Head Extrusion Index Middle Line,1,FemoralHeadExtrusionIndex_Middle_Right_End,-222,-190,0,,,,,,right_extrusionIndexMiddleLine,right_extrusionIndexMiddleLine,2,-222,-190,0,Automated Test
+metadata,right_femoralOffsetLine_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""right_femoralOffsetLine""}",,,,,,Automated Test
+point,Hip Measurements - Right Femoral Offset Line,0,FemoralOffset_Right_Start,-177,-75,0,,,,,,right_femoralOffsetLine,right_femoralOffsetLine,1,-177,-75,0,Automated Test
+point,Hip Measurements - Right Femoral Offset Line,1,FemoralOffset_Right_End,-177,30,0,,,,,,right_femoralOffsetLine,right_femoralOffsetLine,2,-177,30,0,Automated Test
+metadata,right_femoralShaftContour1_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.FemoralShaftContourClass"": ""lateralOuter"", ""PelvicXrayMeasurements.Role"": ""right_femoralShaftContour1""}",,,,,,Automated Test
+point,Hip Measurements - Right Femoral Shaft Contour 1,0,FemoralShaft_LateralOuter_1,-275,-36,0,1,30,,,,right_femoralShaftContour1,right_femoralShaftContour1,1,-275,-36,0,Automated Test
+point,Hip Measurements - Right Femoral Shaft Contour 1,1,FemoralShaft_LateralOuter_2,-277,-2,0,1,30,,,,right_femoralShaftContour1,right_femoralShaftContour1,2,-277,-2,0,Automated Test
+point,Hip Measurements - Right Femoral Shaft Contour 1,2,FemoralShaft_LateralOuter_3,-279,42,0,1,30,,,,right_femoralShaftContour1,right_femoralShaftContour1,3,-279,42,0,Automated Test
+point,Hip Measurements - Right Femoral Shaft Contour 1,3,FemoralShaft_LateralOuter_4,-281,86,0,1,30,,,,right_femoralShaftContour1,right_femoralShaftContour1,4,-281,86,0,Automated Test
+metadata,right_femoralShaftContour2_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.FemoralShaftContourClass"": ""lateralInner"", ""PelvicXrayMeasurements.Role"": ""right_femoralShaftContour2""}",,,,,,Automated Test
+point,Hip Measurements - Right Femoral Shaft Contour 2,0,FemoralShaft_LateralInner_1,-251,-35,0,1,30,,,,right_femoralShaftContour2,right_femoralShaftContour2,1,-251,-35,0,Automated Test
+point,Hip Measurements - Right Femoral Shaft Contour 2,1,FemoralShaft_LateralInner_2,-253,-1,0,1,30,,,,right_femoralShaftContour2,right_femoralShaftContour2,2,-253,-1,0,Automated Test
+point,Hip Measurements - Right Femoral Shaft Contour 2,2,FemoralShaft_LateralInner_3,-255,42,0,1,30,,,,right_femoralShaftContour2,right_femoralShaftContour2,3,-255,42,0,Automated Test
+point,Hip Measurements - Right Femoral Shaft Contour 2,3,FemoralShaft_LateralInner_4,-257,85,0,1,30,,,,right_femoralShaftContour2,right_femoralShaftContour2,4,-257,85,0,Automated Test
+metadata,right_femoralShaftContour3_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.FemoralShaftContourClass"": ""medialInner"", ""PelvicXrayMeasurements.Role"": ""right_femoralShaftContour3""}",,,,,,Automated Test
+point,Hip Measurements - Right Femoral Shaft Contour 3,0,FemoralShaft_MedialInner_1,-218,-34,0,1,30,,,,right_femoralShaftContour3,right_femoralShaftContour3,1,-218,-34,0,Automated Test
+point,Hip Measurements - Right Femoral Shaft Contour 3,1,FemoralShaft_MedialInner_2,-218,0,0,1,30,,,,right_femoralShaftContour3,right_femoralShaftContour3,2,-218,0,0,Automated Test
+point,Hip Measurements - Right Femoral Shaft Contour 3,2,FemoralShaft_MedialInner_3,-219,44,0,1,30,,,,right_femoralShaftContour3,right_femoralShaftContour3,3,-219,44,0,Automated Test
+point,Hip Measurements - Right Femoral Shaft Contour 3,3,FemoralShaft_MedialInner_4,-220,86,0,1,30,,,,right_femoralShaftContour3,right_femoralShaftContour3,4,-220,86,0,Automated Test
+metadata,right_femoralShaftContour4_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.FemoralShaftContourClass"": ""medialOuter"", ""PelvicXrayMeasurements.Role"": ""right_femoralShaftContour4""}",,,,,,Automated Test
+point,Hip Measurements - Right Femoral Shaft Contour 4,0,FemoralShaft_MedialOuter_1,-191,-35,0,1,30,,,,right_femoralShaftContour4,right_femoralShaftContour4,1,-191,-35,0,Automated Test
+point,Hip Measurements - Right Femoral Shaft Contour 4,1,FemoralShaft_MedialOuter_2,-190,0,0,1,30,,,,right_femoralShaftContour4,right_femoralShaftContour4,2,-190,0,0,Automated Test
+point,Hip Measurements - Right Femoral Shaft Contour 4,2,FemoralShaft_MedialOuter_3,-189,45,0,1,30,,,,right_femoralShaftContour4,right_femoralShaftContour4,3,-189,45,0,Automated Test
+point,Hip Measurements - Right Femoral Shaft Contour 4,3,FemoralShaft_MedialOuter_4,-188,87,0,1,30,,,,right_femoralShaftContour4,right_femoralShaftContour4,4,-188,87,0,Automated Test
+metadata,right_femurHeadCenter_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""right_femurHeadCenter""}",,,,,,Automated Test
+derived_point,Hip Measurements - Right Femur Head Center,0,FemurHead_Right_Center,-202.00000000000003,-149.99999999999997,0,,,,,,right_femurHeadCenter,right_femurHeadCenter,1,-202.00000000000003,-149.99999999999997,0,Automated Test
+metadata,right_femurHeadPoints_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""right_femurHeadPoints""}",,,,,,Automated Test
+point,Hip Measurements - Right Femur Head Points,0,FemurHead_Right_P1,-232,-150,0,,,,,,right_femurHeadPoints,right_femurHeadPoints,1,-232,-150,0,Automated Test
+point,Hip Measurements - Right Femur Head Points,1,FemurHead_Right_P2,-202,-120,0,,,,,,right_femurHeadPoints,right_femurHeadPoints,2,-202,-120,0,Automated Test
+point,Hip Measurements - Right Femur Head Points,2,FemurHead_Right_P3,-176.01923788646684,-135,0,,,,,,right_femurHeadPoints,right_femurHeadPoints,3,-176.01923788646684,-135,0,Automated Test
+metadata,right_ilioischialLine_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""right_ilioischialLine""}",,,,,,Automated Test
+point,Hip Measurements - Right Ilioischial Line,0,Hip Measurements - Right Ilioischial Line-1,-221,-150,0,1,30,,,,right_ilioischialLine,right_ilioischialLine,1,-221,-150,0,Automated Test
+point,Hip Measurements - Right Ilioischial Line,1,Hip Measurements - Right Ilioischial Line-2,-235,-100,0,1,30,,,,right_ilioischialLine,right_ilioischialLine,2,-235,-100,0,Automated Test
+point,Hip Measurements - Right Ilioischial Line,2,Hip Measurements - Right Ilioischial Line-3,-241,-50,0,1,30,,,,right_ilioischialLine,right_ilioischialLine,3,-241,-50,0,Automated Test
+point,Hip Measurements - Right Ilioischial Line,3,Hip Measurements - Right Ilioischial Line-4,-247,5,0,1,30,,,,right_ilioischialLine,right_ilioischialLine,4,-247,5,0,Automated Test
+metadata,right_iliopectinealLine_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""right_iliopectinealLine""}",,,,,,Automated Test
+point,Hip Measurements - Right Iliopectineal Line,0,Hip Measurements - Right Iliopectineal Line-1,-287,-165,0,1,30,,,,right_iliopectinealLine,right_iliopectinealLine,1,-287,-165,0,Automated Test
+point,Hip Measurements - Right Iliopectineal Line,1,Hip Measurements - Right Iliopectineal Line-2,-263,-136,0,1,30,,,,right_iliopectinealLine,right_iliopectinealLine,2,-263,-136,0,Automated Test
+point,Hip Measurements - Right Iliopectineal Line,2,Hip Measurements - Right Iliopectineal Line-3,-240,-108,0,1,30,,,,right_iliopectinealLine,right_iliopectinealLine,3,-240,-108,0,Automated Test
+point,Hip Measurements - Right Iliopectineal Line,3,Hip Measurements - Right Iliopectineal Line-4,-213,-82,0,1,30,,,,right_iliopectinealLine,right_iliopectinealLine,4,-213,-82,0,Automated Test
+metadata,right_implantAlignmentGuideDistal_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""right_implantAlignmentGuideDistal""}",,,,,,Automated Test
+point,Hip Measurements - Right Stem Alignment Guide Line Distal,0,StemAlignmentGuide_Distal_Right_Start,-255,77.799999999999997,0,,,,,,right_implantAlignmentGuideDistal,right_implantAlignmentGuideDistal,1,-255,77.799999999999997,0,Automated Test
+point,Hip Measurements - Right Stem Alignment Guide Line Distal,1,StemAlignmentGuide_Distal_Right_End,-211,82.200000000000003,0,,,,,,right_implantAlignmentGuideDistal,right_implantAlignmentGuideDistal,2,-211,82.200000000000003,0,Automated Test
+metadata,right_implantAlignmentGuideProximal_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""right_implantAlignmentGuideProximal""}",,,,,,Automated Test
+point,Hip Measurements - Right Stem Alignment Guide Line Proximal,0,StemAlignmentGuide_Proximal_Right_Start,-257,-42.200000000000003,0,,,,,,right_implantAlignmentGuideProximal,right_implantAlignmentGuideProximal,1,-257,-42.200000000000003,0,Automated Test
+point,Hip Measurements - Right Stem Alignment Guide Line Proximal,1,StemAlignmentGuide_Proximal_Right_End,-213,-37.799999999999997,0,,,,,,right_implantAlignmentGuideProximal,right_implantAlignmentGuideProximal,2,-213,-37.799999999999997,0,Automated Test
+metadata,right_implantAlignmentLine_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""right_implantAlignmentLine""}",,,,,,Automated Test
+derived_point,Hip Measurements - Right Stem Alignment Axis,0,StemAlignment_Right_Start,-162.35732230488068,-696.42677695119221,0,,,,,,right_implantAlignmentLine,right_implantAlignmentLine,1,-162.35732230488068,-696.42677695119221,0,Automated Test
+derived_point,Hip Measurements - Right Stem Alignment Axis,1,StemAlignment_Right_End,-305.64267769511935,736.42677695119221,0,,,,,,right_implantAlignmentLine,right_implantAlignmentLine,2,-305.64267769511935,736.42677695119221,0,Automated Test
+metadata,right_implantHeadCenter_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""right_implantHeadCenter""}",,,,,,Automated Test
+derived_point,Hip Measurements - Right Implant Head Center,0,ImplantHead_Right_Center,-197,-147.99999999999997,0,,,,,,right_implantHeadCenter,right_implantHeadCenter,1,-197,-147.99999999999997,0,Automated Test
+metadata,right_implantHeadPoints_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""right_implantHeadPoints""}",,,,,,Automated Test
+point,Hip Measurements - Right Implant Head Points,0,ImplantHead_Right_P1,-215,-148,0,,,,,,right_implantHeadPoints,right_implantHeadPoints,1,-215,-148,0,Automated Test
+point,Hip Measurements - Right Implant Head Points,1,ImplantHead_Right_P2,-197,-130,0,,,,,,right_implantHeadPoints,right_implantHeadPoints,2,-197,-130,0,Automated Test
+point,Hip Measurements - Right Implant Head Points,2,ImplantHead_Right_P3,-181.4115427318801,-139,0,,,,,,right_implantHeadPoints,right_implantHeadPoints,3,-181.4115427318801,-139,0,Automated Test
+metadata,right_implantNeckAxis_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""right_implantNeckAxis""}",,,,,,Automated Test
+derived_point,Hip Measurements - Right Implant Neck Axis,0,ImplantNeckAxis_Right_Start,-136.50155281000758,-295.99689437998484,0,,,,,,right_implantNeckAxis,right_implantNeckAxis,1,-136.50155281000758,-295.99689437998484,0,Automated Test
+derived_point,Hip Measurements - Right Implant Neck Axis,1,ImplantNeckAxis_Right_End,-297.49844718999242,25.996894379984866,0,,,,,,right_implantNeckAxis,right_implantNeckAxis,2,-297.49844718999242,25.996894379984866,0,Automated Test
+metadata,right_implantNeckGuideProximal_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.LockToCenter"": ""0"", ""PelvicXrayMeasurements.Role"": ""right_implantNeckGuideProximal"", ""PelvicXrayMeasurements.UseSingleGuide"": ""1""}",,,,,,Automated Test
+point,Hip Measurements - Right Implant Neck Guide Line Proximal,0,ImplantNeckGuide_Proximal_Right_Start,-239,-146,0,,,,,,right_implantNeckGuideProximal,right_implantNeckGuideProximal,1,-239,-146,0,Automated Test
+point,Hip Measurements - Right Implant Neck Guide Line Proximal,1,ImplantNeckGuide_Proximal_Right_End,-195,-124,0,,,,,,right_implantNeckGuideProximal,right_implantNeckGuideProximal,2,-195,-124,0,Automated Test
+metadata,right_lceAnglePoint_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""right_lceAnglePoint""}",,,,,,Automated Test
+point,Hip Measurements - Right LCE Angle Point,0,LCEAngle_Right_Point,-222,-175,0,,,,,,right_lceAnglePoint,right_lceAnglePoint,1,-222,-175,0,Automated Test
+metadata,right_lceAngleRadialArm_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""right_lceAngleRadialArm""}",,,,,,Automated Test
+derived_point,Hip Measurements - Right LCE Angle Radial Arm,0,LCEAngleRadial_Right_Start,-202.00000000000003,-149.99999999999997,0,,,,,,right_lceAngleRadialArm,right_lceAngleRadialArm,1,-202.00000000000003,-149.99999999999997,0,Automated Test
+derived_point,Hip Measurements - Right LCE Angle Radial Arm,1,LCEAngleRadial_Right_End,-222,-175,0,,,,,,right_lceAngleRadialArm,right_lceAngleRadialArm,2,-222,-175,0,Automated Test
+metadata,right_lceAngleVisual_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""right_lceAngleVisual""}",,,,,,Automated Test
+derived_point,Hip Measurements - Right LCE Angle Reference Arm,0,LCEAngleReference_Right_Start,-202.00000000000003,-149.99999999999997,0,,,,,,right_lceAngleVisual,right_lceAngleVisual,1,-202.00000000000003,-149.99999999999997,0,Automated Test
+derived_point,Hip Measurements - Right LCE Angle Reference Arm,1,LCEAngleReference_Right_End,-202.00000000000003,-182.01562118716421,0,,,,,,right_lceAngleVisual,right_lceAngleVisual,2,-202.00000000000003,-182.01562118716421,0,Automated Test
+metadata,right_lineaTerminalis_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""right_lineaTerminalis""}",,,,,,Automated Test
+point,Hip Measurements - Right Linea Terminalis,0,Hip Measurements - Right Linea Terminalis-1,-309,-72,0,1,30,,,,right_lineaTerminalis,right_lineaTerminalis,1,-309,-72,0,Automated Test
+point,Hip Measurements - Right Linea Terminalis,1,Hip Measurements - Right Linea Terminalis-2,-283,-46,0,1,30,,,,right_lineaTerminalis,right_lineaTerminalis,2,-283,-46,0,Automated Test
+point,Hip Measurements - Right Linea Terminalis,2,Hip Measurements - Right Linea Terminalis-3,-255,-24,0,1,30,,,,right_lineaTerminalis,right_lineaTerminalis,3,-255,-24,0,Automated Test
+point,Hip Measurements - Right Linea Terminalis,3,Hip Measurements - Right Linea Terminalis-4,-225,-2,0,1,30,,,,right_lineaTerminalis,right_lineaTerminalis,4,-225,-2,0,Automated Test
+metadata,right_neckAxis_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""right_neckAxis""}",,,,,,Automated Test
+derived_point,Hip Measurements - Right Femoral Neck Axis,0,FemoralNeckAxis_Right_Start,-107.5,-254,0,,,,,,right_neckAxis,right_neckAxis,1,-107.5,-254,0,Automated Test
+derived_point,Hip Measurements - Right Femoral Neck Axis,1,FemoralNeckAxis_Right_End,-323.5,34,0,,,,,,right_neckAxis,right_neckAxis,2,-323.5,34,0,Automated Test
+metadata,right_neckGuideDistal_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""right_neckGuideDistal""}",,,,,,Automated Test
+point,Hip Measurements - Right Femoral Neck Guide Line Distal,0,FemoralNeckGuide_Distal_Right_Start,-229,-110,0,,,,,,right_neckGuideDistal,right_neckGuideDistal,1,-229,-110,0,Automated Test
+point,Hip Measurements - Right Femoral Neck Guide Line Distal,1,FemoralNeckGuide_Distal_Right_End,-189,-80,0,,,,,,right_neckGuideDistal,right_neckGuideDistal,2,-189,-80,0,Automated Test
+metadata,right_neckGuideProximal_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.LockToCenter"": ""0"", ""PelvicXrayMeasurements.Role"": ""right_neckGuideProximal"", ""PelvicXrayMeasurements.UseSingleGuide"": ""0""}",,,,,,Automated Test
+point,Hip Measurements - Right Femoral Neck Guide Line Proximal,0,FemoralNeckGuide_Proximal_Right_Start,-242,-140,0,,,,,,right_neckGuideProximal,right_neckGuideProximal,1,-242,-140,0,Automated Test
+point,Hip Measurements - Right Femoral Neck Guide Line Proximal,1,FemoralNeckGuide_Proximal_Right_End,-202,-110,0,,,,,,right_neckGuideProximal,right_neckGuideProximal,2,-202,-110,0,Automated Test
+metadata,right_postOpAcetabularOffsetLineA_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""right_postOpAcetabularOffsetLineA""}",,,,,,Automated Test
+point,Hip Measurements - Right Post-Op Acetabular Offset Line A,0,PostOpAcetabularOffset_LineA_Right_Start,-297,8,0,,,,,,right_postOpAcetabularOffsetLineA,right_postOpAcetabularOffsetLineA,1,-297,8,0,Automated Test
+point,Hip Measurements - Right Post-Op Acetabular Offset Line A,1,PostOpAcetabularOffset_LineA_Right_End,-297,-92,0,,,,,,right_postOpAcetabularOffsetLineA,right_postOpAcetabularOffsetLineA,2,-297,-92,0,Automated Test
+metadata,right_postOpAcetabularOffsetLineB_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""right_postOpAcetabularOffsetLineB""}",,,,,,Automated Test
+point,Hip Measurements - Right Post-Op Acetabular Offset Line B,0,PostOpAcetabularOffset_LineB_Right_Start,-237,10,0,,,,,,right_postOpAcetabularOffsetLineB,right_postOpAcetabularOffsetLineB,1,-237,10,0,Automated Test
+point,Hip Measurements - Right Post-Op Acetabular Offset Line B,1,PostOpAcetabularOffset_LineB_Right_End,-237,-90,0,,,,,,right_postOpAcetabularOffsetLineB,right_postOpAcetabularOffsetLineB,2,-237,-90,0,Automated Test
+metadata,right_postOpFemoralOffsetLine_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""right_postOpFemoralOffsetLine""}",,,,,,Automated Test
+point,Hip Measurements - Right Post-Op Femoral Offset Line,0,PostOpFemoralOffset_Right_Start,-185,-80,0,,,,,,right_postOpFemoralOffsetLine,right_postOpFemoralOffsetLine,1,-185,-80,0,Automated Test
+point,Hip Measurements - Right Post-Op Femoral Offset Line,1,PostOpFemoralOffset_Right_End,-185,28,0,,,,,,right_postOpFemoralOffsetLine,right_postOpFemoralOffsetLine,2,-185,28,0,Automated Test
+metadata,right_shaftAxis_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""right_shaftAxis""}",,,,,,Automated Test
+derived_point,Hip Measurements - Right Femoral Shaft Axis,0,FemoralShaftAxis_Right_Start,-237,-720,0,,,,,,right_shaftAxis,right_shaftAxis,1,-237,-720,0,Automated Test
+derived_point,Hip Measurements - Right Femoral Shaft Axis,1,FemoralShaftAxis_Right_End,-237,720,0,,,,,,right_shaftAxis,right_shaftAxis,2,-237,720,0,Automated Test
+metadata,right_shaftGuideDistal_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""right_shaftGuideDistal""}",,,,,,Automated Test
+point,Hip Measurements - Right Femoral Shaft Guide Line Distal,0,FemoralShaftGuide_Distal_Right_Start,-285,65,0,,,,,,right_shaftGuideDistal,right_shaftGuideDistal,1,-285,65,0,Automated Test
+point,Hip Measurements - Right Femoral Shaft Guide Line Distal,1,FemoralShaftGuide_Distal_Right_End,-189,65,0,,,,,,right_shaftGuideDistal,right_shaftGuideDistal,2,-189,65,0,Automated Test
+metadata,right_shaftGuideProximal_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""right_shaftGuideProximal""}",,,,,,Automated Test
+point,Hip Measurements - Right Femoral Shaft Guide Line Proximal,0,FemoralShaftGuide_Proximal_Right_Start,-282,-65,0,,,,,,right_shaftGuideProximal,right_shaftGuideProximal,1,-282,-65,0,Automated Test
+point,Hip Measurements - Right Femoral Shaft Guide Line Proximal,1,FemoralShaftGuide_Proximal_Right_End,-192,-65,0,,,,,,right_shaftGuideProximal,right_shaftGuideProximal,2,-192,-65,0,Automated Test
+metadata,right_shaftMorphologyGuideLineA_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""right_shaftMorphologyGuideLineA""}",,,,,,Automated Test
+derived_point,Hip Measurements - Right Femur Shaft Morphology Guide Line A,0,FemurShaftMorphology_GuideA_Right_Start,-260.42857142857144,-2,0,,,,,,right_shaftMorphologyGuideLineA,right_shaftMorphologyGuideLineA,1,-260.42857142857144,-2,0,Automated Test
+derived_point,Hip Measurements - Right Femur Shaft Morphology Guide Line A,1,FemurShaftMorphology_GuideA_Right_End,-249,98,0,,,,,,right_shaftMorphologyGuideLineA,right_shaftMorphologyGuideLineA,2,-249,98,0,Automated Test
+metadata,right_shaftMorphologyGuideLineB_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""right_shaftMorphologyGuideLineB""}",,,,,,Automated Test
+derived_point,Hip Measurements - Right Femur Shaft Morphology Guide Line B,0,FemurShaftMorphology_GuideB_Right_Start,-213.57142857142858,-2,0,,,,,,right_shaftMorphologyGuideLineB,right_shaftMorphologyGuideLineB,1,-213.57142857142858,-2,0,Automated Test
+derived_point,Hip Measurements - Right Femur Shaft Morphology Guide Line B,1,FemurShaftMorphology_GuideB_Right_End,-225,98,0,,,,,,right_shaftMorphologyGuideLineB,right_shaftMorphologyGuideLineB,2,-225,98,0,Automated Test
+metadata,right_shaftMorphologyLTPoints_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""right_shaftMorphologyLTPoints""}",,,,,,Automated Test
+point,Hip Measurements - Right Femur Shaft Morphology Lesser Trochanter Points,0,FemurShaftMorphology_Right_LT_Proximal,-235,-12,0,,,,,,right_shaftMorphologyLTPoints,right_shaftMorphologyLTPoints,1,-235,-12,0,Automated Test
+point,Hip Measurements - Right Femur Shaft Morphology Lesser Trochanter Points,1,FemurShaftMorphology_Right_LT_Distal,-239,8,0,,,,,,right_shaftMorphologyLTPoints,right_shaftMorphologyLTPoints,2,-239,8,0,Automated Test
+metadata,right_shaftMorphologyMidline_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""right_shaftMorphologyMidline""}",,,,,,Automated Test
+derived_point,Hip Measurements - Right Femur Shaft Morphology LT Midline,0,FemurShaftMorphology_Midline_Right_Start,-269,-2,0,,,,,,right_shaftMorphologyMidline,right_shaftMorphologyMidline,1,-269,-2,0,Automated Test
+derived_point,Hip Measurements - Right Femur Shaft Morphology LT Midline,1,FemurShaftMorphology_Midline_Right_End,-205,-2,0,,,,,,right_shaftMorphologyMidline,right_shaftMorphologyMidline,2,-205,-2,0,Automated Test
+metadata,right_shaftMorphologyPoints_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""right_shaftMorphologyPoints""}",,,,,,Automated Test
+point,Hip Measurements - Right Femur Shaft Morphology Control Points,0,FemurShaftMorphology_Right_P1,-257,-22,0,,,,,,right_shaftMorphologyPoints,right_shaftMorphologyPoints,1,-257,-22,0,Automated Test
+point,Hip Measurements - Right Femur Shaft Morphology Control Points,1,FemurShaftMorphology_Right_P2,-217,-22,0,,,,,,right_shaftMorphologyPoints,right_shaftMorphologyPoints,2,-217,-22,0,Automated Test
+point,Hip Measurements - Right Femur Shaft Morphology Control Points,2,FemurShaftMorphology_Right_P3,-257,28,0,,,,,,right_shaftMorphologyPoints,right_shaftMorphologyPoints,3,-257,28,0,Automated Test
+point,Hip Measurements - Right Femur Shaft Morphology Control Points,3,FemurShaftMorphology_Right_P4,-217,28,0,,,,,,right_shaftMorphologyPoints,right_shaftMorphologyPoints,4,-217,28,0,Automated Test
+point,Hip Measurements - Right Femur Shaft Morphology Control Points,4,FemurShaftMorphology_Right_P5,-269,98,0,,,,,,right_shaftMorphologyPoints,right_shaftMorphologyPoints,5,-269,98,0,Automated Test
+point,Hip Measurements - Right Femur Shaft Morphology Control Points,5,FemurShaftMorphology_Right_P6,-249,98,0,,,,,,right_shaftMorphologyPoints,right_shaftMorphologyPoints,6,-249,98,0,Automated Test
+point,Hip Measurements - Right Femur Shaft Morphology Control Points,6,FemurShaftMorphology_Right_P7,-225,98,0,,,,,,right_shaftMorphologyPoints,right_shaftMorphologyPoints,7,-225,98,0,Automated Test
+point,Hip Measurements - Right Femur Shaft Morphology Control Points,7,FemurShaftMorphology_Right_P8,-205,98,0,,,,,,right_shaftMorphologyPoints,right_shaftMorphologyPoints,8,-205,98,0,Automated Test
+point,Hip Measurements - Right Femur Shaft Morphology Control Points,8,FemurShaftMorphology_Right_P9,-257,108,0,,,,,,right_shaftMorphologyPoints,right_shaftMorphologyPoints,9,-257,108,0,Automated Test
+point,Hip Measurements - Right Femur Shaft Morphology Control Points,9,FemurShaftMorphology_Right_P10,-217,108,0,,,,,,right_shaftMorphologyPoints,right_shaftMorphologyPoints,10,-217,108,0,Automated Test
+metadata,right_sharpAngleLine_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""right_sharpAngleLine""}",,,,,,Automated Test
+point,Hip Measurements - Right Sharp Angle Line,0,SharpAngle_Right_Start,-267,-20,0,,,,,,right_sharpAngleLine,right_sharpAngleLine,1,-267,-20,0,Automated Test
+point,Hip Measurements - Right Sharp Angle Line,1,SharpAngle_Right_End,-217,-48,0,,,,,,right_sharpAngleLine,right_sharpAngleLine,2,-217,-48,0,Automated Test
+metadata,right_sharpAngleReferenceArm_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""right_sharpAngleReferenceArm""}",,,,,,Automated Test
+derived_point,Hip Measurements - Right Sharp Angle Reference Arm,0,SharpAngleReference_Right_Start,-267,-20,0,,,,,,right_sharpAngleReferenceArm,right_sharpAngleReferenceArm,1,-267,-20,0,Automated Test
+derived_point,Hip Measurements - Right Sharp Angle Reference Arm,1,SharpAngleReference_Right_End,-324.30619512757761,-20,0,,,,,,right_sharpAngleReferenceArm,right_sharpAngleReferenceArm,2,-324.30619512757761,-20,0,Automated Test
+metadata,right_shentonLine_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""right_shentonLine""}",,,,,,Automated Test
+point,Hip Measurements - Right Shenton Line,0,Hip Measurements - Right Shenton Line-1,-272,-88,0,1,30,,,,right_shentonLine,right_shentonLine,1,-272,-88,0,Automated Test
+point,Hip Measurements - Right Shenton Line,1,Hip Measurements - Right Shenton Line-2,-249,-100,0,1,30,,,,right_shentonLine,right_shentonLine,2,-249,-100,0,Automated Test
+point,Hip Measurements - Right Shenton Line,2,Hip Measurements - Right Shenton Line-3,-222,-102,0,1,30,,,,right_shentonLine,right_shentonLine,3,-222,-102,0,Automated Test
+point,Hip Measurements - Right Shenton Line,3,Hip Measurements - Right Shenton Line-4,-195,-92,0,1,30,,,,right_shentonLine,right_shentonLine,4,-195,-92,0,Automated Test
+metadata,right_tonnisAngleLine_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""right_tonnisAngleLine""}",,,,,,Automated Test
+point,Hip Measurements - Right Acetabular Index (Tönnis) Line,0,TonnisAngle_Right_Start,-267,-60,0,,,,,,right_tonnisAngleLine,right_tonnisAngleLine,1,-267,-60,0,Automated Test
+point,Hip Measurements - Right Acetabular Index (Tönnis) Line,1,TonnisAngle_Right_End,-212,-80,0,,,,,,right_tonnisAngleLine,right_tonnisAngleLine,2,-212,-80,0,Automated Test
+metadata,right_tonnisAngleReferenceArm_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""right_tonnisAngleReferenceArm""}",,,,,,Automated Test
+derived_point,Hip Measurements - Right Acetabular Index (Tönnis) Reference Arm,0,TonnisAngleReference_Right_Start,-267,-60,0,,,,,,right_tonnisAngleReferenceArm,right_tonnisAngleReferenceArm,1,-267,-60,0,Automated Test
+derived_point,Hip Measurements - Right Acetabular Index (Tönnis) Reference Arm,1,TonnisAngleReference_Right_End,-325.52349955359813,-60,0,,,,,,right_tonnisAngleReferenceArm,right_tonnisAngleReferenceArm,2,-325.52349955359813,-60,0,Automated Test
+derived_point,CalibrationBall_Center,0,CalibrationBall_Center,-117.0,-330.0,0.0,,,,,,,,,,,,Automated Test
+derived_point,Left_FemoralShaftAxis,0,Left_FemoralShaftAxis,8.0,-720.0,0.0,,,,,,,,,,,,Automated Test
+derived_point,Left_FemoralShaftAxis,1,Left_FemoralShaftAxis,8.0,720.0,0.0,,,,,,,,,,,,Automated Test
+derived_point,Left_FemoralShaftAxis_Origin,0,Left_FemoralShaftAxis_Origin,8.0,0.0,0.0,,,,,,,,,,,,Automated Test
+derived_point,Left_FemoralNeckAxis,0,Left_FemoralNeckAxis,-105.67947968939342,-292.54022813929373,0.0,,,,,,,,,,,,Automated Test
+derived_point,Left_FemoralNeckAxis,1,Left_FemoralNeckAxis,91.67947968939339,8.540228139293703,0.0,,,,,,,,,,,,Automated Test
+derived_point,Left_FemoralNeckAxis_Origin,0,Left_FemoralNeckAxis_Origin,-7.000000000000014,-142.0,0.0,,,,,,,,,,,,Automated Test
+derived_point,Left_ImplantNeckAxis,0,Left_ImplantNeckAxis,72.77070005460101,-305.0726101255823,0.0,,,,,,,,,,,,Automated Test
+derived_point,Left_ImplantNeckAxis,1,Left_ImplantNeckAxis,-70.77070005460101,25.072610125582344,0.0,,,,,,,,,,,,Automated Test
+derived_point,Left_ImplantNeckAxis_Origin,0,Left_ImplantNeckAxis_Origin,1.0,-139.99999999999997,0.0,,,,,,,,,,,,Automated Test
+derived_point,Left_StemAlignmentAxis,0,Left_StemAlignmentAxis,-78.50283229420727,-700.0239655663697,0.0,,,,,,,,,,,,Automated Test
+derived_point,Left_StemAlignmentAxis,1,Left_StemAlignmentAxis,90.50283229420727,730.0239655663697,0.0,,,,,,,,,,,,Automated Test
+derived_point,Left_StemAlignmentAxis_Origin,0,Left_StemAlignmentAxis_Origin,6.0,15.0,0.0,,,,,,,,,,,,Automated Test
+derived_point,Left_CupOpeningEllipse_Center,0,Left_CupOpeningEllipse_Center,17.999999999999996,-60.0,0.0,,,,,,,,,,,,Automated Test
+derived_point,Left_CupOpeningEllipse_MajorAxis,0,Left_CupOpeningEllipse_MajorAxis,43.160117038362735,-43.66082894954919,0.0,,,,,,,,,,,,Automated Test
+derived_point,Left_CupOpeningEllipse_MajorAxis,1,Left_CupOpeningEllipse_MajorAxis,-7.160117038362742,-76.3391710504508,0.0,,,,,,,,,,,,Automated Test
+derived_point,Left_CupOpeningEllipse_MinorAxis,0,Left_CupOpeningEllipse_MinorAxis,26.714224560240424,-73.41872908712679,0.0,,,,,,,,,,,,Automated Test
+derived_point,Left_CupOpeningEllipse_MinorAxis,1,Left_CupOpeningEllipse_MinorAxis,9.285775439759567,-46.58127091287321,0.0,,,,,,,,,,,,Automated Test
+derived_point,Right_FemoralShaftAxis,0,Right_FemoralShaftAxis,-237.0,-720.0,0.0,,,,,,,,,,,,Automated Test
+derived_point,Right_FemoralShaftAxis,1,Right_FemoralShaftAxis,-237.0,720.0,0.0,,,,,,,,,,,,Automated Test
+derived_point,Right_FemoralShaftAxis_Origin,0,Right_FemoralShaftAxis_Origin,-237.0,0.0,0.0,,,,,,,,,,,,Automated Test
+derived_point,Right_FemoralNeckAxis,0,Right_FemoralNeckAxis,-107.5,-254.0,0.0,,,,,,,,,,,,Automated Test
+derived_point,Right_FemoralNeckAxis,1,Right_FemoralNeckAxis,-323.5,34.0,0.0,,,,,,,,,,,,Automated Test
+derived_point,Right_FemoralNeckAxis_Origin,0,Right_FemoralNeckAxis_Origin,-215.5,-110.0,0.0,,,,,,,,,,,,Automated Test
+derived_point,Right_ImplantNeckAxis,0,Right_ImplantNeckAxis,-136.50155281000758,-295.99689437998484,0.0,,,,,,,,,,,,Automated Test
+derived_point,Right_ImplantNeckAxis,1,Right_ImplantNeckAxis,-297.4984471899924,25.996894379984866,0.0,,,,,,,,,,,,Automated Test
+derived_point,Right_ImplantNeckAxis_Origin,0,Right_ImplantNeckAxis_Origin,-217.0,-135.0,0.0,,,,,,,,,,,,Automated Test
+derived_point,Right_StemAlignmentAxis,0,Right_StemAlignmentAxis,-162.35732230488068,-696.4267769511922,0.0,,,,,,,,,,,,Automated Test
+derived_point,Right_StemAlignmentAxis,1,Right_StemAlignmentAxis,-305.64267769511935,736.4267769511922,0.0,,,,,,,,,,,,Automated Test
+derived_point,Right_StemAlignmentAxis_Origin,0,Right_StemAlignmentAxis_Origin,-234.0,20.0,0.0,,,,,,,,,,,,Automated Test
+derived_point,Right_CupOpeningEllipse_Center,0,Right_CupOpeningEllipse_Center,-242.0,-70.0,0.0,,,,,,,,,,,,Automated Test
+derived_point,Right_CupOpeningEllipse_MajorAxis,0,Right_CupOpeningEllipse_MajorAxis,-209.66407844596478,-59.493422191251796,0.0,,,,,,,,,,,,Automated Test
+derived_point,Right_CupOpeningEllipse_MajorAxis,1,Right_CupOpeningEllipse_MajorAxis,-274.3359215540352,-80.5065778087482,0.0,,,,,,,,,,,,Automated Test
+derived_point,Right_CupOpeningEllipse_MinorAxis,0,Right_CupOpeningEllipse_MinorAxis,-235.81966011250105,-89.02113032590307,0.0,,,,,,,,,,,,Automated Test
+derived_point,Right_CupOpeningEllipse_MinorAxis,1,Right_CupOpeningEllipse_MinorAxis,-248.18033988749895,-50.97886967409693,0.0,,,,,,,,,,,,Automated Test
+derived_point,LLD_LeftProjection,0,LLD_LeftProjection,8.0,-30.0,0.0,,,,,,,,,,,,Automated Test
+derived_point,LLD_RightProjection,0,LLD_RightProjection,-232.0,-30.0,0.0,,,,,,,,,,,,Automated Test

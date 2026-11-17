@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Pelvic X-ray Measurements</title>
+  <desc id="desc">An X-ray-style pelvis with femoral heads, teardrop reference landmarks, and a glowing measurement angle.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#162a47"/>
+      <stop offset="0.52" stop-color="#0b1730"/>
+      <stop offset="1" stop-color="#07101f"/>
+    </linearGradient>
+    <radialGradient id="screenGlow" cx="50%" cy="42%" r="60%">
+      <stop offset="0" stop-color="#3b83a4" stop-opacity=".25"/>
+      <stop offset="1" stop-color="#3b83a4" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="bone" x1="0" y1="0" x2=".8" y2="1">
+      <stop offset="0" stop-color="#f5fbff" stop-opacity=".9"/>
+      <stop offset=".52" stop-color="#c3d9e7" stop-opacity=".72"/>
+      <stop offset="1" stop-color="#7998b5" stop-opacity=".58"/>
+    </linearGradient>
+    <linearGradient id="femur" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e5f4fa" stop-opacity=".9"/>
+      <stop offset="1" stop-color="#89acc5" stop-opacity=".6"/>
+    </linearGradient>
+    <linearGradient id="measure" gradientUnits="userSpaceOnUse" x1="100" y1="250" x2="410" y2="250">
+      <stop offset="0" stop-color="#6ef5e2"/>
+      <stop offset="1" stop-color="#4ccaff"/>
+    </linearGradient>
+    <path id="halfPelvis" fill-rule="evenodd" d="M244 151 C221 118 190 102 151 109 C115 116 87 142 81 176 C76 204 86 229 111 246 C125 256 139 261 146 277 C150 289 146 305 151 331 C156 361 174 384 199 391 C218 396 239 385 252 370 L252 333 C234 320 217 311 203 300 C194 292 190 283 193 270 C195 253 208 241 222 228 C239 212 246 191 244 151 Z M187 317 C198 307 216 321 231 338 L235 348 C230 365 215 376 201 371 C184 365 174 338 187 317 Z"/>
+    <path id="femurShape" d="M145 255 C166 244 191 258 191 279 C192 298 175 312 157 308 L139 327 C148 336 152 347 151 360 L149 380 L156 443 C147 451 132 451 123 443 L122 385 C119 365 105 346 108 327 C110 312 117 305 128 307 L133 296 C123 280 130 263 145 255 Z"/>
+  </defs>
+
+  <rect x="16" y="16" width="480" height="480" rx="110" fill="url(#background)"/>
+  <rect x="16" y="16" width="480" height="480" rx="110" fill="url(#screenGlow)"/>
+  <rect x="35" y="35" width="442" height="442" rx="92" fill="none" stroke="#8ad9ee" stroke-opacity=".22" stroke-width="3"/>
+  <path d="M76 82h56 M76 82v56 M436 82h-56 M436 82v56 M76 430h56 M76 430v-56 M436 430h-56 M436 430v-56" fill="none" stroke="#8fe2f0" stroke-opacity=".26" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- Soft radiographic bone signal beneath the sharper contours. -->
+  <g fill="url(#bone)" stroke="#e1f2f7" stroke-linejoin="round">
+    <use href="#halfPelvis" opacity=".85" stroke-opacity=".73" stroke-width="4"/>
+    <use href="#halfPelvis" transform="translate(512 0) scale(-1 1)" opacity=".85" stroke-opacity=".73" stroke-width="4"/>
+  </g>
+  <path d="M228 135 C238 119 274 119 284 135 C294 153 288 180 275 200 L265 231 Q256 244 247 231 L237 200 C224 180 218 153 228 135 Z" fill="url(#bone)" stroke="#e5f4f8" stroke-opacity=".72" stroke-width="4"/>
+  <path d="M256 159v48 M243 183h26" stroke="#e5f4f8" stroke-opacity=".25" stroke-width="3" stroke-linecap="round"/>
+  <path d="M129 242 Q153 251 169 255 M383 242 Q359 251 343 255" fill="none" stroke="#f1fbff" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- Femoral heads and necks. -->
+  <g fill="url(#femur)" stroke="#e1f1f7" stroke-opacity=".8" stroke-width="4" stroke-linejoin="round">
+    <use href="#femurShape"/>
+    <use href="#femurShape" transform="translate(512 0) scale(-1 1)"/>
+  </g>
+  <path d="M145 264 C158 255 175 261 181 273 M367 264 C354 255 337 261 331 273" fill="none" stroke="#ffffff" stroke-opacity=".3" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- Teardrop-level baseline and a center-edge angle measurement. -->
+  <path d="M101 330H411" stroke="#50dff7" stroke-opacity=".12" stroke-width="13" stroke-linecap="round"/>
+  <path d="M101 330H411" stroke="url(#measure)" stroke-width="4" stroke-linecap="round" stroke-dasharray="9 8"/>
+  <circle cx="220" cy="330" r="7" fill="#ffcf6d" stroke="#fff4c9" stroke-width="2"/>
+  <circle cx="292" cy="330" r="7" fill="#ffcf6d" stroke="#fff4c9" stroke-width="2"/>
+
+  <path d="M351 280V182 M351 280L401 220" fill="none" stroke="#3fe6e1" stroke-opacity=".13" stroke-width="15" stroke-linecap="round"/>
+  <path d="M351 280V182 M351 280L401 220" fill="none" stroke="url(#measure)" stroke-width="5" stroke-linecap="round"/>
+  <path d="M351 236 A44 44 0 0 1 379 246" fill="none" stroke="#ffcf6d" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="351" cy="280" r="8" fill="#ffcf6d" stroke="#fff3c4" stroke-width="3"/>
+  <circle cx="401" cy="220" r="6" fill="#6ef5e2" stroke="#d8fffa" stroke-width="2"/>
+
+  <rect x="16" y="16" width="480" height="480" rx="110" fill="none" stroke="#b7e9f1" stroke-opacity=".35" stroke-width="3"/>
+</svg>

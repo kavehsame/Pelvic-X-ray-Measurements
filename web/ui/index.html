@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta name="color-scheme" content="dark">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-@@SCRIPT_HASH@@' 'wasm-unsafe-eval' blob:; style-src 'unsafe-inline'; img-src data: blob:; worker-src blob:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>Pelvic X-ray Measurements</title>
+  <link rel="icon" href="@@ICON@@">
+  <style>@@STYLE@@</style>
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <img src="@@ICON@@" alt="" width="38" height="38">
+      <div class="wordmark"><strong>Pelvic X-ray Measurements</strong><small>Web edition · v@@VERSION@@</small></div>
+    </div>
+    <div class="header-actions">
+      <span class="local-tag"><i></i> Local processing</span>
+      <button type="button" id="manual-button" class="quiet">User Manual</button>
+      <button type="button" id="close-scene" class="quiet" hidden disabled>Close Scene</button>
+    </div>
+  </header>
+
+  <main class="welcome" id="welcome">
+    <div class="welcome-copy">
+      <h1>Pelvic X-ray<br>Measurements <span class="welcome-edition">for the web<sup aria-describedby="export-browser-note">*</sup></span></h1>
+      <p>Measure and annotate pelvic radiographs. Images, annotations and exports stay on this device.</p>
+      <button type="button" id="start" class="primary">Start <span aria-hidden="true">→</span></button>
+      <div class="start-status" aria-live="polite"><span id="start-status"></span><progress id="start-progress" hidden></progress></div>
+      <p class="browser-note" id="export-browser-note">* Exporting to folders works best in Chrome or Edge.</p>
+      <small class="research">For research use only. This software is not a medical device.</small>
+    </div>
+    <div class="welcome-art" aria-hidden="true"><img src="@@ART@@" alt="" width="252" height="252"></div>
+  </main>
+
+  <main id="workspace" class="workspace" hidden>
+    <aside class="sidebar" aria-label="Measurement controls" id="sidebar">
+      <div class="sidebar-body">
+        <div class="jump-row">
+          <button type="button" class="text-button" data-jump="setup">Tools</button>
+          <button type="button" class="text-button" data-jump="results">Results</button>
+          <button type="button" class="text-button" data-jump="export-section">Export and Save</button>
+        </div>
+        <label class="field"><span>Annotator Name</span><input id="annotator" type="text" maxlength="180" autocomplete="off" required placeholder="Required for export"></label>
+        <div id="annotator-error" class="field-error" role="alert" hidden>Enter the annotator name before exporting.</div>
+        <div class="folder-field">
+          <label class="field"><span>Input Folder</span><input id="input-path" readonly placeholder="Choose a folder"></label>
+          <div class="inline">
+            <button type="button" id="browse-input" class="icon-with-text" aria-label="Browse input folder"><span data-icon="folder"></span>Browse</button>
+            <button type="button" id="clear-input" class="quiet compact">Clear</button>
+            <button type="button" id="open-files" class="text-button push">Open a file...</button>
+          </div>
+          <input type="file" id="file-input" hidden multiple>
+          <input type="file" id="directory-input" hidden webkitdirectory multiple>
+        </div>
+        <div class="folder-field">
+          <label class="field"><span>Output Folder</span><input id="output-path" readonly placeholder="Choose an export folder"></label>
+          <div class="inline">
+            <button type="button" id="browse-output" class="icon-with-text" aria-label="Browse output folder"><span data-icon="folder"></span>Browse</button>
+            <button type="button" id="clear-output" class="quiet compact">Clear</button>
+            <button type="button" id="import-csv" class="text-button push" disabled>Open a CSV...</button>
+          </div>
+          <input type="file" id="csv-input" hidden accept=".csv,text/csv">
+        </div>
+        <section class="case-group">
+          <h2>Case</h2>
+          <div class="case-controls">
+            <div class="case-details">
+              <div id="case-name" class="case-name">No image loaded</div>
+              <div id="case-count" class="case-count"></div>
+            </div>
+            <button type="button" id="case-prev" class="square" aria-label="Previous image">&lt;</button>
+            <button type="button" id="case-next" class="square" aria-label="Next image">&gt;</button>
+          </div>
+        </section>
+        <div class="side-controls" aria-label="Active side">
+          <span>Active Side</span>
+          <div class="segmented">
+            <button type="button" id="side-left" aria-pressed="true">Left</button>
+            <button type="button" id="side-right" aria-pressed="false">Right</button>
+          </div>
+        </div>
+        <label class="field diameter"><span>Ball Diameter (mm)</span><input id="ball" type="number" min=".01" max="999" step="any" value="25" inputmode="decimal"></label>
+
+        <section id="setup" class="tool-section">
+          <h2>Smart Point Placement</h2>
+          <button type="button" class="auto-button" id="auto-place" disabled><span data-icon="sparkle"></span>Auto-place points…</button>
+          <p class="hint">Place the calibration ball, teardrop reference line and exactly one type of head on the active side.</p>
+        </section>
+        <div id="measurement-tools"></div>
+
+        <section id="results" class="tool-section">
+          <div class="result-heading">
+            <h2>Results</h2>
+            <span class="unit-tag" aria-describedby="scene-unit-help">su = scene units</span>
+          </div>
+          <p class="hint" id="scene-unit-help">Lengths use scene units before calibration. For standard raster images, 1 su equals 1 pixel. Medical files can supply a different spacing.</p>
+          <div id="global-results"></div>
+          <div class="result-columns"><span>Measurement</span><span>R</span><span>L</span></div>
+          <div id="bilateral-results"></div>
+          <h3>Custom Measurements</h3>
+          <div id="custom-results" class="hint">No custom measurements.</div>
+        </section>
+
+        <section id="export-section" class="tool-section export-section">
+          <h2>Export and Save</h2>
+          <label class="field"><span>Comments</span><textarea id="comments" rows="3" maxlength="12000" placeholder="Optional case notes"></textarea></label>
+          <label class="check export-checkbox"><input id="export-values" type="checkbox" checked><span>Display measurement values on exported image</span></label>
+          <button class="export-button" data-export="all" type="button">Export All</button>
+          <button class="export-button" data-export="all" data-advance="true" type="button">Export All / Load Next Image</button>
+          <button class="export-button" data-export="csv" type="button">Export CSV</button>
+          <button class="export-button" data-export="scene" type="button">Export Scene</button>
+          <button class="export-button" data-export="image" type="button">Export Image</button>
+          <small class="research">For research use only. This software is not a medical device.</small>
+        </section>
+      </div>
+    </aside>
+
+    <section class="viewer" aria-label="Radiograph viewer">
+      <div class="viewer-toolbar">
+        <div class="toolbar-group"><button type="button" id="fit" class="view-button">Fit</button><button type="button" id="zoom-in" class="view-button" aria-label="Zoom in">Zoom +</button><button type="button" id="zoom-out" class="view-button" aria-label="Zoom out">Zoom −</button><button type="button" id="pan-button" class="view-button" aria-pressed="false" data-help="pan">Pan</button></div>
+        <div class="toolbar-group"><button type="button" id="rotate" class="view-button" aria-label="Rotate right"><span data-icon="rotate"></span><span>Rotate</span></button><button type="button" id="mirror" class="view-button"><span data-icon="mirror"></span><span>Mirror</span></button></div>
+        <button type="button" id="show-window" class="view-button push"><span data-icon="contrast"></span><span>Window</span></button>
+      </div>
+      <div class="view-stage" id="view-stage">
+        <canvas id="radiograph" tabindex="0" aria-label="Radiograph and editable annotations"></canvas>
+        <div class="side-badge" id="side-badge" hidden>ACTIVE SIDE: LEFT</div>
+        <div class="empty-view" id="empty-view">
+          <span class="empty-icon" data-icon="image"></span>
+          <h2>Open a radiograph</h2>
+          <p>Choose an input folder, open files or drop a radiograph here.</p>
+          <button type="button" id="open-empty" class="primary">Open a file...</button>
+        </div>
+      </div>
+      <div class="viewer-footer">
+        <div class="instruction" role="status" aria-live="polite"><strong id="active-tool">Ready</strong><span id="instruction"></span></div>
+        <div class="viewer-meta" id="viewer-meta"></div>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="manual" class="manual-dialog">
+    <header class="dialog-heading"><h2>User Manual</h2><button type="button" data-close class="quiet">Close</button></header>
+    <article class="manual-content">@@MANUAL@@@@LICENCES@@</article>
+  </dialog>
+  <dialog id="decision-dialog">
+    <header class="dialog-heading"><h2 id="decision-title"></h2></header>
+    <div class="dialog-content"><p id="decision-description"></p><div id="decision-actions" class="dialog-actions"></div></div>
+  </dialog>
+  <dialog id="auto-dialog">
+    <header class="dialog-heading"><h2>Smart Point Placement</h2></header>
+    <form id="auto-form" class="dialog-content">
+      <p id="auto-context"></p>
+      <p class="hint">The pelvic reference line should be at teardrop level. Placement may be inaccurate at the ischial tuberosities. Check each suggested point on the radiograph.</p>
+      <div id="auto-features"></div>
+      <div class="dialog-actions"><button type="button" data-close class="quiet">Cancel</button><button type="submit" class="primary" id="apply-suggestions">Place selected points</button></div>
+    </form>
+  </dialog>
+  <dialog id="window-dialog">
+    <header class="dialog-heading"><h2>Window and level</h2></header>
+    <form id="window-form" class="dialog-content">
+      <div class="window-fields">
+        <label class="field"><span>Window minimum</span><input id="window-low" type="number" step="any" required></label>
+        <label class="field"><span>Window maximum</span><input id="window-high" type="number" step="any" required></label>
+      </div>
+      <label class="check"><input type="checkbox" id="invert"><span>Invert grayscale</span></label>
+      <div class="dialog-actions"><button type="button" data-close class="quiet">Cancel</button><button type="submit" class="primary">Apply</button></div>
+    </form>
+  </dialog>
+  <div id="hover-help" class="hover-help" role="tooltip" hidden></div>
+  <script>@@APPLICATION@@</script>
+</body>
+</html>

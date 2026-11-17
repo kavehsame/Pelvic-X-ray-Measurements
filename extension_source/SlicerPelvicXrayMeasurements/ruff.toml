@@ -1,0 +1,40 @@
+# Ruff configuration for a 3D Slicer extension.
+#
+# Slicer-specific constraints that shape this config:
+#   - Module filenames must be CamelCase to match the class name Slicer expects (N999 ignored globally).
+#   - The extension entry point must manipulate sys.path before importing local lib modules,
+#     placing those imports after executable code (E402, I001 ignored for that file only).
+#   - Slicer/Qt identifiers are verbose; 120 chars avoids false positives while still
+#     flagging lines that genuinely need breaking.
+
+target-version = "py39"  # Slicer 5.x ships Python 3.9
+line-length = 120
+exclude = [
+    "Testing",  # utility and validation scripts, not production extension code
+]
+
+[lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes (undefined names, unused imports, etc.)
+    "I",   # isort (import ordering)
+    "N",   # pep8-naming — kept despite Qt camelCase; only truly unavoidable cases are suppressed below
+    "UP",  # pyupgrade (modernise Python syntax)
+    "B",   # flake8-bugbear (common bug patterns)
+    "C4",  # flake8-comprehensions (unnecessary comprehension constructs)
+]
+ignore = [
+    "N999",  # Slicer requires module filenames to match the CamelCase class name it loads
+]
+
+[lint.per-file-ignores]
+# sys.path must be extended at runtime before the local lib modules can be imported,
+# so these imports cannot be moved to the top of the file.
+"PelvicXrayMeasurements/PelvicXrayMeasurements.py" = [
+    "E402",  # module-level import not at top of file
+    "I001",  # isort would move the local imports above the sys.path manipulation
+]
+
+[lint.isort]
+known-first-party = ["PelvicXrayMeasurements*"]

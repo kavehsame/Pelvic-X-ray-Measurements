@@ -1,0 +1,16 @@
+{
+  "version": "models-v1.6.0",
+  "license": "Apache-2.0",
+  "files": {
+    "auto_point_model.json": {
+      "bytes": 21662,
+      "sha256": "0884740f04ab921995de9ae73cb116a92273a5f782b7ff7b74d3a420ef23550e",
+      "url": "https://github.com/kavehsame/Pelvic-X-ray-Measurements/releases/download/models-v1.6.0/auto_point_model.json"
+    },
+    "auto_point_image_model.npz": {
+      "bytes": 899751,
+      "sha256": "b1e0dcc0bc7be8bbd4af9d1510ef955fc469adea15eed665d645a6da1a699ebc",
+      "url": "https://github.com/kavehsame/Pelvic-X-ray-Measurements/releases/download/models-v1.6.0/auto_point_image_model.npz"
+    }
+  }
+}

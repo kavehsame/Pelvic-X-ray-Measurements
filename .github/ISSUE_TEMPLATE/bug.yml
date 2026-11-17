@@ -1,0 +1,28 @@
+name: Bug report
+description: Report a reproducible software problem
+body:
+- type: markdown
+  attributes:
+    value: Use a synthetic example. Do not include patient images, identifiers or confidential exports.
+- type: dropdown
+  id: edition
+  attributes:
+    label: Edition
+    options:
+    - Web
+    - Slicer extension
+    - Both
+  validations:
+    required: true
+- type: input
+  id: version
+  attributes:
+    label: Software and browser or Slicer version
+  validations:
+    required: true
+- type: textarea
+  id: steps
+  attributes:
+    label: Steps, expected result and observed result
+  validations:
+    required: true
