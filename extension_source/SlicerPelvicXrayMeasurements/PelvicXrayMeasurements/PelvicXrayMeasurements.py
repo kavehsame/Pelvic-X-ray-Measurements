@@ -1137,7 +1137,7 @@ class PelvicXrayMeasurementsWidget(
             image_width = max(320, min(1100, available.width() - 50,
                                        int(max(180, available.height() - 230) * 1.8)))
         image_html = (
-            f'<img src="{image_url}" width="{image_width}"><br>'
+            f'<p><img src="{image_url}" width="{image_width}"></p>'
             if os.path.exists(MORPHOLOGY_REFERENCE_IMAGE_PATH)
             else ""
         )

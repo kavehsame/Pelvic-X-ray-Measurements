@@ -1,5 +1,6 @@
 """Exercise manual placement queues and display visibility in a real Slicer UI."""
 import json
+import re
 import traceback
 
 import qt
@@ -132,6 +133,13 @@ def main():
     assert exported.width() >= 2048 and exported.height() >= 2048
     assert volume.GetImageData().GetDimensions() == (600, 600, 1)
     print("PASS: high-resolution annotation export from a low-resolution image preserves the source", flush=True)
+    tooltip = widget._morphology_reference_tooltip()
+    image_width = int(re.search(r'<img[^>]+width="(\d+)"', tooltip).group(1))
+    document = qt.QTextDocument()
+    document.setHtml(tooltip)
+    document.setTextWidth(image_width + 20)
+    assert document.size.height() < image_width * 800 / 1440 + 200
+    print("PASS: enlarged morphology help has a compact layout", flush=True)
     widget.cleanup()
     print("SLICER_WORKFLOW_CHECKS_PASSED", flush=True)
 
