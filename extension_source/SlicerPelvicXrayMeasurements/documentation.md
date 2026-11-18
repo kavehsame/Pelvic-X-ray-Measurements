@@ -7,6 +7,10 @@ software. Completed clinical validation is not claimed.
 
 ## Version changelog
 
+### V1.7.1
+
+- Matches the version of the web release.
+
 ### V1.7.0
 
 - Render annotation exports at a useful resolution for small source images.

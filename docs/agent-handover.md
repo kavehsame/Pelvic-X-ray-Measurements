@@ -13,12 +13,11 @@ whose measurement workspace runs entirely in the visitor's browser. Their common
 measurement definitions and saved-data meaning must agree. The web interface is
 purpose-built for one radiograph and does not reproduce Slicer's full interface.
 
-Version 1.7.0 adds high-resolution annotation exports, a bottom-centre web PNG
-summary, bilateral anterior and posterior acetabular wall contours, curved web
-placement previews and larger morphology help. The new contours belong directly
-after Acetabular Roof (Sourcil). Existing measurements and model weights retain
-their definitions. See [the changelog](https://github.com/kavehsame/Pelvic-X-ray-Measurements/blob/main/CHANGELOG.md)
-for the version history.
+Version 1.7.1 makes landmark selection easier, keeps pixels sharp during high-zoom
+panning and adds direct case navigation in the web viewer. Version 1.7.0 introduced
+high-resolution exports, a bottom-centre web PNG summary, bilateral acetabular
+wall contours, curved web placement previews and larger morphology help. The wall
+contours belong directly after Acetabular Roof (Sourcil). See the [changelog](https://github.com/kavehsame/Pelvic-X-ray-Measurements/blob/main/CHANGELOG.md).
 
 The software is for research and is not a medical device. It is not intended for
 diagnosis, treatment planning or other clinical decision-making. A validation
@@ -207,6 +206,14 @@ The web viewer keeps pan and window gestures distinct from placement. Space-drag
 Ctrl-drag, middle-button drag and the Pan toggle preserve an unfinished tool.
 Shift-drag moves both window limits together. Escape cancels an edit preview.
 Preview state must not modify the saved scene until an action commits.
+
+Landmark picking uses an 8 CSS-pixel radius independent of zoom. Focus persists
+until another candidate is clearly closer or the pointer leaves the radius.
+Clicking cycles overlapping candidates. A drag captures the chosen role and
+control index and preserves the offset from pointer to point. Show the hand only
+while the image pans. Display smoothing is disabled when a source pixel spans at
+least two backing pixels in both axes. The case jump uses the same `loadCase`
+path as the arrows, including working annotations and saved-export lookup.
 
 PNG exports fill the frame with the radiograph at preserved proportions. Small
 images are enlarged before annotations and text are rendered. The minimum long

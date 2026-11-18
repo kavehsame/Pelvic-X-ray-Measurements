@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.7.1
+
+- Use the arrow cursor in the web viewer and show the hand only while dragging to pan.
+- Highlight landmarks within reach, allow clicks to cycle through overlapping landmarks and keep the chosen landmark selected throughout a drag.
+- Display source pixels without smoothing at high magnification, including during panning.
+- Add **Go to image** directly below the filename and count in the web case list.
+
 ## 1.7.0
 
 - Render exported annotations and text at a useful resolution for small source images while the radiograph fills the frame.

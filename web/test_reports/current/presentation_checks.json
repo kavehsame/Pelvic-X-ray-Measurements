@@ -5,8 +5,11 @@
     "The translucent PNG summary is centred at the bottom.",
     "Both wall contours follow the roof in the UI; bilateral placement, finish, distinct colours and Hide work.",
     "The dashed contour continuation and preceding segment match the complete provisional curve, leave saved points unchanged and keep line previews straight.",
-    "The morphology help image opens at a readable width and remains inside the viewport."
+    "The morphology help image opens at a readable width and remains inside the viewport.",
+    "Nearby points focus without flicker, coincident points cycle through their labels and a drag moves only the chosen point from its original position.",
+    "The hand appears only during panning; high-zoom pixel boundaries stay sharp before, during and after a fractional pan.",
+    "The jump field below the case count accepts Enter and Go, jumps directly to cases 500 and 1,000, rejects invalid numbers and restores unsaved work on return."
   ],
   "patient_data_used": false,
-  "run": "presentation_97wx8by6"
+  "run": "presentation_p4xis53e"
 }

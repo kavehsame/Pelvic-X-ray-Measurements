@@ -153,7 +153,7 @@ def main():
                 + '</ol></details><p><a href="chrome_checks.json">Browser evidence</a> · <a href="core_checks.json">Core replay evidence</a></p>'
             )
             body += f'<p>{len(downloads["tests"])} component-delivery scenarios passed, including blocked binary routes, HTTP failures, altered responses, interrupted-download recovery and unavailable storage. <a href="download_checks.json">Download checks</a>. These simulated conditions do not establish access through a particular hospital network.</p>'
-            body += f'<p>{len(presentation["tests"])} presentation checks passed for export resolution, summary placement, both wall contours, curved previews and larger help. <a href="presentation_checks.json">Presentation evidence</a>.</p>'
+            body += f'<p>{len(presentation["tests"])} presentation checks passed for export resolution, summary placement, both wall contours, curved previews, larger help, landmark picking, magnified panning and direct case navigation. <a href="presentation_checks.json">Presentation evidence</a>.</p>'
         body += (
             limitation
             + "<details><summary>Unit-test cases</summary>"

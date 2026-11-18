@@ -39,7 +39,10 @@ rounding across operating systems. The report lists these fields separately and
 records whether the file bytes are identical. This is a numerical regression rule,
 not a clinical accuracy threshold.
 
-Five additional presentation checks exercise full-frame low-resolution PNG export, the centred translucent summary, bilateral wall controls, curved provisional drawing and larger morphology help.
+Eight presentation checks cover full-frame low-resolution PNG export, the centred
+translucent summary, bilateral wall controls, curved provisional drawing, larger
+morphology help, picking and dragging overlapping points, pixel rendering during
+a high-zoom pan and jumping within a 1,000-image list while retaining edits.
 
 ## Run the checks
 

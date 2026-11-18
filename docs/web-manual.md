@@ -8,6 +8,13 @@ medical software. Completed clinical validation is not claimed.
 
 ## Version history
 
+**1.7.1**
+
+- Shows the arrow cursor unless you are dragging to pan.
+- Highlights nearby landmarks and lets you cycle through overlapping points.
+- Keeps source pixels sharp at high magnification, including during panning.
+- Adds direct navigation below the current image name and count.
+
 **1.7.0**
 
 - Sharper annotations and text on exported images from low-resolution sources.
@@ -63,11 +70,12 @@ When the output folder contains exports for the case, the app opens the most rec
 
 ## View and edit
 
-- **Fit** restores the whole image. Use **Zoom +**, **Zoom −** or the wheel to change magnification. To pan during placement, hold **Space** and drag, or toggle **Pan** and drag. Release Space or turn Pan off to continue placing points. Middle-button drag and Ctrl-drag also pan.
+- **Fit** restores the whole image. Use **Zoom +**, **Zoom −** or the wheel to change magnification. At high zoom, the viewer shows the original pixels without smoothing. To pan during placement, hold **Space** and drag, or toggle **Pan** and drag. The hand appears during the drag. Release Space or turn Pan off to continue placing points. Middle-button drag and Ctrl-drag also pan.
 - **Rotate** turns the image 90° clockwise and **Mirror** flips it left to right. Set the orientation before annotating. Confirm the patient side using the radiograph's orientation markers.
 - **Window** adjusts the grayscale limits and can invert the image. Hold **Shift** and drag up or down over the radiograph to move both limits together while keeping their separation. Drag up to brighten the image or down to darken it. The display updates during the drag. Release to keep the adjustment or press Escape to cancel, including during point placement. These controls change the display only. The underlying intensities remain available for contour snapping and Smart Point Placement.
 - Choose **Left** or **Right** to set the active anatomical side. The badge in the viewer displays the same side.
-- Select a measurement, then follow the prompt beneath the viewer. A dashed line follows the pointer from the latest point as you place a line, a contour or another landmark that needs several clicks. Tools with several guides advance after each pair of endpoints. Drag a control point after placement to refine it. The constructions and results update during the drag. Release to keep the new position or press Escape to cancel the drag. Escape also exits Pan or stops an active point or line tool.
+- Select a measurement, then follow the prompt beneath the viewer. A dashed line follows the pointer from the latest point as you place a line, a contour or another landmark that needs several clicks. Tools with several guides advance after each pair of endpoints.
+- To edit a point, move the pointer near it until a ring appears, then drag. If points overlap, the label identifies the selected point. Click to cycle through the candidates, then drag the point you want. The constructions and results update during the drag. Release to keep the new position or press Escape to cancel the drag. Escape also exits Pan or stops an active point or line tool.
 - The selected tool is highlighted. Completed tools change colour. A disabled tool's help explains its prerequisites. **Hide** changes visibility and leaves the annotations and values available.
 - Hold the pointer over a tool or result for 2.5 seconds to read its help. The shaft morphology help includes the diagrams for CCR, CTI and CFI.
 
