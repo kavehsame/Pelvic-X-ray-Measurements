@@ -30,6 +30,123 @@ def export_png(browser, summary, target):
     return Image.open(BytesIO(data)).convert("RGB")
 
 
+def canvas_mouse(browser, event, point, *, held=False):
+    left, top = browser.js("(() => {const r=viewer.canvas.getBoundingClientRect(); return [r.left,r.top];})()")
+    browser.call(
+        "Input.dispatchMouseEvent",
+        type=event, x=left + point[0], y=top + point[1],
+        button="left" if held or event != "mouseMoved" else "none",
+        buttons=int(held or event == "mousePressed"),
+        clickCount=int(event != "mouseMoved"),
+    )
+
+
+def check_landmark_selection(browser, root):
+    focus = "viewer.landmarkFocus?.target"
+    cursor = "getComputedStyle(viewer.canvas).cursor"
+    # The four wall tracks placed above have coincident control points.
+    x, y = browser.js("viewer.position(snap.markups.find(m=>m.role==='left_anteriorAcetabularWall').points[1])")
+    near = (x + 5, y)
+    canvas_mouse(browser, "mouseMoved", (x + 10, y))
+    assert not browser.js(focus)
+    canvas_mouse(browser, "mouseMoved", near)
+    first = browser.js(focus)
+    assert first and browser.js("viewer.landmarkFocus.multiple")
+    assert browser.js(cursor) == "default"
+    original = browser.js("snap.markups")
+    choices = {first["role"]}
+    for _ in range(3):
+        canvas_mouse(browser, "mousePressed", near)
+        canvas_mouse(browser, "mouseReleased", near)
+        choices.add(browser.js(focus)["role"])
+    assert choices == {f"{side}_{wall}AcetabularWall" for side in ("left", "right") for wall in ("anterior", "posterior")}
+    assert browser.js("snap.markups") == original
+    selected = browser.js(focus)
+    browser.screenshot(root / "overlapping_landmarks.png")
+    start = (near[0] + 0.8, near[1])
+    canvas_mouse(browser, "mouseMoved", start)
+    assert browser.js(focus) == selected
+    canvas_mouse(browser, "mousePressed", start)
+    assert browser.js("viewer.gesture.target") == selected
+    end = (start[0] - 22, start[1] + 11)
+    canvas_mouse(browser, "mouseMoved", end, held=True)
+    assert browser.js("viewer.gesture.target") == selected
+    assert browser.js(cursor) == "default"
+    canvas_mouse(browser, "mouseReleased", end)
+    browser.wait("!busy && !viewer.previewInFlight")
+    moved = {item["role"]: item["points"] for item in browser.js("snap.markups")}
+    for item in original:
+        expected = item["points"].copy()
+        if item["role"] == selected["role"]:
+            zoom = browser.js("viewer.zoom")
+            px, py = expected[selected["index"]]
+            expected[selected["index"]] = [px - 22 / zoom, py + 11 / zoom]
+            for actual, goal in zip(moved[item["role"]], expected, strict=True):
+                assert all(math.isclose(a, b, abs_tol=0.09) for a, b in zip(actual, goal, strict=True))
+        else:
+            assert moved[item["role"]] == expected
+
+    # Two distinguishable points keep their focus when the pointer moves just
+    # across the midpoint, and switch when it gets clearly closer to the other.
+    zoom = browser.js("viewer.zoom")
+    browser.annotate("other_point", [(95, 37)])
+    browser.annotate("other_point", [(95 + 5.5 / zoom, 37)])
+    left, right = browser.js("['otherPoint_1','otherPoint_2'].map(role=>viewer.position(snap.markups.find(m=>m.role===role).points[0]))")
+    canvas_mouse(browser, "mouseMoved", left)
+    assert browser.js(focus)["role"] == "otherPoint_1"
+    canvas_mouse(browser, "mouseMoved", ((left[0] + right[0]) / 2 + 0.4, left[1]))
+    assert browser.js(focus)["role"] == "otherPoint_1"
+    canvas_mouse(browser, "mouseMoved", right)
+    assert browser.js(focus)["role"] == "otherPoint_2"
+
+
+def check_magnified_pan(browser):
+    cursor = "getComputedStyle(viewer.canvas).cursor"
+    # Read the two stripe values after the default grayscale window.
+    source_shades = browser.js("""(() => {
+      const canvas = document.createElement("canvas");
+      canvas.width = 2;
+      canvas.height = 1;
+      const context = canvas.getContext("2d");
+      context.drawImage(viewer.bitmap, 60, 24, 2, 1, 0, 0, 2, 1);
+      const pixels = context.getImageData(0, 0, 2, 1).data;
+      return [pixels[0], pixels[4]].sort((a, b) => a - b);
+    })()""")
+    assert source_shades[1] - source_shades[0] > 100
+    # Sample across pixel boundaries where smoothing would introduce new ones.
+    shades = """(() => {
+      const start = viewer.position([54.5, 24]), end = viewer.position([65.5, 24]);
+      const scale = viewer.ratio;
+      const x = Math.ceil(start[0] * scale), y = Math.floor(start[1] * scale);
+      const width = Math.floor(end[0] * scale) - x;
+      const rgba = viewer.ctx.getImageData(x, y, width, 1).data;
+      return Array.from(new Set(rgba.filter((_, i) => i % 4 === 0))).sort((a, b) => a - b);
+    })()"""
+    browser.js("viewer.zoomAt(1 / (viewer.zoom * viewer.ratio), viewer.position([60, 24]))")
+    assert browser.js("viewer.ctx.imageSmoothingEnabled")
+    browser.js("viewer.zoomAt(11.3 / viewer.zoom, viewer.position([60, 24]))")
+    browser.click("#pan-button")
+    start = browser.js("viewer.position([60, 24])")
+    before = browser.js("[viewer.x, viewer.y]")
+    canvas_mouse(browser, "mouseMoved", start)
+    assert browser.js(cursor) == "default"
+    observed = browser.js(shades)
+    assert observed == source_shades, observed
+    canvas_mouse(browser, "mousePressed", start)
+    assert browser.js(cursor) == "default"
+    end = (start[0] + 28.5, start[1] + 16.25)
+    canvas_mouse(browser, "mouseMoved", end, held=True)
+    assert browser.js(cursor) == "grabbing"
+    assert browser.js("[viewer.x, viewer.y]") != before
+    observed = browser.js(shades)
+    assert observed == source_shades, observed
+    canvas_mouse(browser, "mouseReleased", end)
+    assert browser.js(cursor) == "default"
+    observed = browser.js(shades)
+    assert observed == source_shades, observed
+    browser.click("#pan-button")
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--chrome", type=Path, default=CHROME)
@@ -40,6 +157,9 @@ def main():
     pixels = Image.new("L", (128, 96), 180)
     pixels.putpixel((0, 0), 0)
     pixels.putpixel((127, 0), 255)
+    for y in range(18, 31):
+        for x in range(51, 70):
+            pixels.putpixel((x, y), 32 if x % 2 else 224)
     pixels.save(source)
     checked = []
     with ThreadingHTTPServer(("127.0.0.1", 0), SiteHandler) as host:
@@ -141,7 +261,11 @@ def main():
                 browser.screenshot(root / "morphology_help.png")
                 browser.js("hideHelp()")
                 checked.append("The morphology help image opens at a readable width and remains inside the viewport.")
-    
+                check_landmark_selection(browser, root)
+                checked.append("Nearby points focus without flicker, coincident points cycle through their labels and a drag moves only the chosen point from its original position.")
+                check_magnified_pan(browser)
+                checked.append("The hand appears only during panning; high-zoom pixel boundaries stay sharp before, during and after a fractional pan.")
+
         finally:
             host.shutdown()
             thread.join(timeout=3)

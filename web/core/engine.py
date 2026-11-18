@@ -374,6 +374,7 @@ class Session:
                     markups.append(
                         dict(
                             role=role,
+                            name=node.GetName(),
                             kind=kind,
                             points=[volume.to_image(p) for p in path],
                             color=[round(255 * channel) for channel in node.display.color],

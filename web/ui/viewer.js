@@ -1,5 +1,10 @@
 "use strict";
 
+const LANDMARK_RADIUS = 8;
+const LANDMARK_SWITCH_MARGIN = 2;
+const LANDMARK_OVERLAP_DISTANCE = 6;
+const LANDMARK_CHOICE_TOLERANCE = 3;
+
 function exportImageDimensions(shape, scale) {
   const [width, height] = shape.map((size, i) => size * scale[i]);
   const factor = Math.min(Math.max(1, 2048 / Math.max(width, height)),
@@ -69,6 +74,7 @@ class RadiographViewer {
     this.scale = [1, 1];
     this.bitmap = null;
     this.marks = [];
+    this.landmarkFocus = null;
     this.active = null;
     this.gesture = null;
     this.pointPreview = null;
@@ -83,6 +89,7 @@ class RadiographViewer {
     this.current = null;
     this.fitted = true;
     this.space = false;
+    this.modifiedPointer = false;
     this.panMode = false;
     this.allowContextFinish = false;
     new ResizeObserver(() => this.resize()).observe(canvas);
@@ -108,20 +115,28 @@ class RadiographViewer {
       this.allowContextFinish = false;
       if (finish) this.callbacks.finish();
     });
-    document.addEventListener("keydown", (event) => {
-      if (event.code === "Space" && document.activeElement === canvas) {
-        event.preventDefault();
-        this.space = true;
+    const updateKeys = (event) => {
+      const wasSpace = this.space;
+      if (event.code === "Space") {
+        if (event.type === "keyup") this.space = false;
+        else if (document.activeElement === canvas) {
+          event.preventDefault();
+          this.space = true;
+        }
+      }
+      const modified = event.ctrlKey || event.shiftKey;
+      if (this.space !== wasSpace || modified !== this.modifiedPointer) {
+        this.modifiedPointer = modified;
         this.draw();
       }
-    });
-    document.addEventListener("keyup", (event) => {
-      if (event.code !== "Space" || !this.space) return;
-      this.space = false;
-      this.draw();
-    });
+    };
+    document.addEventListener("keydown", updateKeys);
+    document.addEventListener("keyup", updateKeys);
     window.addEventListener("blur", () => {
       this.space = false;
+      this.modifiedPointer = false;
+      this.current = null;
+      this.landmarkFocus = null;
       this.allowContextFinish = false;
       this.cancelGesture();
       this.draw();
@@ -151,6 +166,7 @@ class RadiographViewer {
     const serial = ++this.updateSerial;
     this.pointPreview = null;
     this.window = snapshot.image;
+    if (reset || snapshot.active_role !== this.active) this.landmarkFocus = null;
     if (this.panMode && (reset || (snapshot.active_role && snapshot.active_role !== this.active))) {
       this.panMode = false;
       this.callbacks.panModeChanged(false);
@@ -199,6 +215,7 @@ class RadiographViewer {
     this.x = (this.width - w * this.zoom) / 2 + this.zoom * this.scale[0] / 2;
     this.y = (this.height - h * this.zoom) / 2 + this.zoom * this.scale[1] / 2;
     this.fitted = true;
+    this.landmarkFocus = null;
     this.draw();
   }
 
@@ -209,20 +226,56 @@ class RadiographViewer {
     this.x = at[0] - image[0] * this.scale[0] * this.zoom;
     this.y = at[1] - image[1] * this.scale[1] * this.zoom;
     this.fitted = false;
+    this.landmarkFocus = null;
     this.draw();
   }
 
-  findPoint(at) {
-    let best = null;
-    let min = 8;
-    for (const m of this.marks) if (!m.locked) {
-      m.points.forEach((p, index) => {
-        const screen = this.position(p);
-        const distance = Math.hypot(at[0] - screen[0], at[1] - screen[1]);
-        if (distance < min) { min = distance; best = {role: m.role, index}; }
+  updateLandmarkFocus(cycle = false) {
+    const at = this.current;
+    const priorFocus = this.landmarkFocus;
+    this.landmarkFocus = null;
+    if (!at || this.active || this.panMode || this.space || this.modifiedPointer || this.callbacks.busy()) return null;
+    if (at[0] < 0 || at[1] < 0 || at[0] >= this.width || at[1] >= this.height) return null;
+
+    const nearby = [];
+    let nearest = null, previous = null;
+    for (const mark of this.marks) {
+      if (mark.locked) continue;
+      mark.points.forEach((point, index) => {
+        const screen = this.position(point);
+        const dx = at[0] - screen[0], dy = at[1] - screen[1];
+        if (dx * dx + dy * dy > LANDMARK_RADIUS ** 2) return;
+        const hit = {role: mark.role, index, screen, distance: Math.hypot(dx, dy)};
+        nearby.push(hit);
+        if (!nearest || hit.distance < nearest.distance) nearest = hit;
+        if (priorFocus?.target.role === mark.role && priorFocus.target.index === index) previous = hit;
       });
     }
-    return best;
+    if (!nearest) return null;
+
+    // Keep a deliberate choice through small pointer movements before the drag.
+    let choiceOrigin = previous ? priorFocus.choiceOrigin : null;
+    if (choiceOrigin && Math.hypot(at[0] - choiceOrigin[0], at[1] - choiceOrigin[1]) > LANDMARK_CHOICE_TOLERANCE) {
+      choiceOrigin = null;
+    }
+    let chosen = nearest;
+    if (previous && (choiceOrigin || previous.distance <= nearest.distance + LANDMARK_SWITCH_MARGIN)) {
+      chosen = previous;
+    }
+    const choices = nearby.filter((hit) => hit === chosen ||
+      Math.hypot(hit.screen[0] - nearest.screen[0], hit.screen[1] - nearest.screen[1]) <= LANDMARK_OVERLAP_DISTANCE);
+    if (cycle && choices.length > 1) {
+      chosen = choices[(choices.indexOf(chosen) + 1) % choices.length];
+      choiceOrigin = at;
+    }
+    const {role, index, screen} = chosen;
+    this.landmarkFocus = {target: {role, index}, screen, multiple: choices.length > 1, choiceOrigin};
+    return this.landmarkFocus;
+  }
+
+  dragPoint(gesture, at) {
+    const [dx, dy] = gesture.grabOffset;
+    return this.imagePoint([at[0] + dx, at[1] + dy]);
   }
 
   down(event) {
@@ -239,14 +292,18 @@ class RadiographViewer {
     this.canvas.focus({preventScroll: true});
     if (this.callbacks.busy()) return;
     const at = this.current = this.location(event);
+    this.modifiedPointer = event.ctrlKey || event.shiftKey;
     // In an active placement tool a click always adds the next point. This
     // avoids grabbing nearby anatomy when placing another role deliberately.
-    const target = !panRequested && !windowRequested && !this.active ? this.findPoint(at) : null;
+    const focus = panRequested || windowRequested ? null : this.updateLandmarkFocus();
+    const target = focus?.target ?? null;
+    if (!target) this.landmarkFocus = null;
+    const grabOffset = focus ? [focus.screen[0] - at[0], focus.screen[1] - at[1]] : null;
     const pan = panRequested || (!windowRequested && !this.active && !target);
     const window = windowRequested ? {low: this.window.low, high: this.window.high, invert: this.window.invert} : null;
-    this.gesture = {at, pan, target, window, moved: false, x: this.x, y: this.y, pointerId: event.pointerId};
+    this.gesture = {at, pan, target, grabOffset, window, moved: false, x: this.x, y: this.y, pointerId: event.pointerId};
     this.canvas.setPointerCapture(event.pointerId);
-    if (pan || window) this.draw();
+    this.draw();
   }
 
   move(event) {
@@ -254,6 +311,7 @@ class RadiographViewer {
     const g = this.gesture;
     if (g && g.pointerId !== event.pointerId) return;
     this.current = at;
+    this.modifiedPointer = event.ctrlKey || event.shiftKey;
     if (g) {
       const dx = at[0] - g.at[0], dy = at[1] - g.at[1];
       g.moved ||= Math.hypot(dx, dy) > 2;
@@ -264,7 +322,7 @@ class RadiographViewer {
         this.y = g.y + dy;
         this.fitted = false;
       } else if (g.target && g.moved) {
-        this.queuePointPreview(g, this.imagePoint(at));
+        this.queuePointPreview(g, this.dragPoint(g, at));
       }
     }
     this.draw();
@@ -274,18 +332,23 @@ class RadiographViewer {
     const g = this.gesture;
     if (!g || g.pointerId !== event.pointerId) return;
     this.current = this.location(event);
-    const [x, y] = this.imagePoint(this.current);
+    this.modifiedPointer = event.ctrlKey || event.shiftKey;
+    if (g.target) g.moved ||= Math.hypot(this.current[0] - g.at[0], this.current[1] - g.at[1]) > 2;
     const committing = Boolean(g.target && g.moved);
     const window = g.window && g.moved ? this.windowAt(g, this.current) : null;
     this.endGesture(committing || !!window);
     if (window) {
       this.callbacks.window(window).finally(() => { this.clearWindowPreview(); this.draw(); });
     } else if (committing) {
+      const [x, y] = this.dragPoint(g, this.current);
       this.callbacks.move({...g.target, x, y}).finally(() => {
         this.clearPointPreview();
         this.draw();
       });
+    } else if (g.target) {
+      this.updateLandmarkFocus(true);
     } else if (!g.pan && !g.window && !g.moved && this.active) {
+      const [x, y] = this.imagePoint(this.current);
       this.callbacks.place({x, y});
     }
     this.draw();
@@ -397,28 +460,63 @@ class RadiographViewer {
     ctx.restore();
   }
 
+  drawLandmarkFocus(ctx, marks, target, showChoice) {
+    const mark = marks.find((item) => item.role === target.role);
+    const point = mark?.points[target.index];
+    if (!point) return;
+    const [x, y] = this.position(point);
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(x, y, 6, 0, Math.PI * 2);
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = "#0b1119";
+    ctx.stroke();
+    ctx.lineWidth = 1.25;
+    ctx.strokeStyle = "#f3f7fc";
+    ctx.stroke();
+    if (showChoice && this.width > 28 && this.height > 32) {
+      const name = mark.name?.replace(/^Hip Measurements - /, "") || "Landmark";
+      const label = `${name} · Point ${target.index + 1} · Click to switch`;
+      ctx.font = "600 12px system-ui";
+      ctx.textBaseline = "middle";
+      const width = Math.min(this.width - 10, Math.ceil(ctx.measureText(label).width) + 14);
+      const left = Math.max(5, Math.min(x + 11, this.width - width - 5));
+      const top = Math.max(5, y + 32 <= this.height ? y + 7 : y - 30);
+      ctx.fillStyle = "#121d27";
+      ctx.fillRect(left, top, width, 22);
+      ctx.fillStyle = "#f3f7fc";
+      ctx.fillText(label, left + 7, top + 11, width - 14);
+    }
+    ctx.restore();
+  }
+
   draw() {
     if (!this.width) return;
     const ctx = this.ctx;
+    const g = this.gesture;
     ctx.setTransform(this.ratio, 0, 0, this.ratio, 0, 0);
     ctx.fillStyle = "#090b0d";
     ctx.fillRect(0, 0, this.width, this.height);
-    this.canvas.style.cursor = this.gesture?.window ? "ns-resize" : this.gesture?.pan ? "grabbing" :
-      !this.bitmap ? "default" : this.panMode || this.space || !this.active ? "grab" : "crosshair";
+    this.canvas.style.cursor = g?.pan && g.moved ? "grabbing" : "default";
     if (!this.bitmap) return;
     const pos = (p) => this.position(p);
     const [x, y] = pos([-.5, -.5]);
     const [rx, ry] = pos([this.shape[0] - .5, this.shape[1] - .5]);
-    ctx.imageSmoothingEnabled = true;
+    // Show individual source pixels when magnified. Keep filtering when a view
+    // is fitted or lightly zoomed and pixels have less room on the display.
+    ctx.imageSmoothingEnabled = this.zoom * Math.min(...this.scale) * this.ratio < 2;
     ctx.imageSmoothingQuality = "high";
     ctx.drawImage(this.windowPreview || this.bitmap, x, y, rx - x, ry - y);
-    const g = this.gesture;
+    const dragPoint = g?.target && g.moved ? this.dragPoint(g, this.current) : null;
     const marks = this.pointPreview?.markups ?? (g?.target && g.moved ? this.marks.map((m) => m.role !== g.target.role ? m : {
-      ...m, points: m.points.map((p, i) => i === g.target.index ? this.imagePoint(this.current) : p),
+      ...m, points: m.points.map((p, i) => i === g.target.index ? dragPoint : p),
     }) : this.marks);
     const continuation = this.placementContinuation();
     drawMarks(ctx, marks, pos, 1.65, 3.05, g?.target, continuation);
     this.drawPlacementGuide(ctx, continuation);
+    const focus = g ? null : this.updateLandmarkFocus();
+    const target = g?.target ?? focus?.target;
+    if (target) this.drawLandmarkFocus(ctx, marks, target, focus?.multiple);
     this.callbacks.zoom(this.zoom);
   }
 
