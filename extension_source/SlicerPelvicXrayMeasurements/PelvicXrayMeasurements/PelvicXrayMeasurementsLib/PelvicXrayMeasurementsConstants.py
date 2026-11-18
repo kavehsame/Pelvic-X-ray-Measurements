@@ -80,7 +80,7 @@ LIB_DIR = os.path.dirname(__file__)
 MODULE_DIR = os.path.dirname(LIB_DIR)
 
 MODULE_NAME = "PelvicXrayMeasurements"
-MODULE_VERSION = "V1.6.0"
+MODULE_VERSION = "V1.6.1"
 ROLE_ATTRIBUTE = f"{MODULE_NAME}.Role"
 ACTIVE_SIDE_BADGE_ROLE = "activeSideBadge"
 CALIBRATION_BALL_DIAMETER_MM = 25.0

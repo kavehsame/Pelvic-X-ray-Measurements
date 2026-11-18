@@ -8,6 +8,11 @@ medical software. Completed clinical validation is not claimed.
 
 ## Version history
 
+**1.6.1**
+
+- Improves component downloads, verified caching and recovery after interruptions.
+- Adds clearer startup errors and a notice about restricted networks.
+
 **1.6.0**
 
 - Matches the Slicer extension version number.
@@ -33,6 +38,8 @@ medical software. Completed clinical validation is not claimed.
 Open the site in a desktop browser and select **Start**. The browser downloads the software package once and can reuse it when the same build opens again. The browser stores this package under the site's data. It contains software and models. Radiographs and annotations stay in the workspace until export or until the scene closes. Exporting to folders works best in Chrome or Edge. Once the workspace is ready, it blocks network connections and can finish the session offline.
 
 The app reads only the files you select. It does not send images, annotations, file names or exports to the host. The host receives the initial requests for the web page and its software. To start a new session after closing the tab, open the site again.
+
+Some restricted networks, including hospital networks, may prevent the app from starting. If preparation fails, open **Download details for IT support** beneath the error. It shows the failed component and response status when available. Your IT team may need to approve access.
 
 ## Open a case
 

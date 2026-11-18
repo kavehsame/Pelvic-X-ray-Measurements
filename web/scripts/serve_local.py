@@ -3,6 +3,7 @@
 import argparse
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
+import re
 from shutil import copyfileobj
 from urllib.parse import urlsplit
 
@@ -10,19 +11,27 @@ DIST = Path(__file__).resolve().parents[2] / "build" / "web"
 ASSETS = {
     "/": ("index.html", "text/html; charset=utf-8"),
     "/index.html": ("index.html", "text/html; charset=utf-8"),
-    "/runtime.bin": ("runtime.bin", "application/octet-stream"),
 }
+
+
+def asset_for(route):
+    if route in ASSETS:
+        return ASSETS[route]
+    if re.fullmatch(r"/components/[0-9a-f]{64}/[0-9]{3}\.json", route):
+        return route.removeprefix("/"), "application/json; charset=utf-8"
+    return None
 
 
 class SiteHandler(BaseHTTPRequestHandler):
     def handle_asset(self, body):
         path = urlsplit(self.path)
-        if path.query or path.path not in ASSETS:
+        asset = asset_for(path.path)
+        if path.query or not asset:
             self.send_error(404)
             return
-        name, content_type = ASSETS[path.path]
+        name, content_type = asset
         file = DIST / name
-        if file.resolve().parent != DIST.resolve() or not file.is_file():
+        if not file.resolve().is_relative_to(DIST.resolve()) or not file.is_file():
             self.send_error(404)
             return
         self.send_response(200)
@@ -56,7 +65,7 @@ class SiteHandler(BaseHTTPRequestHandler):
     def log_request(self, code="-", size="-"):
         # Record only the method and allowlisted asset, never arbitrary paths.
         route = urlsplit(self.path).path
-        asset = ASSETS.get(route, ("unknown", ""))[0]
+        asset = (asset_for(route) or ("unknown", ""))[0]
         self.log_message("%s %s %s", self.command, asset, code)
 
 

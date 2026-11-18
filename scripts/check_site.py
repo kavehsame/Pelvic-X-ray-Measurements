@@ -67,6 +67,7 @@ def main():
                     and "not a medical device" in text
                 )
                 assert "not uploaded" in text
+                assert "hospital networks" in text and "may not work" in text
                 browser.screenshot(out / "landing-wide.png")
                 browser.call(
                     "Emulation.setDeviceMetricsOverride",
@@ -116,6 +117,7 @@ def main():
                     "status": "passed",
                     "project_subpath": PREFIX,
                     "landing_research_notice": True,
+                    "restricted_network_notice": True,
                     "validation_study_notice": True,
                     "how_it_works": True,
                     "narrow_layout_no_horizontal_overflow": True,

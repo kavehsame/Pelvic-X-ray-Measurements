@@ -119,6 +119,11 @@ def main():
             ("core_replay", [*python, str(WEB / "scripts/check_core.py")]),
             ("build", [*python, str(WEB / "scripts/build_web.py")]),
             (
+                "component_delivery",
+                [*python, str(WEB / "scripts/check_downloads.py"),
+                 *(["--chrome", args.chrome] if args.chrome else [])],
+            ),
+            (
                 "chrome",
                 [
                     *python,

@@ -8,6 +8,8 @@
 - [Testing](testing.md): unit tests, measurement replay and the selected results.
 - [Development](development.md): source layout and reproducible build commands.
 - [Publishing](publishing.md): GitHub Releases, GitHub Pages and the separate Slicer catalogue process.
+- [Restricted networks](network-access.md): startup errors and information for IT support.
+- [Version 1.6.1 release notes](releases/v1.6.1.md).
 - [Version 1.6.0 release notes](releases/v1.6.0.md).
 
 **Research use only.** The software is not a medical device and is not intended

@@ -67,57 +67,8 @@ function attachWorker(instance) {
   };
 }
 
-async function readVerifiedRuntime(response, progress = null) {
-  if (!response.ok) throw new Error("The app components could not load. Check the site and try again.");
-  const bytes = new Uint8Array(APP_CONFIG.payloadSize);
-  const reader = response.body.getReader();
-  if (progress) {
-    progress.max = bytes.length;
-    progress.value = 0;
-    progress.hidden = false;
-  }
-  let offset = 0;
-  for (;;) {
-    const {done, value} = await reader.read();
-    if (done) break;
-    if (offset + value.byteLength > bytes.byteLength) {
-      await reader.cancel();
-      throw new Error("The downloaded app components did not pass verification.");
-    }
-    bytes.set(value, offset);
-    offset += value.byteLength;
-    if (progress) progress.value = offset;
-  }
-  if (offset !== bytes.byteLength) throw new Error("The download was incomplete. Try Start again.");
-  const digest = Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256", bytes)), (x) => x.toString(16).padStart(2, "0")).join("");
-  if (digest !== APP_CONFIG.payloadHash) throw new Error("The app components did not match this version.");
-  return bytes;
-}
-
 async function runtimeBytes() {
-  const source = new URL(APP_CONFIG.payload, location.href);
-  const cacheKey = new URL(source);
-  cacheKey.searchParams.set("sha256", APP_CONFIG.payloadHash);
-  let cache;
-  try {
-    cache = await globalThis.caches?.open("pelvic-xray-software");
-    const stored = await cache?.match(cacheKey.href);
-    if (stored) return await readVerifiedRuntime(stored);
-  } catch {
-    // A damaged or unavailable cache must not stop a normal download.
-    await cache?.delete(cacheKey.href).catch(() => {});
-  }
-  $("start-status").textContent = "Downloading browser components…";
-  const response = await fetch(source, {
-    method: "GET", cache: "no-store", credentials: "omit", referrerPolicy: "no-referrer", redirect: "error",
-  });
-  const bytes = await readVerifiedRuntime(response, $("start-progress"));
-  // Only the verified software bundle enters the cache, before any image
-  // picker is enabled. Storage can be disabled or decline the write.
-  await cache?.put(cacheKey.href, new Response(bytes, {
-    headers: {"Content-Type": "application/octet-stream"},
-  })).catch(() => {});
-  return bytes;
+  return loadRuntimePackage(APP_CONFIG, $("start-status"), $("start-progress"));
 }
 
 async function checkedRuntime() {
@@ -164,6 +115,7 @@ async function checkedRuntime() {
 
 click("start", async () => {
   $("start").disabled = true;
+  $("start-error-details").hidden = true;
   $("start-status").textContent = "Checking for cached app components…";
   try {
     config = await checkedRuntime();
@@ -176,6 +128,8 @@ click("start", async () => {
   } catch (error) {
     worker?.terminate();
     $("start-status").textContent = error.message;
+    $("start-error-details").hidden = !error.details;
+    $("start-error-text").textContent = error.details ? JSON.stringify(error.details, null, 2) : "";
     $("start").disabled = startLocked;
     $("start-progress").hidden = true;
   }

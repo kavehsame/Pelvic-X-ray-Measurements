@@ -161,3 +161,6 @@ dialog::backdrop { background: #040809b0; }
   .sidebar { grid-row: 2; border-top: 1px solid var(--rule); border-right: none; }
   .side-badge { font-size: 12px; }
 }
+
+#start-error-details { margin: 8px 0 14px; color: var(--subtle); font-size: 12px; }
+#start-error-details pre { white-space: pre-wrap; overflow-wrap: anywhere; max-height: 220px; overflow: auto; }

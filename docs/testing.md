@@ -16,9 +16,13 @@ results do not enter the downloadable Slicer or web bundles.
 - **Slicer:** 116 unit tests; a full CSV replay matching 397 reference rows; Smart
   Point Placement; live multi-guide axes, morphology, bilateral leg-length lines,
   circle visibility and advancement through four shaft contours.
-- **Web:** 25 unit tests covering import, image frames and editing regressions;
-  a core measurement replay; and 18 Chrome workflow groups that exercise the built
+- **Web:** 33 unit tests covering import, image frames, editing regressions and
+  component packaging; a core measurement replay; and 18 Chrome workflow groups that exercise the built
   app, including offline operation, export, resume and compressed image decoding.
+- **Startup:** 11 browser scenarios covering blocked binary routes, temporary and
+  permanent HTTP errors, altered or incomplete responses, timeouts, interrupted
+  downloads and unavailable or corrupt caches. These are controlled simulations,
+  not evidence of access through a particular hospital network.
 - **Measurement coverage:** the native replay gate requires 58 measurements, 114
   coordinate roles and 25 analytical constructions. The web replay compares 58
   measurements and 81 numeric values with the fixed reference.
@@ -47,7 +51,7 @@ python scripts/verify.py --slicer SLICER_EXECUTABLE --chrome CHROME_EXECUTABLE
 
 The executable arguments select installed Slicer and Chrome programs. The verifier
 runs both unit suites, the live Slicer checks, the browser core replay, the web
-build and the actual Chrome workflow. It records results, source hashes and the
+build, component-download scenarios and the actual Chrome workflow. It records results, source hashes and the
 runtime environment in a new folder under **build/**. Before website publication,
 **scripts/check_site.py** also checks the landing page at desktop and narrow widths,
 starts the app from a project subpath and opens a synthetic scene after the test

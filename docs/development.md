@@ -17,8 +17,11 @@ python scripts/build.py
 python web/scripts/serve_local.py
 ```
 
-The preview command prints its loopback address. **build/web/** contains the two
-files required by the measurement app: **index.html** and **runtime.bin**.
+The preview command prints its loopback address. **build/web/** contains
+**index.html** and the **components/** folder. Serve the entire folder tree and
+use **application/json** for its JSON files. The build manifest identifies every
+required file. The runtime is compressed before being encoded into bounded JSON
+components, then verified and expanded inside the browser.
 **build/site/** contains the landing page, app, rendered manuals and test review
 for GitHub Pages. Only build output is deployed, never the repository or test data.
 

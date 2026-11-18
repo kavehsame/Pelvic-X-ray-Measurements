@@ -2,6 +2,7 @@
 
 import ast
 import base64
+import gzip
 import hashlib
 from html import escape
 from io import BytesIO
@@ -105,6 +106,25 @@ def build_payload(runtime, model_files):
     return struct.pack("<I", len(manifest)) + manifest + b"".join(
         items[name] for name in offsets
     ), omitted
+
+
+def component_documents(transport, payload_hash, chunk_size=512 * 1024):
+    """Encode bounded, explicitly described JSON components for static hosting."""
+    if chunk_size <= 0 or not transport:
+        raise ValueError("A non-empty payload and positive component size are required.")
+    records, files = [], {}
+    for index, offset in enumerate(range(0, len(transport), chunk_size)):
+        block = transport[offset : offset + chunk_size]
+        name = f"components/{payload_hash}/{index:03d}.json"
+        record = {"path": name, "index": index, "offset": offset,
+                  "bytes": len(block), "sha256": digest(block)}
+        document = {"format": "pelvic-runtime-component-v1", "encoding": "base64", "compression": "gzip",
+                    "payloadSha256": payload_hash, **{k: v for k, v in record.items() if k != "path"},
+                    "data": base64.b64encode(block).decode("ascii")}
+        content = (json.dumps(document, separators=(",", ":")) + "\n").encode("utf-8")
+        records.append({**record, "documentBytes": len(content)})
+        files[name] = content
+    return records, files
 
 
 def read_help():
@@ -217,10 +237,21 @@ def main():
         models[MODEL_FILES[1]]
     )
     payload, omitted = build_payload(binaries, models)
+    transport = gzip.compress(payload, compresslevel=9, mtime=0)
+    components, component_files = component_documents(transport, digest(payload))
+    if sum(len(content) for content in component_files.values()) > len(payload):
+        raise ValueError("The component transfer must not exceed the previous binary-package size.")
     app_config = {
+        "version": version,
+        # Preserve the checksum-keyed local cache used by the earlier loader.
+        # This is a virtual Cache API key, never a network download.
         "payload": "runtime.bin",
         "payloadSize": len(payload),
         "payloadHash": digest(payload),
+        "components": components,
+        "transportSize": len(transport),
+        "transportHash": digest(transport),
+        "componentTimeoutMs": 30_000,
         "help": read_help(),
         "schematic": data_uri(ASSETS / "morphology_parameters_pothong_2023.png"),
     }
@@ -228,6 +259,7 @@ def main():
         [
             f"const APP_CONFIG = {json.dumps(app_config).replace('<', chr(92) + 'u003c')};",
             (WEB / "viewer.js").read_text(),
+            (WEB / "download.js").read_text(),
             (WEB / "app.js").read_text(),
         ]
     )
@@ -250,14 +282,19 @@ def main():
     if not DIST.resolve().is_relative_to(STEP):
         raise RuntimeError("The distribution folder escapes this repository.")
     DIST.mkdir(exist_ok=True)
-    files = {"runtime.bin": payload, "index.html": template.encode()}
+    files = {**component_files, "index.html": template.encode()}
     for name, data in files.items():
+        (DIST / name).parent.mkdir(parents=True, exist_ok=True)
         write(DIST / name, data)
     report = {
         "version": version,
         "distribution": "build/web",
         "models": {n: digest(b) for n, b in models.items()},
         "pydicom_test_assets_excluded": omitted,
+        "payload": {"bytes": len(payload), "sha256": digest(payload)},
+        "transport": {"compression": "gzip", "bytes": len(transport), "sha256": digest(transport)},
+        "component_count": len(components),
+        "component_download_bytes": sum(len(data) for data in component_files.values()),
         "files": {
             name: {"bytes": len(data), "sha256": digest(data)}
             for name, data in files.items()

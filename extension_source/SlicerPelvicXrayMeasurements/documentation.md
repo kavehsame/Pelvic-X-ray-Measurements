@@ -7,6 +7,10 @@ software. Completed clinical validation is not claimed.
 
 ## Version changelog
 
+### V1.6.1
+
+- Matches the web release version; Slicer measurement and annotation behaviour is unchanged.
+
 ### V1.6.0
 
 - Shared-landmark seeding across Tönnis, Sharp, LCE, offsets and head extrusion, including sourcil-contour landmarks.

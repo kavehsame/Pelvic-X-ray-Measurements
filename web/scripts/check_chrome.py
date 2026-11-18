@@ -314,7 +314,7 @@ def main():
                     "browser workspace",
                     55,
                 )
-                b.wait("!!snap && !busy && config.version === '1.6.0'")
+                b.wait("!!snap && !busy && config.version === APP_CONFIG.version")
                 assert b.js(
                     "isSecureContext && typeof window.showDirectoryPicker === 'function'"
                 )
@@ -325,9 +325,8 @@ def main():
                   await new Promise(r=>setTimeout(r,30));
                   return result && block;
                 })()""")
-                assert [
-                    route for _, route, status in TestHost.requests if status == 200
-                ] == ["/", "/runtime.bin"]
+                component_routes = b.js("APP_CONFIG.components.map(part => '/' + part.path)")
+                assert sorted(route for _, route, status in TestHost.requests if status == 200) == sorted(["/", *component_routes])
                 assert all(method == "GET" for method, _, _ in TestHost.requests)
                 assert b.js("""(async () => {
                   const keys=await (await caches.open("pelvic-xray-software")).keys();
@@ -352,11 +351,9 @@ def main():
                     "cached offline Start",
                     55,
                 )
-                assert [
-                    route for _, route, status in TestHost.requests if status == 200
-                ] == ["/", "/runtime.bin", "/"]
+                assert sorted(route for _, route, status in TestHost.requests if status == 200) == sorted(["/", *component_routes, "/"])
                 checked(
-                    "The first Start downloads one software package. The reloaded page starts from the verified cache after the server disconnects."
+                    "The first Start downloads a verified software package through JSON components. The reloaded page starts from the verified cache after the server disconnects."
                 )
                 checked(
                     "The network policy blocked a same-origin POST before synthetic files were selected."
@@ -880,8 +877,7 @@ def main():
                     )
                 ]
                 assert {x["params"]["response"]["url"] for x in network} == {
-                    url,
-                    url + "runtime.bin",
+                    url, *(url + route.removeprefix("/") for route in component_routes),
                 }
                 evidence = {
                     "status": "passed",
@@ -892,7 +888,8 @@ def main():
                     "http_responses_in_browser": len(network),
                     "network_disconnected_before_image_selection": True,
                     "blocked_same_origin_post": True,
-                    "runtime_gets": 1,
+                    "component_gets": len(component_routes),
+                    "binary_or_archive_gets": 0,
                     "warm_start_from_cache_offline": True,
                     "chrome_process_environment": "OS-only PATH and no inherited Conda, Python or dynamic loader overrides",
                     "chrome_replay": parity,

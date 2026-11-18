@@ -9,7 +9,11 @@ the local Slicer session.
 ## What the website downloads
 
 The browser loads the page and, after **Start**, the software package. This package
-contains the code, runtime and Smart Point Placement models. The app checks its
+contains the code, runtime and Smart Point Placement models. It is delivered in
+small JSON components. The browser verifies their checksums before expanding and
+starting the runtime. Completed components may be reused after an interrupted
+download. Some restricted networks may still block these contents; see
+[restricted networks](network-access.md). The app checks its
 checksum and may reuse the browser's cached copy for the same build. Clearing site
 data, using a different browser profile or opening a new build may require another
 download. The cache contains the software package, not a backup of annotations.

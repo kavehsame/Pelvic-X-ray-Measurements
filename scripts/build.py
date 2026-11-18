@@ -63,22 +63,19 @@ def render_site():
             site
         )  # Only this command's generated site, never retained source or releases.
     site.mkdir(parents=True)
-    for name in ("index.html", "runtime.bin"):
+    manifest = json.loads((BUILD / "build_manifest.json").read_text())
+    for name in manifest["files"]:
         copy(BUILD / "web" / name, site / "app" / name)
     put(site / ".nojekyll", "")
     put(site / "assets/site.css", STYLE)
     copy(WEB / "assets/favicon.png", site / "assets/icon.png")
     settings = config()
     release_url = "https://github.com/" + settings["repository"] + "/releases/latest"
-    download_mb = (
-        json.loads((BUILD / "build_manifest.json").read_text())["files"]["runtime.bin"][
-            "bytes"
-        ]
-        / 1_000_000
-    )
+    download_mb = manifest["component_download_bytes"] / 1_000_000
     landing = f"""<section class="hero"><p class="eyebrow">Version {settings["version"]} · Web and 3D Slicer</p>
 <h1>Pelvic X-ray Measurements</h1><p class="lead">Place editable landmarks, check the measurement geometry and save your research results. Use the web app or work inside 3D Slicer.</p>
 <div class="actions"><a class="button" href="app/">Start the web app</a><a class="button secondary" href="{release_url}">Download the Slicer extension</a></div>
+<p id="network-notice" class="small"><strong>Restricted networks:</strong> The web app may not work on some restricted networks, including hospital networks, if they block the components needed to start it. Your IT team may need to approve access.</p>
 <p class="notice"><strong>Research use only. This software is not a medical device.</strong> It is not intended for diagnosis, treatment planning or other clinical decision-making.</p></section>
 <section aria-labelledby="how"><h2 id="how">How the website works</h2><div class="cards">
 <div class="card"><span class="number">1</span><h3>Start the tool</h3><p>Open the web app and select Start. Your browser prepares the software in the background. No separate installation is needed.</p></div>
@@ -119,10 +116,12 @@ def render_site():
             'href="../extension_source/SlicerPelvicXrayMeasurements/documentation.md"',
             'href="slicer-manual.html"',
         )
-        body = body.replace(
-            'href="releases/v1.6.0.md"',
-            f'href="https://github.com/{settings["repository"]}/releases/tag/v1.6.0"',
-        )
+        for release_note in (ROOT / "docs/releases").glob("*.md"):
+            body = body.replace(
+                f'href="releases/{release_note.name}"',
+                f'href="https://github.com/{settings["repository"]}/releases/tag/{release_note.stem}"',
+            )
+
         put(
             site / "docs" / (name[:-3] + ".html"),
             shell(

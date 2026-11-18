@@ -3,7 +3,7 @@
   "patient_data": false,
   "chrome": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36",
   "tests": [
-    "The first Start downloads one software package. The reloaded page starts from the verified cache after the server disconnects.",
+    "The first Start downloads a verified software package through JSON components. The reloaded page starts from the verified cache after the server disconnects.",
     "The network policy blocked a same-origin POST before synthetic files were selected.",
     "Resume prefers a replaced CSV over an older MRB in the same export group, and a newer MRB over an older CSV.",
     "Local PNG selection, rotate, mirror, fit, zoom and disabled prerequisites.",
@@ -30,7 +30,122 @@
     ],
     [
       "GET",
-      "/runtime.bin",
+      "/components/8e65a6286a141a5f4756c5c8cd78838efb1c8a24ddef1322aae25ed89db5c68c/000.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/8e65a6286a141a5f4756c5c8cd78838efb1c8a24ddef1322aae25ed89db5c68c/002.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/8e65a6286a141a5f4756c5c8cd78838efb1c8a24ddef1322aae25ed89db5c68c/001.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/8e65a6286a141a5f4756c5c8cd78838efb1c8a24ddef1322aae25ed89db5c68c/003.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/8e65a6286a141a5f4756c5c8cd78838efb1c8a24ddef1322aae25ed89db5c68c/004.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/8e65a6286a141a5f4756c5c8cd78838efb1c8a24ddef1322aae25ed89db5c68c/005.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/8e65a6286a141a5f4756c5c8cd78838efb1c8a24ddef1322aae25ed89db5c68c/008.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/8e65a6286a141a5f4756c5c8cd78838efb1c8a24ddef1322aae25ed89db5c68c/006.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/8e65a6286a141a5f4756c5c8cd78838efb1c8a24ddef1322aae25ed89db5c68c/007.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/8e65a6286a141a5f4756c5c8cd78838efb1c8a24ddef1322aae25ed89db5c68c/009.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/8e65a6286a141a5f4756c5c8cd78838efb1c8a24ddef1322aae25ed89db5c68c/011.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/8e65a6286a141a5f4756c5c8cd78838efb1c8a24ddef1322aae25ed89db5c68c/010.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/8e65a6286a141a5f4756c5c8cd78838efb1c8a24ddef1322aae25ed89db5c68c/012.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/8e65a6286a141a5f4756c5c8cd78838efb1c8a24ddef1322aae25ed89db5c68c/013.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/8e65a6286a141a5f4756c5c8cd78838efb1c8a24ddef1322aae25ed89db5c68c/014.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/8e65a6286a141a5f4756c5c8cd78838efb1c8a24ddef1322aae25ed89db5c68c/016.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/8e65a6286a141a5f4756c5c8cd78838efb1c8a24ddef1322aae25ed89db5c68c/015.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/8e65a6286a141a5f4756c5c8cd78838efb1c8a24ddef1322aae25ed89db5c68c/017.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/8e65a6286a141a5f4756c5c8cd78838efb1c8a24ddef1322aae25ed89db5c68c/018.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/8e65a6286a141a5f4756c5c8cd78838efb1c8a24ddef1322aae25ed89db5c68c/020.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/8e65a6286a141a5f4756c5c8cd78838efb1c8a24ddef1322aae25ed89db5c68c/019.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/8e65a6286a141a5f4756c5c8cd78838efb1c8a24ddef1322aae25ed89db5c68c/021.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/8e65a6286a141a5f4756c5c8cd78838efb1c8a24ddef1322aae25ed89db5c68c/022.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/8e65a6286a141a5f4756c5c8cd78838efb1c8a24ddef1322aae25ed89db5c68c/023.json",
       200
     ],
     [
@@ -39,10 +154,11 @@
       200
     ]
   ],
-  "http_responses_in_browser": 3,
+  "http_responses_in_browser": 26,
   "network_disconnected_before_image_selection": true,
   "blocked_same_origin_post": true,
-  "runtime_gets": 1,
+  "component_gets": 24,
+  "binary_or_archive_gets": 0,
   "warm_start_from_cache_offline": true,
   "chrome_process_environment": "OS-only PATH and no inherited Conda, Python or dynamic loader overrides",
   "chrome_replay": {
@@ -51,5 +167,5 @@
     "max_absolute_difference": 4.988010005035903e-12
   },
   "output_test_mode": "Chrome FileSystemDirectoryHandle (origin-private test folder)",
-  "run": "chrome_run_t_jcuf9e"
+  "run": "chrome_run_t7ze4513"
 }

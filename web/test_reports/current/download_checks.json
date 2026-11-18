@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "tests": [
+    "normal",
+    "temporary",
+    "denied",
+    "html",
+    "corrupt",
+    "truncated",
+    "oversize",
+    "timeout",
+    "resume",
+    "cache_unavailable",
+    "corrupt_cache"
+  ],
+  "binary_and_archive_routes_blocked": true,
+  "unverified_components_never_started": true,
+  "partial_download_reused": true,
+  "patient_data_used": false,
+  "run": "delivery_n6xztohf"
+}

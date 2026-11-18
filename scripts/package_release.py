@@ -67,7 +67,7 @@ def main():
     )
     web_files = {
         name: (BUILD / "web" / name).read_bytes()
-        for name in ("index.html", "runtime.bin")
+        for name in json.loads((BUILD / "build_manifest.json").read_text())["files"]
     }
     web_files.update(
         {
@@ -76,7 +76,7 @@ def main():
         }
     )
     web_files["README.md"] = (
-        b"# Pelvic X-ray Measurements web application\n\nServe index.html and runtime.bin together over HTTPS. Open the site and select Start.\nFor local testing, a loopback HTTP server is supported. Opening the HTML directly\nfrom disk is not the supported launch method. Normal website visitors do not need\nto download this ZIP. The app processes selected images on the user's device.\n\nResearch use only. This software is not a medical device. It is not intended for\ndiagnosis, treatment planning or other clinical decision-making.\n\nRead the User Manual inside the app for tools, workflows and third-party licences.\n"
+        b"# Pelvic X-ray Measurements web application\n\nServe index.html and the complete components folder together over HTTPS. Open the\nsite and select Start. The JSON component files must be served as application/json.\nFor local testing, a loopback HTTP server is supported. Opening the HTML directly\nfrom disk is not the supported launch method. Normal website visitors do not need\nto download this ZIP. The app processes selected images on the user's device.\nSome restricted networks, including hospital networks, may prevent startup.\n\nResearch use only. This software is not a medical device. It is not intended for\ndiagnosis, treatment planning or other clinical decision-making.\n\nRead the User Manual inside the app for tools, workflows and third-party licences.\n"
     )
     archive(out / f"PelvicXrayMeasurements_{version}_web.zip", web_files)
     sums = [

@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.6.1
+
+- Smaller JSON component transfers, verified caching, interrupted-download reuse and transient retries for web startup.
+- Clear download errors with details for IT support and a restricted-network notice on the landing page.
+- Existing measurement, annotation and export behaviour retained; matching Slicer version label.
+
 ## 1.6.0
 
 - Slicer extension and browser-based web application with dedicated manuals.

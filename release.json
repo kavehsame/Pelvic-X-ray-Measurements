@@ -1,10 +1,13 @@
 {
   "name": "Pelvic X-ray Measurements",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "repository": "kavehsame/Pelvic-X-ray-Measurements",
   "website": "https://kavehsame.github.io/Pelvic-X-ray-Measurements/",
   "model_release": "models-v1.6.0",
-  "editions": ["slicer", "web"],
+  "editions": [
+    "slicer",
+    "web"
+  ],
   "validation_study": "in progress; comparison with established medical software",
   "clinical_validation_completed": false
 }

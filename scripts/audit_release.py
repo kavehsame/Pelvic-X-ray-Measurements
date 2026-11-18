@@ -157,9 +157,11 @@ def audit_site():
     assert (
         "established medical software" in landing and "not a medical device" in landing
     )
-    assert (site / "app/runtime.bin").read_bytes() == (
-        BUILD / "web/runtime.bin"
-    ).read_bytes()
+    assert "hospital networks" in landing and 'id="network-notice"' in landing
+    for name, record in json.loads((BUILD / "build_manifest.json").read_text())["files"].items():
+        deployed = (site / "app" / name).read_bytes()
+        assert deployed == (BUILD / "web" / name).read_bytes()
+        assert hashlib.sha256(deployed).hexdigest() == record["sha256"]
     return count
 
 
@@ -188,7 +190,7 @@ def main():
                             current.is_file()
                             and archive.read(member) == current.read_bytes()
                         ), member
-                    elif member in {"index.html", "runtime.bin"}:
+                    elif member == "index.html" or member.startswith("components/"):
                         assert (
                             archive.read(member)
                             == (BUILD / "web" / member).read_bytes()
