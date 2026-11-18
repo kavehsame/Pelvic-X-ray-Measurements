@@ -131,6 +131,8 @@ PNG exports use at least 2,048 pixels on the long edge for ordinary image propor
 Landmarks, contours and text are drawn at the export resolution, so they remain
 clear on small source images. Enlarging the radiograph does not add anatomical
 detail. Large exports are limited to 40 megapixels and 15,500 pixels per edge.
+The measurement box sits at the bottom centre. Its background is translucent,
+and annotations retain their colours within it.
 
 With an output folder selected, the app saves files in a subfolder named for the case. If an export group exists, choose **Replace** or **Save new version**. Without an output folder, Chrome saves an individual download or a ZIP for **Export All**. To resume from a downloaded ZIP, extract it into the chosen output folder or open its MRB directly. MRB scenes include the radiograph. Keep scene and image exports in your authorised local storage.
 

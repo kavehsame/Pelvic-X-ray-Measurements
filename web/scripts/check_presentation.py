@@ -9,7 +9,7 @@ from pathlib import Path
 import tempfile
 from threading import Thread
 
-from PIL import Image
+from PIL import Image, ImageChops
 
 from check_chrome import CHROME, isolated_chrome
 from check_core import QA
@@ -36,7 +36,10 @@ def main():
     QA.mkdir(parents=True, exist_ok=True)
     root = Path(tempfile.mkdtemp(prefix="presentation_", dir=QA))
     source = root / "LowResolution.png"
-    Image.new("L", (128, 96), 180).save(source)
+    pixels = Image.new("L", (128, 96), 180)
+    pixels.putpixel((0, 0), 0)
+    pixels.putpixel((127, 0), 255)
+    pixels.save(source)
     checked = []
     with ThreadingHTTPServer(("127.0.0.1", 0), SiteHandler) as host:
         thread = Thread(target=host.serve_forever, daemon=True)
@@ -59,6 +62,15 @@ def main():
                 assert browser.js("snap.markups") == before
                 assert browser.js("snap.image.dimensions") == [128, 96]
                 checked.append("Low-resolution PNG is rendered at 2,048 pixels on its long edge with crisp annotation colours; source pixels and landmarks are unchanged.")
+                band = image.crop((0, image.height - 180, image.width, image.height))
+                background = Image.new("RGB", band.size, image.getpixel((0, image.height - 1)))
+                bounds = ImageChops.difference(band, background).getbbox()
+                assert bounds and abs((bounds[0] + bounds[2]) / 2 - image.width / 2) <= 2, bounds
+                # A gap near the panel's left padding samples the background,
+                # away from text, and must retain visible grayscale information.
+                x, y = bounds[0] + 3, image.height - 180 + bounds[1] + 3
+                assert 0 < image.getpixel((x, y))[0] < image.getpixel((0, image.height - 1))[0]
+                checked.append("The translucent PNG summary is centred at the bottom.")
     
         finally:
             host.shutdown()

@@ -429,7 +429,8 @@ class RadiographViewer {
     const maxLines = Math.max(5, Math.floor((h - 4 * pad) / lineHeight));
     const groups = Array.from({length: Math.ceil(lines.length / maxLines)}, (_, i) => lines.slice(i * maxLines, (i + 1) * maxLines));
     const blockWidths = groups.map((chunk) => Math.min(w - pad * 2, Math.max(...chunk.map((line) => ctx.measureText(line).width)) + 2 * pad));
-    let left = Math.max(pad, w - blockWidths.reduce((sum, value) => sum + value, 0) - pad * groups.length);
+    const totalWidth = blockWidths.reduce((sum, value) => sum + value, 0) + pad * (groups.length - 1);
+    let left = Math.max(pad, (w - totalWidth) / 2);
     const top = Math.max(pad, h - Math.min(lines.length, maxLines) * lineHeight - pad * 3);
     const panels = groups.map((chunk, i) => {
       const boxWidth = Math.min(blockWidths[i], w - left);
