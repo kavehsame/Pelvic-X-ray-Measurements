@@ -1,12 +1,12 @@
 {
   "status": "passed",
   "patient_data": false,
-  "prior_replay_sha256": "6e60ef83c98120aa3982ddd8131372465cc1eb78cb51e1d4f09c65cb3a291bbd",
+  "prior_replay_sha256": "f828367146386ef6a8fa9743df0252270ecfcaa2709c392b4805f7751d1c5445",
   "csv_measurement_comparison": {
     "measurements": 58,
     "numeric_values": 81,
     "max_absolute_difference": 4.988010005035903e-12
   },
-  "editable_roles_roundtrip": 79,
+  "editable_roles_roundtrip": 83,
   "reorientation_index_mappings": 8
 }

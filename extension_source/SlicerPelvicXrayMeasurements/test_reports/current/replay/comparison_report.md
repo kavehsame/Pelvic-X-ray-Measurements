@@ -9,14 +9,14 @@
 - Numeric rounding limit (binary64 steps): `8`
 - Rows with accepted numeric rounding: `0`
 - Fields with accepted numeric rounding: `0`
-- Expected rows: `397`
-- Actual rows: `397`
-- Exact rows: `397`
+- Expected rows: `413`
+- Actual rows: `413`
+- Exact rows: `413`
 - Mismatched rows: `0`
 - Missing rows: `0`
 - Unexpected rows: `0`
-- Expected SHA-256: `7b895d9b221aa39ac01f60165905c07693becaff96092210ec43a4321cd40682`
-- Actual SHA-256: `7b895d9b221aa39ac01f60165905c07693becaff96092210ec43a4321cd40682`
+- Expected SHA-256: `2ba9971f7e0a0e3c96480f3cf491edfd809b9c8fc01058072e85bc1529ddaf4d`
+- Actual SHA-256: `2ba9971f7e0a0e3c96480f3cf491edfd809b9c8fc01058072e85bc1529ddaf4d`
 
 ## Outcome
 

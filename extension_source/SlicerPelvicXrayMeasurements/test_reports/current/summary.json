@@ -4,7 +4,7 @@
   "live_slicer": true,
   "clinical_validation_completed": false,
   "validation_study": "in progress; comparison with established medical software",
-  "started_utc": "20261118T090307Z",
+  "started_utc": "20261118T101212Z",
   "platform": "Darwin",
   "machine": "arm64",
   "python": "3.13.9",
@@ -39,6 +39,10 @@
     },
     {
       "stage": "chrome",
+      "exit_code": 0
+    },
+    {
+      "stage": "presentation",
       "exit_code": 0
     }
   ],

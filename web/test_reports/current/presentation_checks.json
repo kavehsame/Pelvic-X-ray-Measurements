@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "tests": [
+    "Low-resolution PNG is rendered at 2,048 pixels on its long edge with crisp annotation colours; source pixels and landmarks are unchanged.",
+    "The translucent PNG summary is centred at the bottom.",
+    "Both wall contours follow the roof in the UI; bilateral placement, finish, distinct colours and Hide work.",
+    "The dashed contour continuation and preceding segment match the complete provisional curve, leave saved points unchanged and keep line previews straight.",
+    "The morphology help image opens at a readable width and remains inside the viewport."
+  ],
+  "patient_data_used": false,
+  "run": "presentation_zypwp5fy"
+}
