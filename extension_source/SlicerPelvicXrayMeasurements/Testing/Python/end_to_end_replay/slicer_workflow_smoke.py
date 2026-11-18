@@ -104,6 +104,12 @@ def main():
     assert widget.active_femoral_shaft_contour_step_index is None
     assert widget.logic.latest_results["sides"]["left"]["femoralShaftContours"]["defined"]
     print("PASS: circle visibility and automatic advancement through all four shaft contours", flush=True)
+
+    assert widget._export_image_dimensions(volume) == (2048, 2048)
+    exported = widget._capture_annotation_image(volume)
+    assert exported.width() >= 2048 and exported.height() >= 2048
+    assert volume.GetImageData().GetDimensions() == (600, 600, 1)
+    print("PASS: high-resolution annotation export from a low-resolution image preserves the source", flush=True)
     widget.cleanup()
 
 

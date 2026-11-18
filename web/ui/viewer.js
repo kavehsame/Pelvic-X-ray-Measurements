@@ -1,5 +1,12 @@
 "use strict";
 
+function exportImageDimensions(shape, scale) {
+  const [width, height] = shape.map((size, i) => size * scale[i]);
+  const factor = Math.min(Math.max(1, 2048 / Math.max(width, height)),
+    15500 / Math.max(width, height), Math.sqrt(40_000_000 / (width * height)));
+  return [width, height].map((size) => Math.max(2, Math.floor(size * factor)));
+}
+
 function drawMarks(ctx, marks, position, width, glyph, selected = null) {
   ctx.lineJoin = "round";
   ctx.lineCap = "round";
@@ -404,12 +411,10 @@ class RadiographViewer {
 
   async exportPNG(snapshot, summary, annotator, includeValues) {
     if (!this.bitmap) throw new Error("Open a radiograph before exporting.");
-    const [sw, sh] = this.shape.map((n, i) => n * this.scale[i]);
-    const shrink = Math.min(1, 15500 / Math.max(sw, sh), Math.sqrt(40_000_000 / (sw * sh)));
     const output = document.createElement("canvas");
-    output.width = Math.max(2, Math.round(sw * shrink));
-    output.height = Math.max(2, Math.round(sh * shrink));
+    [output.width, output.height] = exportImageDimensions(this.shape, this.scale);
     const ctx = output.getContext("2d", {alpha: false});
+    ctx.imageSmoothingEnabled = true;
     ctx.imageSmoothingQuality = "high";
     const w = output.width, h = output.height;
     ctx.drawImage(this.bitmap, 0, 0, w, h);

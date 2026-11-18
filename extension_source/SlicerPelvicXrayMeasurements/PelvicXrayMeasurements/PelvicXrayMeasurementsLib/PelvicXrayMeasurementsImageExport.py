@@ -370,8 +370,10 @@ class AnnotationImageExportMixin:
         return qimage
 
     def _export_image_dimensions(self, image_node: Any) -> Any:
-        """Choose the output pixel dimensions for annotated image export. Export dimensions are derived
-        from the source image so saved figures do not depend on the current zoom state.
+        """Render overlays at a minimum 2,048-pixel long edge, independent of source resolution.
+
+        Increase the render target before Slicer draws the markups, rather than enlarging a
+        rasterised annotation layer. Bound large exports to 40 megapixels and 15,500 per edge.
         """
 
         image_data = image_node.GetImageData() if image_node is not None else None
@@ -381,7 +383,12 @@ class AnnotationImageExportMixin:
         dimensions = image_data.GetDimensions()
         width = max(1, int(dimensions[0]))
         height = max(1, int(dimensions[1]))
-        return width, height
+        factor = min(
+            max(1.0, 2048.0 / max(width, height)),
+            15500.0 / max(width, height),
+            math.sqrt(40_000_000.0 / (width * height)),
+        )
+        return max(2, int(width * factor)), max(2, int(height * factor))
 
     def _temporarily_disable_slice_annotations(self) -> Any:
         """Disable Slicer slice-corner annotations during image export. The module wants its own clean

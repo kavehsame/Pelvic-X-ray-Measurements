@@ -738,10 +738,12 @@ def main():
                     ".png",
                 }
                 with Image.open(next((run_dir / "first_export").glob("*.png"))) as png:
-                    assert png.size == (1000, 900)
-                    ix, iy = map(round, mark["points"][0])
+                    assert png.size == (2048, 1843)
+                    ix, iy = [round((value + 0.5) * size / original)
+                              for value, size, original in zip(mark["points"][0], png.size, (1000, 900), strict=True)]
                     assert list(png.getpixel((ix, iy))[:3]) == mark["color"]
-                    composite = png.getpixel(sample)[:3]
+                    composite = png.getpixel(tuple(round((value + 0.5) * size / original)
+                                                  for value, size, original in zip(sample, png.size, (1000, 900), strict=True)))[:3]
                     expected = [
                         round(src * 0.6 + fill * 0.4)
                         for src, fill in zip(original_pixel, [8, 12, 16], strict=True)

@@ -131,6 +131,11 @@ def main():
                     *(["--chrome", args.chrome] if args.chrome else []),
                 ],
             ),
+            (
+                "presentation",
+                [*python, str(WEB / "scripts/check_presentation.py"),
+                 *(["--chrome", args.chrome] if args.chrome else [])],
+            ),
         ]
     )
     report = {

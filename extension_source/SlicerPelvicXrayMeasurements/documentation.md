@@ -1293,6 +1293,11 @@ The module is meant to be audit-friendly and reusable for research, validation, 
 
 The image export is designed to produce a publication-friendly annotated figure.
 
+Exports render at a minimum long edge of 2,048 pixels for ordinary image proportions,
+with landmarks and measurement text drawn at the final resolution. The radiograph
+retains its original information; enlargement does not add anatomical detail.
+Large exports are limited to 40 megapixels and 15,500 pixels per edge.
+
 ### What is included
 
 - the radiograph itself,
