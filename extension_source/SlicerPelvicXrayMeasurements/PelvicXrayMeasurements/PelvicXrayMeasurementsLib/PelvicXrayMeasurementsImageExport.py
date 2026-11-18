@@ -473,6 +473,9 @@ class AnnotationImageExportMixin:
             if hasattr(view_widget, "sliceController"):
                 view_widget.sliceController().setVisible(False)
             view_widget.resize(width, height)
+            # Size the rendering surface itself; wrapper margins must not
+            # reduce the exported pixel dimensions on small input images.
+            view_widget.sliceView().setFixedSize(width, height)
             if hasattr(view_widget, "move"):
                 view_widget.move(-max(width + 200, 2000), -max(height + 200, 2000))
 

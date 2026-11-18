@@ -87,6 +87,8 @@ def main():
             with (out / f"{stage}.log").open("w", encoding="utf-8") as log:
                 result = subprocess.run(command, stdout=log, stderr=subprocess.STDOUT, timeout=600)
             record = {"stage": stage, "exit_code": result.returncode}
+            if stage == "interactive_workflows" and "SLICER_WORKFLOW_CHECKS_PASSED" not in (out / f"{stage}.log").read_text():
+                record = {"stage": stage, "exit_code": 1, "error": "The Slicer workflow did not reach its completion marker."}
         except subprocess.TimeoutExpired:
             record = {"stage": stage, "exit_code": 124, "error": "Verification exceeded its time limit."}
         records.append(record)

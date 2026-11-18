@@ -111,7 +111,9 @@ def main():
                           ("posterior", MeasurementKey.POSTERIOR_ACETABULAR_WALL)):
             getattr(widget, f"on_{wall}_acetabular_wall_clicked")()
             role = f"{side}_{wall}AcetabularWall"
-            queued(role)
+            assert widget.active_placement_measurement_key == key
+            assert widget.active_placement_side_key == side
+            assert slicer.mrmlScene.GetNodeByID(slicer.app.applicationLogic().GetSelectionNode().GetActivePlaceNodeID()) == widget.logic.get_node(role)
             node = points(role, [(-30, 30, 0), (-10, 40, 0), (10, 30, 0)])
             widget.logic.stop_placement_mode()
             events()
@@ -126,10 +128,12 @@ def main():
 
     assert widget._export_image_dimensions(volume) == (2048, 2048)
     exported = widget._capture_annotation_image(volume)
+    print(f"EXPORT_IMAGE_SIZE {exported.width()} {exported.height()}", flush=True)
     assert exported.width() >= 2048 and exported.height() >= 2048
     assert volume.GetImageData().GetDimensions() == (600, 600, 1)
     print("PASS: high-resolution annotation export from a low-resolution image preserves the source", flush=True)
     widget.cleanup()
+    print("SLICER_WORKFLOW_CHECKS_PASSED", flush=True)
 
 
 try:
