@@ -149,6 +149,8 @@ class MeasurementCalculationMixin:
                     "ilioischialLine",
                     "shentonLine",
                     "acetabularRoofSourcil",
+                    "anteriorAcetabularWall",
+                    "posteriorAcetabularWall",
                     "lineaTerminalis",
                     *FEMORAL_SHAFT_CONTOUR_BASE_ROLES,
                 ]:

@@ -121,6 +121,14 @@ HELP = {
         "Trace the roof from medial to lateral. Its lateral point can seed shared landmarks. "
         "Right-click or Escape finishes.",
     ),
+    "anterior_wall": (
+        "Anterior Acetabular Wall",
+        "Trace the anterior acetabular rim. Right-click or Escape finishes; drag points to refine.",
+    ),
+    "posterior_wall": (
+        "Posterior Acetabular Wall",
+        "Trace the posterior acetabular rim. Right-click or Escape finishes; drag points to refine.",
+    ),
     "linea_terminalis": (
         "Linea Terminalis",
         "Trace the pelvic brim. Right-click or Escape finishes; check points against the "

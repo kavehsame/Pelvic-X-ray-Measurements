@@ -1911,6 +1911,24 @@ class WorkflowActionsMixin:
             "Acetabular Roof (Sourcil)",
         )
 
+    def on_anterior_acetabular_wall_clicked(self, _checked: Any=False) -> None:
+        """Place or finish the active-side anterior wall using the shared contour workflow."""
+
+        self._toggle_edge_contour_placement(
+            MeasurementKey.ANTERIOR_ACETABULAR_WALL,
+            "anteriorAcetabularWall",
+            "Anterior Acetabular Wall",
+        )
+
+    def on_posterior_acetabular_wall_clicked(self, _checked: Any=False) -> None:
+        """Place or finish the active-side posterior wall using the shared contour workflow."""
+
+        self._toggle_edge_contour_placement(
+            MeasurementKey.POSTERIOR_ACETABULAR_WALL,
+            "posteriorAcetabularWall",
+            "Posterior Acetabular Wall",
+        )
+
     def on_linea_terminalis_clicked(self, _checked: Any=False) -> None:
         """Start, restart, or pause the Linea Terminalis contour workflow."""
 

@@ -425,6 +425,8 @@ class PelvicXrayMeasurementsWidget(
         self.ilioischial_line_button = qt.QPushButton("Ilioischial Line")
         self.shenton_line_button = qt.QPushButton("Shenton Line")
         self.acetabular_roof_sourcil_button = qt.QPushButton("Acetabular Roof (Sourcil)")
+        self.anterior_acetabular_wall_button = qt.QPushButton("Anterior Acetabular Wall")
+        self.posterior_acetabular_wall_button = qt.QPushButton("Posterior Acetabular Wall")
         self.linea_terminalis_button = qt.QPushButton("Linea Terminalis")
         self.femoral_shaft_contour_button = qt.QPushButton("Femoral Shaft")
         self.other_point_button = qt.QPushButton("Point")
@@ -517,6 +519,8 @@ class PelvicXrayMeasurementsWidget(
             MeasurementKey.ILIOISCHIAL_LINE: self.ilioischial_line_button,
             MeasurementKey.SHENTON_LINE: self.shenton_line_button,
             MeasurementKey.ACETABULAR_ROOF_SOURCIL: self.acetabular_roof_sourcil_button,
+            MeasurementKey.ANTERIOR_ACETABULAR_WALL: self.anterior_acetabular_wall_button,
+            MeasurementKey.POSTERIOR_ACETABULAR_WALL: self.posterior_acetabular_wall_button,
             MeasurementKey.LINEA_TERMINALIS: self.linea_terminalis_button,
             MeasurementKey.FEMORAL_SHAFT_CONTOUR: self.femoral_shaft_contour_button,
             MeasurementKey.OTHER_POINT: self.other_point_button,
@@ -557,6 +561,8 @@ class PelvicXrayMeasurementsWidget(
             (self.ilioischial_line_button, self.on_ilioischial_line_clicked),
             (self.shenton_line_button, self.on_shenton_line_clicked),
             (self.acetabular_roof_sourcil_button, self.on_acetabular_roof_sourcil_clicked),
+            (self.anterior_acetabular_wall_button, self.on_anterior_acetabular_wall_clicked),
+            (self.posterior_acetabular_wall_button, self.on_posterior_acetabular_wall_clicked),
             (self.linea_terminalis_button, self.on_linea_terminalis_clicked),
             (self.femoral_shaft_contour_button, self.on_femoral_shaft_contour_clicked),
             (self.other_point_button, self.on_other_point_clicked),
@@ -864,6 +870,8 @@ class PelvicXrayMeasurementsWidget(
             (self.ilioischial_line_button, MeasurementKey.ILIOISCHIAL_LINE),
             (self.shenton_line_button, MeasurementKey.SHENTON_LINE),
             (self.acetabular_roof_sourcil_button, MeasurementKey.ACETABULAR_ROOF_SOURCIL),
+            (self.anterior_acetabular_wall_button, MeasurementKey.ANTERIOR_ACETABULAR_WALL),
+            (self.posterior_acetabular_wall_button, MeasurementKey.POSTERIOR_ACETABULAR_WALL),
             (self.linea_terminalis_button, MeasurementKey.LINEA_TERMINALIS),
             (self.femoral_shaft_contour_button, MeasurementKey.FEMORAL_SHAFT_CONTOUR),
         ]:
@@ -2544,6 +2552,8 @@ class PelvicXrayMeasurementsWidget(
             MeasurementKey.ILIOISCHIAL_LINE: "ilioischialLine",
             MeasurementKey.SHENTON_LINE: "shentonLine",
             MeasurementKey.ACETABULAR_ROOF_SOURCIL: "acetabularRoofSourcil",
+            MeasurementKey.ANTERIOR_ACETABULAR_WALL: "anteriorAcetabularWall",
+            MeasurementKey.POSTERIOR_ACETABULAR_WALL: "posteriorAcetabularWall",
             MeasurementKey.LINEA_TERMINALIS: "lineaTerminalis",
         }
         if measurement_key in contour_roles:

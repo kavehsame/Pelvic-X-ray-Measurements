@@ -180,6 +180,8 @@ BILATERAL_INPUT_BASE_ROLES = [
     "ilioischialLine",
     "shentonLine",
     "acetabularRoofSourcil",
+    "anteriorAcetabularWall",
+    "posteriorAcetabularWall",
     "lineaTerminalis",
     *FEMORAL_SHAFT_CONTOUR_BASE_ROLES,
 ]
@@ -233,6 +235,20 @@ def _edge_contour_node_specs(side_key: str, side_label: str) -> NodeSpecMap:
             "name": side_node_name(side_key, "Acetabular Roof (Sourcil)"),
             "color": (0.32, 0.58, 0.95),
             "labelPrefix": f"AcetabularRoofSourcil_{side_label}",
+            "glyphScale": 1.2,
+        },
+        side_role(side_key, "anteriorAcetabularWall"): {
+            "className": "vtkMRMLMarkupsCurveNode",
+            "name": side_node_name(side_key, "Anterior Acetabular Wall"),
+            "color": (0.98, 0.82, 0.22),
+            "labelPrefix": f"AnteriorAcetabularWall_{side_label}",
+            "glyphScale": 1.2,
+        },
+        side_role(side_key, "posteriorAcetabularWall"): {
+            "className": "vtkMRMLMarkupsCurveNode",
+            "name": side_node_name(side_key, "Posterior Acetabular Wall"),
+            "color": (0.98, 0.32, 0.68),
+            "labelPrefix": f"PosteriorAcetabularWall_{side_label}",
             "glyphScale": 1.2,
         },
         side_role(side_key, "lineaTerminalis"): {

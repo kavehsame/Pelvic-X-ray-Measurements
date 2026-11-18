@@ -105,6 +105,25 @@ def main():
     assert widget.logic.latest_results["sides"]["left"]["femoralShaftContours"]["defined"]
     print("PASS: circle visibility and automatic advancement through all four shaft contours", flush=True)
 
+    for side in ("left", "right"):
+        widget.side_selector.setCurrentIndex(0 if side == "left" else 1)
+        for wall, key in (("anterior", MeasurementKey.ANTERIOR_ACETABULAR_WALL),
+                          ("posterior", MeasurementKey.POSTERIOR_ACETABULAR_WALL)):
+            getattr(widget, f"on_{wall}_acetabular_wall_clicked")()
+            role = f"{side}_{wall}AcetabularWall"
+            queued(role)
+            node = points(role, [(-30, 30, 0), (-10, 40, 0), (10, 30, 0)])
+            widget.logic.stop_placement_mode()
+            events()
+            assert node.GetNumberOfDefinedControlPoints() == 3
+            widget.logic.set_measurement_visible(key, False, side)
+            widget.logic.update_all_derived_measurements(volume)
+            assert not node.GetDisplayVisibility()
+            widget.logic.set_measurement_visible(key, True, side)
+            widget.logic.update_all_derived_measurements(volume)
+            assert node.GetDisplayVisibility()
+    print("PASS: bilateral anterior and posterior wall placement, finish and Hide", flush=True)
+
     assert widget._export_image_dimensions(volume) == (2048, 2048)
     exported = widget._capture_annotation_image(volume)
     assert exported.width() >= 2048 and exported.height() >= 2048

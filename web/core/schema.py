@@ -278,6 +278,8 @@ def _add_bilateral_specs() -> None:
             ("ilioischialLine", "Ilioischial Line", (0.18, 0.70, 0.72)),
             ("shentonLine", "Shenton Line", (0.90, 0.48, 0.20)),
             ("acetabularRoofSourcil", "Acetabular Roof (Sourcil)", (0.32, 0.58, 0.95)),
+            ("anteriorAcetabularWall", "Anterior Acetabular Wall", (0.98, 0.82, 0.22)),
+            ("posteriorAcetabularWall", "Posterior Acetabular Wall", (0.98, 0.32, 0.68)),
             ("lineaTerminalis", "Linea Terminalis", (0.52, 0.74, 0.25)),
             ("femoralShaftContour1", "Femoral Shaft Contour 1", (0.93, 0.32, 0.46)),
             ("femoralShaftContour2", "Femoral Shaft Contour 2", (0.96, 0.50, 0.30)),

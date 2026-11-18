@@ -71,6 +71,32 @@ def main():
                 x, y = bounds[0] + 3, image.height - 180 + bounds[1] + 3
                 assert 0 < image.getpixel((x, y))[0] < image.getpixel((0, image.height - 1))[0]
                 checked.append("The translucent PNG summary is centred at the bottom.")
+                keys = browser.js("Array.from(document.querySelectorAll('[id^=tool-]')).map(button=>button.id)")
+                roof = keys.index("tool-sourcil")
+                assert keys[roof + 1:roof + 3] == ["tool-anterior_wall", "tool-posterior_wall"]
+                colors = []
+                for side in ("left", "right"):
+                    browser.click("#side-" + side)
+                    browser.wait("!busy")
+                    for wall in ("anterior", "posterior"):
+                        role = side + "_" + wall + "AcetabularWall"
+                        browser.click("#tool-" + wall + "_wall")
+                        browser.wait("!busy && !!snap.active_role")
+                        assert browser.js("snap.active_role") == role
+                        for point in ((20, 70), (40, 45), (80, 60)):
+                            browser.point(*point)
+                        browser.finish()
+                        mark = browser.js(f"snap.markups.find(mark=>mark.role==={json.dumps(role)})")
+                        assert mark["kind"] == "curve" and len(mark["points"]) == 3
+                        colors.append(mark["color"])
+                        browser.click(f'#hide-{wall}_wall')
+                        browser.wait("!busy")
+                        assert not browser.js(f"snap.markups.some(mark=>mark.role==={json.dumps(role)})")
+                        browser.click(f'#hide-{wall}_wall')
+                        browser.wait("!busy")
+                assert colors[0] != colors[1] and colors[:2] == colors[2:]
+                browser.screenshot(root / "wall_contours.png")
+                checked.append("Both wall contours follow the roof in the UI; bilateral placement, finish, distinct colours and Hide work.")
     
         finally:
             host.shutdown()

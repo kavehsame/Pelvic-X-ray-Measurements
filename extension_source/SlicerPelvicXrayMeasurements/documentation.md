@@ -1025,6 +1025,8 @@ The contour tools store editable Slicer markups curves for anatomical borders.
 - `Ilioischial Line`
 - `Shenton Line`
 - `Acetabular Roof (Sourcil)`
+- `Anterior Acetabular Wall` (yellow)
+- `Posterior Acetabular Wall` (pink)
 - `Linea Terminalis`
 
 **How they are measured in the module**

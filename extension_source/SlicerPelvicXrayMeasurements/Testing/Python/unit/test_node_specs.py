@@ -57,6 +57,8 @@ def test_named_edge_contours_are_curve_inputs() -> None:
         MeasurementKey.ILIOISCHIAL_LINE,
         MeasurementKey.SHENTON_LINE,
         MeasurementKey.ACETABULAR_ROOF_SOURCIL,
+        MeasurementKey.ANTERIOR_ACETABULAR_WALL,
+        MeasurementKey.POSTERIOR_ACETABULAR_WALL,
         MeasurementKey.LINEA_TERMINALIS,
     ]:
         assert measurement_key.value in ANATOMY_EDGE_CONTOUR_ROLES

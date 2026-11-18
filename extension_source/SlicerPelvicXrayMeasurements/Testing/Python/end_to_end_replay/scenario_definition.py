@@ -493,6 +493,18 @@ STATIC_ROLE_POINTS = {
 }
 
 
+# The new wall curves extend the fixed contour scenario without changing any
+# existing measurement inputs. They do not seed the shared sourcil landmarks.
+for _side in ("left", "right"):
+    for _wall, _dy in (("anterior", -8.0), ("posterior", 8.0)):
+        _role = side_role(_side, f"{_wall}AcetabularWall")
+        STATIC_ROLE_POINTS[_role] = [
+            point(x, y + _dy, z)
+            for x, y, z in STATIC_ROLE_POINTS[side_role(_side, "acetabularRoofSourcil")]
+        ]
+        STATIC_ROLE_STAGES[-2].append(_role)
+
+
 CUSTOM_LINES = {
     1: {
         "lockMode": OtherAngleLockMode.NONE,

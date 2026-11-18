@@ -226,6 +226,8 @@ WORKFLOW_SECTIONS: tuple[tuple[str, tuple[PlacementWorkflow, ...]], ...] = (
                 ("ilioischial", "Ilioischial Line", "ilioischialLine"),
                 ("shenton", "Shenton Line", "shentonLine"),
                 ("sourcil", "Acetabular Roof (Sourcil)", "acetabularRoofSourcil"),
+                ("anterior_wall", "Anterior Acetabular Wall", "anteriorAcetabularWall"),
+                ("posterior_wall", "Posterior Acetabular Wall", "posteriorAcetabularWall"),
                 ("linea_terminalis", "Linea Terminalis", "lineaTerminalis"),
                 ("shaft_contour", "Femoral Shaft", "femoralShaftContour1"),
             )

@@ -41,6 +41,8 @@ class MeasurementKey(StringEnum):
     ILIOISCHIAL_LINE = "ilioischialLine"
     SHENTON_LINE = "shentonLine"
     ACETABULAR_ROOF_SOURCIL = "acetabularRoofSourcil"
+    ANTERIOR_ACETABULAR_WALL = "anteriorAcetabularWall"
+    POSTERIOR_ACETABULAR_WALL = "posteriorAcetabularWall"
     LINEA_TERMINALIS = "lineaTerminalis"
     FEMORAL_SHAFT_CONTOUR = "femoralShaftContour"
     OTHER_POINT = "otherPoint"
@@ -130,6 +132,8 @@ ANATOMY_EDGE_CONTOUR_ROLES = (
     "ilioischialLine",
     "shentonLine",
     "acetabularRoofSourcil",
+    "anteriorAcetabularWall",
+    "posteriorAcetabularWall",
     "lineaTerminalis",
     *FEMORAL_SHAFT_CONTOUR_BASE_ROLES,
 )
@@ -184,6 +188,8 @@ SIDE_MEASUREMENT_KEYS = (
     MeasurementKey.ILIOISCHIAL_LINE,
     MeasurementKey.SHENTON_LINE,
     MeasurementKey.ACETABULAR_ROOF_SOURCIL,
+    MeasurementKey.ANTERIOR_ACETABULAR_WALL,
+    MeasurementKey.POSTERIOR_ACETABULAR_WALL,
     MeasurementKey.LINEA_TERMINALIS,
     MeasurementKey.FEMORAL_SHAFT_CONTOUR,
 )
@@ -203,6 +209,8 @@ MEASUREMENT_ROLE_GROUPS = {
     MeasurementKey.ILIOISCHIAL_LINE: ["ilioischialLine"],
     MeasurementKey.SHENTON_LINE: ["shentonLine"],
     MeasurementKey.ACETABULAR_ROOF_SOURCIL: ["acetabularRoofSourcil"],
+    MeasurementKey.ANTERIOR_ACETABULAR_WALL: ["anteriorAcetabularWall"],
+    MeasurementKey.POSTERIOR_ACETABULAR_WALL: ["posteriorAcetabularWall"],
     MeasurementKey.LINEA_TERMINALIS: ["lineaTerminalis"],
     MeasurementKey.FEMORAL_SHAFT_CONTOUR: list(FEMORAL_SHAFT_CONTOUR_BASE_ROLES),
     MeasurementKey.FEMUR_HEAD: ["femurHeadPoints", "femurHeadCenter", "femurHeadCircle"],

@@ -216,6 +216,14 @@ point,Hip Measurements - Left Acetabular Roof (Sourcil),0,AcetabularRoofSourcil_
 point,Hip Measurements - Left Acetabular Roof (Sourcil),1,AcetabularRoofSourcil_Left_2,64.0,-151.0,0.0,spline,30,,,,left_acetabularRoofSourcil
 point,Hip Measurements - Left Acetabular Roof (Sourcil),2,AcetabularRoofSourcil_Left_3,88.0,-153.0,0.0,spline,30,,,,left_acetabularRoofSourcil
 point,Hip Measurements - Left Acetabular Roof (Sourcil),3,AcetabularRoofSourcil_Left_4,110.0,-139.0,0.0,spline,30,,,,left_acetabularRoofSourcil
+point,Hip Measurements - Left Anterior Acetabular Wall,0,AnteriorAcetabularWall_Left_1,40.0,-141.0,0.0,spline,30,,,,left_anteriorAcetabularWall
+point,Hip Measurements - Left Anterior Acetabular Wall,1,AnteriorAcetabularWall_Left_2,64.0,-159.0,0.0,spline,30,,,,left_anteriorAcetabularWall
+point,Hip Measurements - Left Anterior Acetabular Wall,2,AnteriorAcetabularWall_Left_3,88.0,-161.0,0.0,spline,30,,,,left_anteriorAcetabularWall
+point,Hip Measurements - Left Anterior Acetabular Wall,3,AnteriorAcetabularWall_Left_4,110.0,-147.0,0.0,spline,30,,,,left_anteriorAcetabularWall
+point,Hip Measurements - Left Posterior Acetabular Wall,0,PosteriorAcetabularWall_Left_1,40.0,-125.0,0.0,spline,30,,,,left_posteriorAcetabularWall
+point,Hip Measurements - Left Posterior Acetabular Wall,1,PosteriorAcetabularWall_Left_2,64.0,-143.0,0.0,spline,30,,,,left_posteriorAcetabularWall
+point,Hip Measurements - Left Posterior Acetabular Wall,2,PosteriorAcetabularWall_Left_3,88.0,-145.0,0.0,spline,30,,,,left_posteriorAcetabularWall
+point,Hip Measurements - Left Posterior Acetabular Wall,3,PosteriorAcetabularWall_Left_4,110.0,-131.0,0.0,spline,30,,,,left_posteriorAcetabularWall
 point,Hip Measurements - Left Linea Terminalis,0,LineaTerminalis_Left_1,24.0,-87.0,0.0,spline,30,,,,left_lineaTerminalis
 point,Hip Measurements - Left Linea Terminalis,1,LineaTerminalis_Left_2,53.0,-59.0,0.0,spline,30,,,,left_lineaTerminalis
 point,Hip Measurements - Left Linea Terminalis,2,LineaTerminalis_Left_3,84.0,-37.0,0.0,spline,30,,,,left_lineaTerminalis
@@ -339,6 +347,14 @@ point,Hip Measurements - Right Acetabular Roof (Sourcil),0,AcetabularRoofSourcil
 point,Hip Measurements - Right Acetabular Roof (Sourcil),1,AcetabularRoofSourcil_Right_2,-186.0,-149.0,0.0,spline,30,,,,right_acetabularRoofSourcil
 point,Hip Measurements - Right Acetabular Roof (Sourcil),2,AcetabularRoofSourcil_Right_3,-163.0,-155.0,0.0,spline,30,,,,right_acetabularRoofSourcil
 point,Hip Measurements - Right Acetabular Roof (Sourcil),3,AcetabularRoofSourcil_Right_4,-142.0,-145.0,0.0,spline,30,,,,right_acetabularRoofSourcil
+point,Hip Measurements - Right Anterior Acetabular Wall,0,AnteriorAcetabularWall_Right_1,-206.0,-139.0,0.0,spline,30,,,,right_anteriorAcetabularWall
+point,Hip Measurements - Right Anterior Acetabular Wall,1,AnteriorAcetabularWall_Right_2,-186.0,-157.0,0.0,spline,30,,,,right_anteriorAcetabularWall
+point,Hip Measurements - Right Anterior Acetabular Wall,2,AnteriorAcetabularWall_Right_3,-163.0,-163.0,0.0,spline,30,,,,right_anteriorAcetabularWall
+point,Hip Measurements - Right Anterior Acetabular Wall,3,AnteriorAcetabularWall_Right_4,-142.0,-153.0,0.0,spline,30,,,,right_anteriorAcetabularWall
+point,Hip Measurements - Right Posterior Acetabular Wall,0,PosteriorAcetabularWall_Right_1,-206.0,-123.0,0.0,spline,30,,,,right_posteriorAcetabularWall
+point,Hip Measurements - Right Posterior Acetabular Wall,1,PosteriorAcetabularWall_Right_2,-186.0,-141.0,0.0,spline,30,,,,right_posteriorAcetabularWall
+point,Hip Measurements - Right Posterior Acetabular Wall,2,PosteriorAcetabularWall_Right_3,-163.0,-147.0,0.0,spline,30,,,,right_posteriorAcetabularWall
+point,Hip Measurements - Right Posterior Acetabular Wall,3,PosteriorAcetabularWall_Right_4,-142.0,-137.0,0.0,spline,30,,,,right_posteriorAcetabularWall
 point,Hip Measurements - Right Linea Terminalis,0,LineaTerminalis_Right_1,-240.0,-89.0,0.0,spline,30,,,,right_lineaTerminalis
 point,Hip Measurements - Right Linea Terminalis,1,LineaTerminalis_Right_2,-214.0,-63.0,0.0,spline,30,,,,right_lineaTerminalis
 point,Hip Measurements - Right Linea Terminalis,2,LineaTerminalis_Right_3,-186.0,-41.0,0.0,spline,30,,,,right_lineaTerminalis

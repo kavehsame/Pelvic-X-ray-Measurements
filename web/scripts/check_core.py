@@ -213,7 +213,7 @@ def main():
     computed = measurements(result_csv.read_text("utf-8-sig"))
     parity = compare(reference, computed)
     recovered = read_csv(result_csv.read_bytes())
-    assert len(recovered["points"]) == 79
+    assert len(recovered["points"]) == 83
     original = read_mrb(path.read_bytes())[1]
     assert original["settings"]["comments"] == reopened.settings.pelvic_comments
     for role, points in s.serialize()["points"].items():

@@ -104,6 +104,14 @@ point,Hip Measurements - Left Acetabular Roof (Sourcil),0,Hip Measurements - Lef
 point,Hip Measurements - Left Acetabular Roof (Sourcil),1,Hip Measurements - Left Acetabular Roof (Sourcil)-2,-5,-134,0,1,30,,,,left_acetabularRoofSourcil,left_acetabularRoofSourcil,2,-5,-134,0,Automated Test
 point,Hip Measurements - Left Acetabular Roof (Sourcil),2,Hip Measurements - Left Acetabular Roof (Sourcil)-3,19,-136,0,1,30,,,,left_acetabularRoofSourcil,left_acetabularRoofSourcil,3,19,-136,0,Automated Test
 point,Hip Measurements - Left Acetabular Roof (Sourcil),3,Hip Measurements - Left Acetabular Roof (Sourcil)-4,41,-122,0,1,30,,,,left_acetabularRoofSourcil,left_acetabularRoofSourcil,4,41,-122,0,Automated Test
+point,Hip Measurements - Left Anterior Acetabular Wall,0,AnteriorAcetabularWall_Left_1,-29,-124.0,0,1,30,,,,left_anteriorAcetabularWall,left_anteriorAcetabularWall,1,-29,-124.0,0,Automated Test
+point,Hip Measurements - Left Anterior Acetabular Wall,1,AnteriorAcetabularWall_Left_2,-5,-142.0,0,1,30,,,,left_anteriorAcetabularWall,left_anteriorAcetabularWall,2,-5,-142.0,0,Automated Test
+point,Hip Measurements - Left Anterior Acetabular Wall,2,AnteriorAcetabularWall_Left_3,19,-144.0,0,1,30,,,,left_anteriorAcetabularWall,left_anteriorAcetabularWall,3,19,-144.0,0,Automated Test
+point,Hip Measurements - Left Anterior Acetabular Wall,3,AnteriorAcetabularWall_Left_4,41,-130.0,0,1,30,,,,left_anteriorAcetabularWall,left_anteriorAcetabularWall,4,41,-130.0,0,Automated Test
+point,Hip Measurements - Left Posterior Acetabular Wall,0,PosteriorAcetabularWall_Left_1,-29,-108.0,0,1,30,,,,left_posteriorAcetabularWall,left_posteriorAcetabularWall,1,-29,-108.0,0,Automated Test
+point,Hip Measurements - Left Posterior Acetabular Wall,1,PosteriorAcetabularWall_Left_2,-5,-126.0,0,1,30,,,,left_posteriorAcetabularWall,left_posteriorAcetabularWall,2,-5,-126.0,0,Automated Test
+point,Hip Measurements - Left Posterior Acetabular Wall,2,PosteriorAcetabularWall_Left_3,19,-128.0,0,1,30,,,,left_posteriorAcetabularWall,left_posteriorAcetabularWall,3,19,-128.0,0,Automated Test
+point,Hip Measurements - Left Posterior Acetabular Wall,3,PosteriorAcetabularWall_Left_4,41,-114.0,0,1,30,,,,left_posteriorAcetabularWall,left_posteriorAcetabularWall,4,41,-114.0,0,Automated Test
 metadata,left_cupOpeningEllipsePoints_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_cupOpeningEllipsePoints""}",,,,,,Automated Test
 point,Hip Measurements - Left Cup Opening Ellipse Points,0,CupOpeningEllipse_Left_P1,43.160117038362728,-43.660828949549185,0,,,,,,left_cupOpeningEllipsePoints,left_cupOpeningEllipsePoints,1,43.160117038362728,-43.660828949549185,0,Automated Test
 point,Hip Measurements - Left Cup Opening Ellipse Points,1,CupOpeningEllipse_Left_P2,23.033318675730868,-40.209454198821625,0,,,,,,left_cupOpeningEllipsePoints,left_cupOpeningEllipsePoints,2,23.033318675730868,-40.209454198821625,0,Automated Test
@@ -332,6 +340,14 @@ point,Hip Measurements - Right Acetabular Roof (Sourcil),0,Hip Measurements - Ri
 point,Hip Measurements - Right Acetabular Roof (Sourcil),1,Hip Measurements - Right Acetabular Roof (Sourcil)-2,-255,-132,0,1,30,,,,right_acetabularRoofSourcil,right_acetabularRoofSourcil,2,-255,-132,0,Automated Test
 point,Hip Measurements - Right Acetabular Roof (Sourcil),2,Hip Measurements - Right Acetabular Roof (Sourcil)-3,-232,-138,0,1,30,,,,right_acetabularRoofSourcil,right_acetabularRoofSourcil,3,-232,-138,0,Automated Test
 point,Hip Measurements - Right Acetabular Roof (Sourcil),3,Hip Measurements - Right Acetabular Roof (Sourcil)-4,-211,-128,0,1,30,,,,right_acetabularRoofSourcil,right_acetabularRoofSourcil,4,-211,-128,0,Automated Test
+point,Hip Measurements - Right Anterior Acetabular Wall,0,AnteriorAcetabularWall_Right_1,-275,-122.0,0,1,30,,,,right_anteriorAcetabularWall,right_anteriorAcetabularWall,1,-275,-122.0,0,Automated Test
+point,Hip Measurements - Right Anterior Acetabular Wall,1,AnteriorAcetabularWall_Right_2,-255,-140.0,0,1,30,,,,right_anteriorAcetabularWall,right_anteriorAcetabularWall,2,-255,-140.0,0,Automated Test
+point,Hip Measurements - Right Anterior Acetabular Wall,2,AnteriorAcetabularWall_Right_3,-232,-146.0,0,1,30,,,,right_anteriorAcetabularWall,right_anteriorAcetabularWall,3,-232,-146.0,0,Automated Test
+point,Hip Measurements - Right Anterior Acetabular Wall,3,AnteriorAcetabularWall_Right_4,-211,-136.0,0,1,30,,,,right_anteriorAcetabularWall,right_anteriorAcetabularWall,4,-211,-136.0,0,Automated Test
+point,Hip Measurements - Right Posterior Acetabular Wall,0,PosteriorAcetabularWall_Right_1,-275,-106.0,0,1,30,,,,right_posteriorAcetabularWall,right_posteriorAcetabularWall,1,-275,-106.0,0,Automated Test
+point,Hip Measurements - Right Posterior Acetabular Wall,1,PosteriorAcetabularWall_Right_2,-255,-124.0,0,1,30,,,,right_posteriorAcetabularWall,right_posteriorAcetabularWall,2,-255,-124.0,0,Automated Test
+point,Hip Measurements - Right Posterior Acetabular Wall,2,PosteriorAcetabularWall_Right_3,-232,-130.0,0,1,30,,,,right_posteriorAcetabularWall,right_posteriorAcetabularWall,3,-232,-130.0,0,Automated Test
+point,Hip Measurements - Right Posterior Acetabular Wall,3,PosteriorAcetabularWall_Right_4,-211,-120.0,0,1,30,,,,right_posteriorAcetabularWall,right_posteriorAcetabularWall,4,-211,-120.0,0,Automated Test
 metadata,right_cupOpeningEllipsePoints_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.Role"": ""right_cupOpeningEllipsePoints""}",,,,,,Automated Test
 point,Hip Measurements - Right Cup Opening Ellipse Points,0,CupOpeningEllipse_Right_P1,-209.66407844596478,-59.493422191251788,0,,,,,,right_cupOpeningEllipsePoints,right_cupOpeningEllipsePoints,1,-209.66407844596478,-59.493422191251788,0,Automated Test
 point,Hip Measurements - Right Cup Opening Ellipse Points,1,CupOpeningEllipse_Right_P2,-231.18437056957873,-48.273929024699257,0,,,,,,right_cupOpeningEllipsePoints,right_cupOpeningEllipsePoints,2,-231.18437056957873,-48.273929024699257,0,Automated Test

@@ -9,6 +9,12 @@ REQUIRED_COORDINATE_COUNTS = {'calibrationPoints': 3, 'left_acetabularInclinatio
 REQUIRED_DERIVED_COUNTS = {'CalibrationBall_Center': 1, 'LLD_LeftProjection': 1, 'LLD_RightProjection': 1, 'Left_CupOpeningEllipse_Center': 1, 'Left_CupOpeningEllipse_MajorAxis': 2, 'Left_CupOpeningEllipse_MinorAxis': 2, 'Left_FemoralNeckAxis': 2, 'Left_FemoralNeckAxis_Origin': 1, 'Left_FemoralShaftAxis': 2, 'Left_FemoralShaftAxis_Origin': 1, 'Left_ImplantNeckAxis': 2, 'Left_ImplantNeckAxis_Origin': 1, 'Left_StemAlignmentAxis': 2, 'Left_StemAlignmentAxis_Origin': 1, 'Right_CupOpeningEllipse_Center': 1, 'Right_CupOpeningEllipse_MajorAxis': 2, 'Right_CupOpeningEllipse_MinorAxis': 2, 'Right_FemoralNeckAxis': 2, 'Right_FemoralNeckAxis_Origin': 1, 'Right_FemoralShaftAxis': 2, 'Right_FemoralShaftAxis_Origin': 1, 'Right_ImplantNeckAxis': 2, 'Right_ImplantNeckAxis_Origin': 1, 'Right_StemAlignmentAxis': 2, 'Right_StemAlignmentAxis_Origin': 1}
 
 
+REQUIRED_COORDINATE_COUNTS.update({
+    f"{side}_{wall}AcetabularWall": 4
+    for side in ("left", "right") for wall in ("anterior", "posterior")
+})
+
+
 def assert_csv_coverage(path):
     with path.open(newline='', encoding='utf-8-sig') as handle:
         rows = list(csv.DictReader(handle))
@@ -33,6 +39,9 @@ def assert_csv_coverage(path):
             assert all(math.isfinite(float(row[key])) for key in ('x_ras', 'y_ras', 'z_ras')), 'Invalid CSV coordinate'
     required = set(REQUIRED_COORDINATE_COUNTS)
     for side in ('left', 'right'):
+        for wall in ('anterior', 'posterior'):
+            row = roles[f'{side}_{wall}AcetabularWall']
+            assert row['curve_type'] != '' and row['curve_points_per_segment'] != '', 'Missing wall-curve metadata'
         for i in range(1, 5):
             row = roles[f'{side}_femoralShaftContour{i}']
             assert row['curve_type'] != '' and row['curve_points_per_segment'] != '', 'Missing contour reconstruction metadata'

@@ -52,7 +52,7 @@ def csv_bytes(rows):
 def test_slicer_csv_import_preserves_named_curves_axes_and_calibration():
     raw = REFERENCE.read_bytes()
     saved = read_csv(raw)
-    assert len(saved["points"]) == 79
+    assert len(saved["points"]) == 83
     assert saved["settings"]["axis_options"]["left_neck"] == [True, True]
     assert saved["settings"]["axis_options"]["right_implant_neck"] == [False, True]
     assert saved["curve_types"]["left_iliopectinealLine"] == 1

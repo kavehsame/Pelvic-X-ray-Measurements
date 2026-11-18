@@ -19,6 +19,8 @@ ANATOMY_EDGE_CONTOUR_ROLES = (
     "ilioischialLine",
     "shentonLine",
     "acetabularRoofSourcil",
+    "anteriorAcetabularWall",
+    "posteriorAcetabularWall",
     "lineaTerminalis",
     "femoralShaftContour1",
     "femoralShaftContour2",
