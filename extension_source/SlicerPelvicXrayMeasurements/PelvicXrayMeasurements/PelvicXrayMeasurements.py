@@ -1130,8 +1130,14 @@ class PelvicXrayMeasurementsWidget(
             image_url = qt.QUrl.fromLocalFile(MORPHOLOGY_REFERENCE_IMAGE_PATH).toString()
         else:
             image_url = Path(MORPHOLOGY_REFERENCE_IMAGE_PATH).resolve().as_uri()
+        image_width = 1000
+        desktop = qt.QApplication.desktop()
+        if desktop is not None:
+            available = desktop.availableGeometry(self.parent)
+            image_width = max(320, min(1100, available.width() - 50,
+                                       int(max(180, available.height() - 230) * 1.8)))
         image_html = (
-            f'<img src="{image_url}" width="520"><br>'
+            f'<img src="{image_url}" width="{image_width}"><br>'
             if os.path.exists(MORPHOLOGY_REFERENCE_IMAGE_PATH)
             else ""
         )
@@ -1141,7 +1147,7 @@ class PelvicXrayMeasurementsWidget(
             "CTI = (outer - inner width) / outer width at -10 cm. "
             "CFI = canal width at +2 cm / width at -10 cm.</p>"
             f"{image_html}"
-            f'<p style="white-space: normal; width: 520px;">{MORPHOLOGY_REFERENCE_CITATION}</p>'
+            f'<p style="white-space: normal; width: {image_width}px;">{MORPHOLOGY_REFERENCE_CITATION}</p>'
             "</body></html>"
         )
 

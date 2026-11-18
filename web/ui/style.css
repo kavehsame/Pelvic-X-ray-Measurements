@@ -151,6 +151,8 @@ dialog::backdrop { background: #040809b0; }
 .hover-help { position: fixed; z-index: 4; pointer-events: none; max-width: min(360px, calc(100vw - 20px)); background: #203038; color: var(--ink); padding: 8px 10px; border: 1px solid #536873; border-radius: 7px; box-shadow: 0 6px 20px #0007; font-size: 12px; }
 .hover-help strong { display: block; }
 .hover-help img { display: block; max-width: 100%; margin-top: 5px; border-radius: 4px; }
+.hover-help--schematic { width: min(1000px, calc(100vw - 20px)); max-width: calc(100vw - 20px); }
+.hover-help--schematic img { width: 100%; max-height: calc(100dvh - 150px); object-fit: contain; background: white; }
 @media (max-width: 730px) {
   .welcome { grid-template-columns: 1fr; align-content: start; padding: 28px; gap: 20px; }
   .welcome-art { max-width: 250px; min-height: 0; }

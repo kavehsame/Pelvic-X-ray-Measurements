@@ -834,6 +834,12 @@ function hideHelp() {
   help.hidden = true;
   helpTarget = null;
 }
+function positionHelp(target) {
+  const {left, bottom, top} = target.getBoundingClientRect();
+  help.style.left = Math.max(8, Math.min(left, innerWidth - help.offsetWidth - 8)) + "px";
+  const preferred = bottom + help.offsetHeight < innerHeight - 7 ? bottom + 6 : top - help.offsetHeight - 6;
+  help.style.top = Math.max(7, Math.min(preferred, innerHeight - help.offsetHeight - 7)) + "px";
+}
 function queueHelp(target) {
   if (!target || target === helpTarget || !APP_CONFIG.help[target.dataset.help]) return;
   hideHelp();
@@ -841,17 +847,17 @@ function queueHelp(target) {
   tooltipTimer = setTimeout(() => {
     const entry = APP_CONFIG.help[target.dataset.help];
     help.replaceChildren();
+    help.classList.toggle("hover-help--schematic", ["morphology", "result_ccr", "result_cti", "result_cfi"].includes(target.dataset.help));
     add(help, "strong", entry[0]);
     add(help, "div", [entry[1], target.dataset.dependency].filter(Boolean).join(" "));
     if (["morphology", "result_ccr", "result_cti", "result_cfi"].includes(target.dataset.help)) {
       const img = add(help, "img");
+      img.addEventListener("load", () => { if (helpTarget === target && !help.hidden) positionHelp(target); }, {once: true});
       img.src = APP_CONFIG.schematic;
       img.alt = "Femoral shaft indices schematic";
     }
     help.hidden = false;
-    const {left, bottom, top} = target.getBoundingClientRect();
-    help.style.left = Math.max(8, Math.min(left, innerWidth - help.offsetWidth - 8)) + "px";
-    help.style.top = Math.max(7, bottom + help.offsetHeight < innerHeight - 7 ? bottom + 6 : top - help.offsetHeight - 6) + "px";
+    positionHelp(target);
   }, 2500);
 }
 document.addEventListener("pointerover", (event) => queueHelp(event.target.closest("[data-help]")));

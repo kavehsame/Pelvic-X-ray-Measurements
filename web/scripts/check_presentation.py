@@ -128,6 +128,19 @@ def main():
                 browser.screenshot(root / "curved_continuation.png")
                 browser.finish()
                 checked.append("The dashed contour continuation and preceding segment match the complete provisional curve, leave saved points unchanged and keep line previews straight.")
+                browser.js("document.querySelector('#tool-morphology').focus()")
+                # Disabled buttons cannot receive focus. A result field carries
+                # the same help entry without requiring calibration first.
+                browser.js("queueHelp(document.querySelector('[data-help=result_ccr]'))")
+                browser.wait("!document.querySelector('#hover-help').hidden", seconds=5)
+                browser.wait("document.querySelector('#hover-help img').complete")
+                box = browser.js("(()=>{const r=document.querySelector('#hover-help').getBoundingClientRect();return {x:r.x,y:r.y,w:r.width,h:r.height,vw:innerWidth,vh:innerHeight};})()")
+                assert box["w"] >= min(900, box["vw"] - 20)
+                assert 0 <= box["x"] and box["x"] + box["w"] <= box["vw"]
+                assert 0 <= box["y"] and box["y"] + box["h"] <= box["vh"]
+                browser.screenshot(root / "morphology_help.png")
+                browser.js("hideHelp()")
+                checked.append("The morphology help image opens at a readable width and remains inside the viewport.")
     
         finally:
             host.shutdown()
