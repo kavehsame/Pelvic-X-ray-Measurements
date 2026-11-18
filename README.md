@@ -93,6 +93,10 @@ bundles and models are distributed through GitHub Releases. The website is deplo
 through GitHub Pages. [Development and release instructions](docs/development.md)
 explain how both editions are updated and checked together.
 
+**For AI agents and maintainers:** start with [AGENTS.md](AGENTS.md) and the
+[technical handover](docs/agent-handover.md). They cover the architecture,
+coordinate conventions, measurement rules, tests, assets and release process.
+
 ## Credits and licence
 
 **Developed by:** Kaveh Same, MD, MPH, PhD Candidate, Michael Ogon Laboratory for

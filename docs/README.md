@@ -7,6 +7,7 @@
 - [Smart Point Placement](models.md): inputs, limitations and versioned models.
 - [Testing](testing.md): unit tests, measurement replay and the selected results.
 - [Development](development.md): source layout and reproducible build commands.
+- [Agent handover](agent-handover.md): architecture, data contracts, invariants, commands and release continuity.
 - [Publishing](publishing.md): GitHub Releases, GitHub Pages and the separate Slicer catalogue process.
 - [Restricted networks](network-access.md): startup errors and information for IT support.
 - [Version 1.6.1 release notes](releases/v1.6.1.md).

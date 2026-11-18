@@ -5,6 +5,9 @@ contract. The complete Slicer framework tree is under **extension_source/**. The
 web application is under **web/**, with its Python measurement core, browser
 interface, resources and synthetic tests kept together.
 
+New maintainers and agents should read [the handover](agent-handover.md) for the
+coordinate, interaction and export contracts before making changes.
+
 ## Build the web app
 
 Use Python 3.11 or later in a development environment. These dependencies are for
