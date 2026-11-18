@@ -7,23 +7,29 @@ function exportImageDimensions(shape, scale) {
   return [width, height].map((size) => Math.max(2, Math.floor(size * factor)));
 }
 
-function drawMarks(ctx, marks, position, width, glyph, selected = null) {
+function traceMarkupPath(ctx, screen, curved, firstSegment = 1, limit = screen.length) {
+  ctx.beginPath();
+  ctx.moveTo(...screen[firstSegment - 1]);
+  for (let i = firstSegment; i < limit; i++) {
+    const start = screen[i - 1], end = screen[i];
+    if (curved && screen.length >= 3) {
+      const before = screen[Math.max(0, i - 2)], after = screen[Math.min(screen.length - 1, i + 1)];
+      ctx.bezierCurveTo(start[0] + (end[0] - before[0]) / 6, start[1] + (end[1] - before[1]) / 6,
+        end[0] - (after[0] - start[0]) / 6, end[1] - (after[1] - start[1]) / 6, ...end);
+    } else ctx.lineTo(...end);
+  }
+}
+
+function drawMarks(ctx, marks, position, width, glyph, selected = null, continuation = null) {
   ctx.lineJoin = "round";
   ctx.lineCap = "round";
   for (const item of marks) {
     const color = "rgb(" + item.color.join(",") + ")";
     const screen = item.points.map(position);
     if (item.kind !== "points" && screen.length >= 2) {
-      ctx.beginPath();
-      ctx.moveTo(...screen[0]);
-      for (let i = 1; i < screen.length; i++) {
-        const start = screen[i - 1], end = screen[i];
-        if (item.kind === "curve" && item.curve_type !== 0 && screen.length >= 3) {
-          const before = screen[Math.max(0, i - 2)], after = screen[Math.min(screen.length - 1, i + 1)];
-          ctx.bezierCurveTo(start[0] + (end[0] - before[0]) / 6, start[1] + (end[1] - before[1]) / 6,
-            end[0] - (after[0] - start[0]) / 6, end[1] - (after[1] - start[1]) / 6, ...end);
-        } else ctx.lineTo(...end);
-      }
+      const curved = item.kind === "curve" && item.curve_type !== 0;
+      const path = curved && continuation?.role === item.role ? [...screen, continuation.point] : screen;
+      traceMarkupPath(ctx, path, curved, 1, screen.length);
       ctx.lineWidth = width;
       ctx.strokeStyle = color;
       ctx.stroke();
@@ -366,7 +372,7 @@ class RadiographViewer {
     }
   }
 
-  drawPlacementGuide(ctx) {
+  placementContinuation() {
     if (!this.active || !this.current || this.panMode || this.space || this.gesture?.pan || this.gesture?.window) return;
     const mark = this.marks.find((item) => item.role === this.active);
     if (!mark?.points.length) return;
@@ -374,10 +380,16 @@ class RadiographViewer {
     if (i < 0 || j < 0 || i > this.shape[0] - 1 || j > this.shape[1] - 1) return;
     const start = this.position(mark.points.at(-1));
     if (Math.hypot(start[0] - this.current[0], start[1] - this.current[1]) < 2) return;
+    return {role: mark.role, point: this.current, mark};
+  }
+
+  drawPlacementGuide(ctx, continuation = this.placementContinuation()) {
+    if (!continuation) return;
+    const {mark, point} = continuation;
+    const curved = mark.kind === "curve" && mark.curve_type !== 0;
+    const screen = [...mark.points.map((p) => this.position(p)), point];
     ctx.save();
-    ctx.beginPath();
-    ctx.moveTo(...start);
-    ctx.lineTo(...this.current);
+    traceMarkupPath(ctx, screen, curved, screen.length - 1);
     ctx.strokeStyle = `rgba(${mark.color.join(",")},0.86)`;
     ctx.lineWidth = 1.7;
     ctx.setLineDash([5, 4]);
@@ -404,8 +416,9 @@ class RadiographViewer {
     const marks = this.pointPreview?.markups ?? (g?.target && g.moved ? this.marks.map((m) => m.role !== g.target.role ? m : {
       ...m, points: m.points.map((p, i) => i === g.target.index ? this.imagePoint(this.current) : p),
     }) : this.marks);
-    drawMarks(ctx, marks, pos, 1.65, 3.05, g?.target);
-    this.drawPlacementGuide(ctx);
+    const continuation = this.placementContinuation();
+    drawMarks(ctx, marks, pos, 1.65, 3.05, g?.target, continuation);
+    this.drawPlacementGuide(ctx, continuation);
     this.callbacks.zoom(this.zoom);
   }
 

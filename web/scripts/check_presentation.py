@@ -5,6 +5,7 @@ import base64
 from http.server import ThreadingHTTPServer
 from io import BytesIO
 import json
+import math
 from pathlib import Path
 import tempfile
 from threading import Thread
@@ -97,6 +98,36 @@ def main():
                 assert colors[0] != colors[1] and colors[:2] == colors[2:]
                 browser.screenshot(root / "wall_contours.png")
                 checked.append("Both wall contours follow the roof in the UI; bilateral placement, finish, distinct colours and Hide work.")
+                browser.click("#tool-shenton")
+                browser.wait("!busy && !!snap.active_role")
+                browser.point(30, 70)
+                browser.point(45, 40)
+                browser.mouse_at("mouseMoved", 85, 65, button="none")
+                paths = browser.js("""(()=>{
+                  const original=JSON.stringify(viewer.marks), mark=viewer.marks.find(m=>m.role===viewer.active);
+                  const record=()=>{const calls=[];return {calls,ctx:new Proxy({}, {
+                    get:(_,name)=>(...args)=>{if(['lineTo','bezierCurveTo'].includes(name))calls.push([name,...args]);},
+                    set:()=>true})};};
+                  const solid=record(),guide=record(),complete=record(),plain=record();
+                  const next=viewer.placementContinuation(),pos=p=>viewer.position(p);
+                  drawMarks(solid.ctx,[mark],pos,1.65,3.05,null,next);
+                  viewer.drawPlacementGuide(guide.ctx,next);
+                  drawMarks(complete.ctx,[{...mark,points:[...mark.points,viewer.imagePoint(viewer.current)]}],pos,1.65,3.05);
+                  viewer.drawPlacementGuide(plain.ctx,{...next,mark:{...mark,kind:'line'}});
+                  return {solid:solid.calls,guide:guide.calls,complete:complete.calls,plain:plain.calls,
+                    unchanged:original===JSON.stringify(viewer.marks)};
+                })()""")
+                assert len(paths["guide"]) == 1 and paths["guide"][0][0] == "bezierCurveTo"
+                combined = paths["solid"] + paths["guide"]
+                assert len(combined) == len(paths["complete"]), paths
+                for actual, expected in zip(combined, paths["complete"], strict=True):
+                    assert actual[0] == expected[0]
+                    assert all(math.isclose(a, b, abs_tol=1e-8) for a, b in zip(actual[1:], expected[1:], strict=True)), paths
+                assert len(paths["plain"]) == 1 and paths["plain"][0][0] == "lineTo"
+                assert paths["unchanged"]
+                browser.screenshot(root / "curved_continuation.png")
+                browser.finish()
+                checked.append("The dashed contour continuation and preceding segment match the complete provisional curve, leave saved points unchanged and keep line previews straight.")
     
         finally:
             host.shutdown()

@@ -119,6 +119,11 @@ The app checks the anchor geometry and reports features it could not place. The 
 
 The contour tools trace the iliopectineal line, ilioischial line, Shenton line, acetabular roof (sourcil), anterior acetabular wall, posterior acetabular wall, linea terminalis and femoral shaft. The anterior wall is yellow and the posterior wall is pink. Click along the structure. Nearby strong image edges can attract a control point. Drag a point after placement to refine the trace.
 
+While placing a contour, the dashed continuation previews the curve towards the
+pointer. The preceding curve segment updates to join it smoothly. This preview
+does not add a saved point until you click. Straight-line tools retain a straight
+dashed continuation.
+
 Right-click or press Escape to finish a contour. **Femoral Shaft** collects four contours in succession. Place at least two points on each contour, then right-click or press Escape to advance. Review all four traces after placement.
 
 ## Results and export
