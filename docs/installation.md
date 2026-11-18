@@ -12,7 +12,7 @@ Choose images using the input folder picker or **Open a file...**. Selecting a f
 lets the browser read it locally; it does not upload it to the website. The
 [web manual](web-manual.md) explains all controls and export choices.
 
-**PelvicXrayMeasurements_1.6.1_web.zip** is for people who want to host their own
+**PelvicXrayMeasurements_1.7.0_web.zip** is for people who want to host their own
 copy of the website. Normal users do not need it. Extract its files and serve them
 over HTTPS, or through a local loopback web server for testing. Opening the HTML
 directly from disk is not the supported launch method. The ZIP includes the full
@@ -21,7 +21,7 @@ runtime and models, but no generated test results or research images.
 ## Slicer extension
 
 1. Install a current supported 3D Slicer release from [slicer.org](https://www.slicer.org/).
-2. Download **PelvicXrayMeasurements_1.6.1_Slicer_extension.zip** from the GitHub release.
+2. Download **PelvicXrayMeasurements_1.7.0_Slicer_extension.zip** from the GitHub release.
 3. Extract the ZIP. Keep its folders and resources together.
 4. In Slicer, open **Application Settings → Modules → Additional module paths**.
 5. Add the inner **PelvicXrayMeasurements** folder containing **PelvicXrayMeasurements.py**.

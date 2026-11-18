@@ -20,7 +20,7 @@ from .schema import ROLE_ATTRIBUTE
 from .suggestions import SuggestionController
 from .workflow import WORKFLOWS, WORKFLOW_SECTIONS, BrowserPlacementController
 
-VERSION = "1.6.1"
+VERSION = "1.7.0"
 CUSTOM_KINDS = ("point", "line", "angle")
 CUSTOM_LOCKS = tuple(
     f"pelvic_other_{kind}_{mode}" for kind in ("line", "angle") for mode in ("parallel", "perpendicular")

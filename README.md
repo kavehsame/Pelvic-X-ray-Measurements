@@ -44,7 +44,7 @@ starting estimate, not an anatomical assessment.
 
 ## Install in Slicer
 
-Download **PelvicXrayMeasurements_1.6.1_Slicer_extension.zip** from the release.
+Download **PelvicXrayMeasurements_1.7.0_Slicer_extension.zip** from the release.
 Extract it and keep the complete folder together. In Slicer, add the inner
 **PelvicXrayMeasurements** folder containing **PelvicXrayMeasurements.py** through
 **Application Settings → Modules → Additional module paths**, then restart Slicer.
@@ -64,9 +64,9 @@ The source retains one selected run for each edition:
 - [Slicer unit tests and full CSV replay](extension_source/SlicerPelvicXrayMeasurements/test_reports/current/index.html).
 - [Web unit tests and Chrome workflow replay](web/test_reports/current/index.html).
 
-The release check covers 116 Slicer unit tests, 33 web unit tests, all 397 rows of
+The release check covers 116 Slicer unit tests, 37 web unit tests, all 413 rows of
 the native synthetic CSV replay, 18 Chrome workflow groups and 11 component-download
-scenarios. The web measurement
+scenarios. Five presentation checks cover the new exports, wall contours, curved preview and larger help. The web measurement
 replay compares 58 measurements and 81 numeric values with a fixed reference.
 Interactive checks include multi-guide placement, shaft morphology, four shaft
 contours, shared landmarks, Smart Point Placement, visibility, export and resume.

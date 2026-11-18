@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.7.0
+
+- Render exported annotations and text at a useful resolution for small source images while the radiograph fills the frame.
+- Centre the web PNG measurement summary at the bottom.
+- Add bilateral Anterior Acetabular Wall and Posterior Acetabular Wall contours, with distinct colours and complete coordinate export.
+- Preview the curve towards the pointer during web contour placement.
+- Enlarge morphology-index help to fit the screen.
+- Add a technical agent handover and extend synthetic replay and presentation checks.
+
 ## 1.6.1
 
 - Smaller JSON component transfers, verified caching, interrupted-download reuse and transient retries for web startup.

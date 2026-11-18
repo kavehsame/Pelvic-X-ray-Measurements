@@ -7,6 +7,12 @@ software. Completed clinical validation is not claimed.
 
 ## Version changelog
 
+### V1.7.0
+
+- Render annotation exports at a useful resolution for small source images.
+- Add anterior and posterior acetabular wall contours with distinct colours, Hide controls and coordinate export.
+- Enlarge the morphology-index diagram to fit the screen.
+
 ### V1.6.1
 
 - Matches the web release version; Slicer measurement and annotation behaviour is unchanged.

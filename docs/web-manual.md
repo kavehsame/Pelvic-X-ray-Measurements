@@ -8,6 +8,14 @@ medical software. Completed clinical validation is not claimed.
 
 ## Version history
 
+**1.7.0**
+
+- Sharper annotations and text on exported images from low-resolution sources.
+- Bottom-centred measurement summary on PNGs.
+- Anterior and posterior acetabular wall contours below the acetabular roof.
+- Curved dashed continuation while placing contours.
+- Larger morphology-index diagram in hover help.
+
 **1.6.1**
 
 - Improves component downloads, verified caching and recovery after interruptions.

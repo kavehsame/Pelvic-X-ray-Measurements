@@ -71,7 +71,8 @@ def main():
     chrome = load(run / "web/chrome_checks.json")
     core = load(run / "web/core_checks.json")
     downloads = load(run / "web/download_checks.json")
-    assert all(item["status"] == "passed" for item in (native, chrome, core, downloads))
+    presentation = load(run / "web/presentation_checks.json")
+    assert all(item["status"] == "passed" for item in (native, chrome, core, downloads, presentation))
     test_sets = {
         "slicer": cases(run / "slicer/unit.junit.xml"),
         "web": cases(run / "web_unit.xml"),
@@ -142,7 +143,7 @@ def main():
             agreement = "byte for byte" if comparison["raw_byte_match"] else f"with {comparison['roundoff_field_count']} numeric fields within the {comparison['max_numeric_ulps']}-step floating-point rounding limit"
             body += f'<p>The full CSV replay matched all {count} reference rows {agreement}. Smart Point Placement and live multi-guide, morphology, leg-length, circle-visibility and four-contour workflow checks also passed.</p><p><a href="replay/comparison_report.html">Interactive CSV and coordinate comparison</a></p>'
         else:
-            for name in ("chrome_checks.json", "core_checks.json", "download_checks.json"):
+            for name in ("chrome_checks.json", "core_checks.json", "download_checks.json", "presentation_checks.json"):
                 shutil.copyfile(run / "web" / name, target / name)
             comparison = chrome["chrome_replay"]
             body += f"<p>{len(chrome['tests'])} Chrome workflow groups passed. The full browser export reproduced {comparison['measurements']} measurements and {comparison['numeric_values']} numeric values; maximum absolute difference {comparison['max_absolute_difference']:.3g}.</p><p>The test host disconnected before synthetic images were selected. The cached software started offline and the browser completed loading, annotation and local export.</p>"
@@ -152,6 +153,7 @@ def main():
                 + '</ol></details><p><a href="chrome_checks.json">Browser evidence</a> · <a href="core_checks.json">Core replay evidence</a></p>'
             )
             body += f'<p>{len(downloads["tests"])} component-delivery scenarios passed, including blocked binary routes, HTTP failures, altered responses, interrupted-download recovery and unavailable storage. <a href="download_checks.json">Download checks</a>. These simulated conditions do not establish access through a particular hospital network.</p>'
+            body += f'<p>{len(presentation["tests"])} presentation checks passed for export resolution, summary placement, both wall contours, curved previews and larger help. <a href="presentation_checks.json">Presentation evidence</a>.</p>'
         body += (
             limitation
             + "<details><summary>Unit-test cases</summary>"

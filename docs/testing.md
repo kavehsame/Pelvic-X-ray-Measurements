@@ -13,17 +13,17 @@ links the selected Slicer and web runs. Each edition retains one selected eviden
 folder in source. New development runs go to an ignored build folder. Generated
 results do not enter the downloadable Slicer or web bundles.
 
-- **Slicer:** 116 unit tests; a full CSV replay matching 397 reference rows; Smart
+- **Slicer:** 116 unit tests; a full CSV replay matching 413 reference rows; Smart
   Point Placement; live multi-guide axes, morphology, bilateral leg-length lines,
   circle visibility and advancement through four shaft contours.
-- **Web:** 33 unit tests covering import, image frames, editing regressions and
+- **Web:** 37 unit tests covering import, image frames, editing regressions and
   component packaging; a core measurement replay; and 18 Chrome workflow groups that exercise the built
   app, including offline operation, export, resume and compressed image decoding.
 - **Startup:** 11 browser scenarios covering blocked binary routes, temporary and
   permanent HTTP errors, altered or incomplete responses, timeouts, interrupted
   downloads and unavailable or corrupt caches. These are controlled simulations,
   not evidence of access through a particular hospital network.
-- **Measurement coverage:** the native replay gate requires 58 measurements, 114
+- **Measurement coverage:** the native replay gate requires 58 measurements, 118
   coordinate roles and 25 analytical constructions. The web replay compares 58
   measurements and 81 numeric values with the fixed reference.
 
@@ -38,6 +38,8 @@ differ by at most eight representable binary64 floating-point steps to accommoda
 rounding across operating systems. The report lists these fields separately and
 records whether the file bytes are identical. This is a numerical regression rule,
 not a clinical accuracy threshold.
+
+Five additional presentation checks exercise full-frame low-resolution PNG export, the centred translucent summary, bilateral wall controls, curved provisional drawing and larger morphology help.
 
 ## Run the checks
 
