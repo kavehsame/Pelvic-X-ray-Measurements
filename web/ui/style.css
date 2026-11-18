@@ -73,6 +73,9 @@ svg { display: block; width: 16px; height: 16px; flex: 0 0 auto; }
 .case-details { min-width: 0; flex: 1; }
 .case-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
 .case-count { color: var(--subtle); font-variant-numeric: tabular-nums; font-size: 12px; }
+.case-jump { margin-top: 6px; }
+.case-jump label { color: var(--subtle); font-size: 12px; }
+.case-jump input { width: 80px; padding: 4px 7px; font-size: 13px; font-variant-numeric: tabular-nums; }
 .square { min-width: 34px; min-height: 32px; border-color: var(--rule-strong); }
 .side-controls { display: flex; align-items: center; justify-content: space-between; color: var(--subtle); gap: 10px; }
 .segmented { display: flex; border-radius: 7px; border: 1px solid var(--rule-strong); overflow: hidden; }

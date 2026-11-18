@@ -53,7 +53,7 @@ Some restricted networks, including hospital networks, may prevent the app from 
 
 1. Select **Browse** under **Input Folder** and select a radiograph folder. You can also use **Open a file...** or drop selected radiographs onto the viewer.
 2. Select **Browse** under **Output Folder** and choose where to save the results. Chrome asks for permission to write to that folder. The fields show the names of the folders you select.
-3. Enter **Annotator Name** before exporting. Use the case arrows to move through the input folder. Unsaved edits stay in the tab when you move between cases.
+3. Enter **Annotator Name** before exporting. Use the case arrows for adjacent images. To jump farther, enter a number in **Go to image** below the filename and image count, then press Enter or select **Go**. For example, enter `500` to open the 500th image in the list. Unsaved edits stay in the tab when you move between cases.
 
 The viewer shows one radiograph at a time. It accepts PNG, JPEG, TIFF, BMP and WebP. It also opens single-frame monochrome DICOM, single-slice NRRD, NIfTI-1 and MetaImage, and MRB scenes containing one stored radiograph. For detached NRRD or MetaImage, select the header and its pixel file from the same folder. DICOM files can use native encoding, RLE, baseline JPEG, JPEG 2000, JPEG-LS or lossless JPEG Process 14. If a DICOM transfer syntax or multi-frame study cannot open, export a single radiograph as uncompressed DICOM or a lossless image.
 

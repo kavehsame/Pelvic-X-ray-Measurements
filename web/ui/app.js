@@ -306,6 +306,7 @@ function renderAvailability() {
   $("clear-output").disabled = busy || !outputHandle;
   $("case-prev").disabled = busy || caseIndex <= 0;
   $("case-next").disabled = busy || caseIndex + 1 >= entries.length;
+  $("case-number").disabled = $("case-go").disabled = busy || entries.length < 2;
   for (const button of document.querySelectorAll("[data-export]")) {
     button.disabled = busy || !loaded || (button.dataset.advance && (!outputHandle || caseIndex >= entries.length - 1));
     if (button.dataset.advance) button.title = !outputHandle ? "Choose an output folder to save and advance." : "";
@@ -398,7 +399,18 @@ function updateCaseLabel() {
   $("case-name").title = entry?.file.name || "";
   $("case-count").textContent = entry ? `${caseIndex + 1} of ${entries.length}`
     : entries.length ? `${entries.length} available` : "";
+  $("case-jump").hidden = entries.length < 2;
+  $("case-number").max = String(entries.length);
+  $("case-number").value = "";
+  setCaseJumpError("");
   renderAvailability();
+}
+
+function setCaseJumpError(message) {
+  const error = $("case-jump-error");
+  error.textContent = message;
+  error.hidden = !message;
+  $("case-number").setAttribute("aria-invalid", String(Boolean(message)));
 }
 
 async function selectedEntries(files, folderName, handle = null) {
@@ -570,6 +582,21 @@ click("browse-output", () => run("", async () => {
 click("clear-output", () => { outputHandle = null; $("output-path").value = ""; renderAvailability(); });
 click("case-prev", () => run("", () => loadCase(caseIndex - 1)));
 click("case-next", () => run("", () => loadCase(caseIndex + 1)));
+$("case-number").addEventListener("input", () => setCaseJumpError(""));
+$("case-jump").addEventListener("submit", (event) => {
+  event.preventDefault();
+  if (busy || entries.length < 2) return;
+  const input = $("case-number");
+  const number = input.valueAsNumber;
+  if (!Number.isInteger(number) || number < 1 || number > entries.length) {
+    setCaseJumpError(`Enter a whole image number from 1 to ${entries.length}.`);
+    input.focus();
+    return;
+  }
+  setCaseJumpError("");
+  if (number === caseIndex + 1) input.value = "";
+  else run("", () => loadCase(number - 1));
+});
 
 async function clearScene(clearInput) {
   if (!await discardQuery()) return;

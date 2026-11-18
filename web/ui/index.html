@@ -75,6 +75,14 @@
             <button type="button" id="case-prev" class="square" aria-label="Previous image">&lt;</button>
             <button type="button" id="case-next" class="square" aria-label="Next image">&gt;</button>
           </div>
+          <form id="case-jump" class="case-jump" novalidate hidden>
+            <div class="inline">
+              <label for="case-number">Go to image</label>
+              <input id="case-number" type="number" inputmode="numeric" min="1" step="1" aria-describedby="case-count case-jump-error">
+              <button id="case-go" class="quiet compact" type="submit">Go</button>
+            </div>
+            <div id="case-jump-error" class="field-error" role="alert" hidden></div>
+          </form>
         </section>
         <div class="side-controls" aria-label="Active side">
           <span>Active Side</span>

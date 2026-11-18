@@ -147,6 +147,57 @@ def check_magnified_pan(browser):
     browser.click("#pan-button")
 
 
+def check_case_jump(browser, root):
+    assert browser.js("document.querySelector('#case-jump').hidden")
+    browser.js("""(() => {
+      const source = entries[0].file;
+      const list = new DataTransfer();
+      for (let i = 1; i <= 1000; i++) {
+        list.items.add(new File([source], `Study${i}.png`, {type: "image/png"}));
+      }
+      const chooser = document.querySelector("#file-input");
+      chooser.files = list.files;
+      chooser.dispatchEvent(new Event("change", {bubbles: true}));
+    })()""")
+    browser.wait("document.querySelector('#decision-dialog').open")
+    browser.click("#decision-actions .primary")
+    browser.wait("!busy && document.querySelector('#case-count').textContent === '1 of 1000'")
+    assert browser.js("""(() => {
+      const count = document.querySelector("#case-count").getBoundingClientRect();
+      const field = document.querySelector("#case-number").getBoundingClientRect();
+      return field.top >= count.bottom && field.width > 0;
+    })()""")
+    browser.annotate("other_point", [(15, 59)])
+    original = browser.js("snap.markups.find(mark => mark.role === 'otherPoint_1').points")
+    browser.js("document.querySelector('#comments').value = 'Keep this working case'")
+    browser.js("document.querySelector('#case-number').focus()")
+    browser.call("Input.insertText", text="500")
+    assert browser.js("document.querySelector('#case-number').valueAsNumber") == 500
+    enter = dict(key="Enter", code="Enter", windowsVirtualKeyCode=13)
+    browser.call("Input.dispatchKeyEvent", type="keyDown", text="\r", **enter)
+    browser.call("Input.dispatchKeyEvent", type="keyUp", **enter)
+    browser.wait("!busy && document.querySelector('#case-count').textContent === '500 of 1000'")
+    assert browser.js("document.querySelector('#case-name').textContent") == "Study500.png"
+    assert not browser.js("snap.markups.length")
+    browser.screenshot(root / "case_jump.png")
+
+    for invalid in ("", "0", "1.5", "1001"):
+        browser.js(f"document.querySelector('#case-number').value = {json.dumps(invalid)}")
+        browser.click("#case-go")
+        assert browser.js("document.querySelector('#case-number').getAttribute('aria-invalid')") == "true"
+        assert browser.js("document.querySelector('#case-count').textContent") == "500 of 1000"
+    browser.js("document.querySelector('#case-number').value = '1000'")
+    browser.click("#case-go")
+    browser.wait("!busy && document.querySelector('#case-count').textContent === '1000 of 1000'")
+    assert browser.js("document.querySelector('#case-next').disabled")
+    assert browser.js("document.querySelector('#case-jump-error').hidden")
+    browser.js("document.querySelector('#case-number').value = '1'")
+    browser.click("#case-go")
+    browser.wait("!busy && document.querySelector('#case-count').textContent === '1 of 1000'")
+    assert browser.js("snap.markups.find(mark => mark.role === 'otherPoint_1').points") == original
+    assert browser.js("document.querySelector('#comments').value") == "Keep this working case"
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--chrome", type=Path, default=CHROME)
@@ -265,6 +316,8 @@ def main():
                 checked.append("Nearby points focus without flicker, coincident points cycle through their labels and a drag moves only the chosen point from its original position.")
                 check_magnified_pan(browser)
                 checked.append("The hand appears only during panning; high-zoom pixel boundaries stay sharp before, during and after a fractional pan.")
+                check_case_jump(browser, root)
+                checked.append("The jump field below the case count accepts Enter and Go, jumps directly to cases 500 and 1,000, rejects invalid numbers and restores unsaved work on return.")
 
         finally:
             host.shutdown()
