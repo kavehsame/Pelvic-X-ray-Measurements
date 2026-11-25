@@ -13,7 +13,6 @@ from datetime import datetime
 from typing import Any
 
 import slicer
-import vtk
 
 from PelvicXrayMeasurementsCaseWorkflow import (
     filesystem_path,
@@ -538,6 +537,8 @@ class CaseExportMixin:
         ]
 
         if image_node is not None and image_node.GetStorageNode() is not None:
+            import vtk
+
             frame = vtk.vtkMatrix4x4()
             image_node.GetIJKToRASMatrix(frame)
             matrix = [[frame.GetElement(i, j) for j in range(4)] for i in range(4)]
