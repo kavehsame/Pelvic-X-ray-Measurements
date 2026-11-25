@@ -162,7 +162,7 @@ for component, colour in zip(
         colour,
         "Drag the implant to move it. Drag the round handle to rotate about its pivot, or enter an angle.",
     )
-# Result key, stable CSV suffix and panel title.
+# Result key, stable CSV suffix and descriptive label.
 LENGTH_FIELDS = (
     ("straight_resection", "Planning_StraightResection_Length", "Straight cut"),
     ("step_medial", "Planning_SteppedResection_MedialLength", "Stepped cut · medial"),
@@ -272,6 +272,13 @@ def template_choice(component, raw, side, *, allow_missing=False):
     if not np.isfinite(angle) or abs(angle) > 180:
         raise ValueError("Template rotation must be between −180° and 180°.")
     result = {"id": choice["id"], "angle": angle}
+    # Store the catalogue wording with the pose so a session-only pack can be identified later.
+    for field in ("family", "size"):
+        value = (item if item is not None else choice).get(field)
+        if value is not None:
+            if not isinstance(value, str) or not value.strip() or len(value) > 512 or any(ord(c) < 32 for c in value):
+                raise ValueError(f"Invalid saved implant {field}.")
+            result[field] = value
     if item and "image" in item:
         if isinstance(raw, str) and "frame" not in choice:
             # Old CSVs measured cup rotation from a level opening. Keep their pose
@@ -279,7 +286,32 @@ def template_choice(component, raw, side, *, allow_missing=False):
             delta = degrees(item["sourceAngle"]) * (-1 if item["drawn"] == "right" else 1)
             result["angle"] = (angle + delta + 180) % 360 - 180
         result["frame"] = "sheet"
+    elif choice.get("frame") == "sheet":
+        result["frame"] = "sheet"
     return result
+
+
+def node_template_choice(node, component, side):
+    """Read the selected pose and retain the identity on a placed anchor, including older cases."""
+    raw = node.GetAttribute(TEMPLATE_ATTRIBUTE) if node is not None else None
+    choice = template_choice(component, raw, side, allow_missing=True)
+    if choice and node is not None and node.GetNumberOfDefinedControlPoints():
+        saved = json.loads(raw) if raw else {}
+        if any(saved.get(key) != value for key, value in choice.items()):
+            node.SetAttribute(TEMPLATE_ATTRIBUTE, json.dumps({**saved, **choice}))
+    return choice
+
+
+def implant_report(side, component, choice):
+    """Describe a placed implant using the exact family and size labels shown in Planning."""
+    family, size = choice.get("family", ""), choice.get("size", "")
+    prefix = f"{side.title()}_Planning_{component.title()}_"
+    fields = {"Component": component, "Family": family, "Size": size, "ID": choice["id"]}
+    size_text = f"Size {size}" if size else "Size unavailable"
+    return {
+        "caption": f"{side.title()} {component} · {family or choice['id']} · {size_text}",
+        "metadata": {prefix + key: value for key, value in fields.items()},
+    }
 
 
 def artwork_hit_grid(alpha):

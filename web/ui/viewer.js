@@ -689,7 +689,14 @@ class RadiographViewer {
     this.drawFragmentPixels(ctx, this.bitmap, snapshot.fragments, 0, 0, w, h);
     const position = ([i, j]) => [(i + .5) * w / this.shape[0], (j + .5) * h / this.shape[1]];
     const glyph = Math.max(1.3, Math.min(6.0, Math.min(w, h) * .0029));
-    const lines = [`Annotator: ${annotator}`, ...(includeValues ? summary : [])];
+    const lines = [`Annotator: ${annotator}`];
+    for (const side of ["right", "left"]) {
+      for (const kind of ["cup", "stem"]) {
+        const implant = snapshot.state?.[`pelvic_placed_${side}_${kind}`];
+        if (implant) lines.push(implant.caption);
+      }
+    }
+    if (includeValues) lines.push(...summary);
     if (includeValues && summary.some((line) => /\bsu\b/.test(line))) lines.push("su = scene units");
     const minSide = Math.min(w, h);
     const font = Math.max(5, Math.min(26, Math.floor(minSide * .013)));

@@ -148,10 +148,6 @@ HELP = {
 }
 
 RESULTS = {
-    "straight_resection": ("Straight cut", "Distance between the two cut ends."),
-    "step_medial": ("Medial segment", "Distance from the medial end to the corner."),
-    "step_lateral": ("Lateral segment", "Distance from the corner to the lateral end."),
-    "stepped_resection": ("Stepped cut", "Sum of its two segment lengths."),
     "inlay_wear": ("Inlay wear estimate", "Projected head-to-shell centre distance on this film. Serial films are needed to measure change."),
     "head": ("Native Head Diameter", "Diameter of the fitted native-head circle."),
     "ccd": ("CCD Angle", "Obtuse angle between native neck and shaft axes."),

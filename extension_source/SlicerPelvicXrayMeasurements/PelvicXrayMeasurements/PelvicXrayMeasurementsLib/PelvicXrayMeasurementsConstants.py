@@ -10,7 +10,7 @@ import re
 from enum import Enum
 
 
-from PelvicXrayMeasurementsPlanning import LENGTH_FIELDS, TOOLS as PLANNING_TOOLS, extra_roles
+from PelvicXrayMeasurementsPlanning import TOOLS as PLANNING_TOOLS, extra_roles
 
 
 class StringEnum(str, Enum):
@@ -92,7 +92,7 @@ LIB_DIR = os.path.dirname(__file__)
 MODULE_DIR = os.path.dirname(LIB_DIR)
 
 MODULE_NAME = "PelvicXrayMeasurements"
-MODULE_VERSION = "V1.8.0"
+MODULE_VERSION = "V1.8.1"
 ROLE_ATTRIBUTE = f"{MODULE_NAME}.Role"
 ACTIVE_SIDE_BADGE_ROLE = "activeSideBadge"
 CALIBRATION_BALL_DIAMETER_MM = 25.0
@@ -327,7 +327,7 @@ IMAGE_OVERLAY_MEASUREMENT_ORDER = (
     ("sideRatio", "canalThicknessIndex", "CTI"),
     ("sideRatio", "canalFlareIndex", "CFI"),
     ("globalLength", "lld", "LLD"),
-    *(("sideLength", key, title) for key, _csv, title in LENGTH_FIELDS),
+    ("sideLength", "inlay_wear", "Inlay wear estimate"),
     ("sideLength", "implantHead", "ImplHead"),
     ("sideAngle", "acetabularInclinationAngle", "Incl FH"),
     ("sideAngle", "cupOpeningEllipseInclinationAngle", "Incl E"),

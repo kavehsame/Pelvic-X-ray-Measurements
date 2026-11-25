@@ -4,7 +4,7 @@ import csv
 import json
 from datetime import datetime, timezone
 import numpy as np
-from .planning import LENGTH_FIELDS
+from .planning import COMPONENTS, LENGTH_FIELDS
 from .scene import vtkStringArray
 from .geometry import angle_deviation_from_perpendicular
 
@@ -115,6 +115,12 @@ def write_case_csv(path, controller, case_name, annotator):
         volume.GetIJKToRASMatrix(matrix)
         metadata("ImageIJKToRAS", json.dumps([[matrix.GetElement(i, j) for j in range(4)] for i in range(4)]))
     for side in ("left", "right"):
+        for component in COMPONENTS:
+            implant = state.get(f"pelvic_placed_{side}_{component}")
+            if implant:
+                for name, value in implant["metadata"].items():
+                    # Treat text supplied by a session pack as a spreadsheet label.
+                    metadata(name, "'" + value if value.startswith(("=", "+", "-", "@", "\t", "\r")) else value)
         for kind in ("neck", "implant_neck"):
             lock, single = controller.axis_options(side, kind)
             metadata(f"{side}_{kind}_options", json.dumps({"lockToCenter": lock, "useSingleGuide": single}))

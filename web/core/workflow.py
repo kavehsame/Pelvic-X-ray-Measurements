@@ -1255,13 +1255,12 @@ class BrowserPlacementController(CustomMeasurementMixin, LandmarkReuseMixin):
         for kind in planning.COMPONENTS:
             key = "template_" + kind
             node = self.planning_node(side, key)
-            choice = planning.template_choice(kind, node.GetAttribute(planning.TEMPLATE_ATTRIBUTE) if node else None, side, allow_missing=True)
-            if node and choice and node.GetNumberOfControlPoints() and not node.GetAttribute(planning.TEMPLATE_ATTRIBUTE):
-                node.SetAttribute(planning.TEMPLATE_ATTRIBUTE, json.dumps(choice))
+            choice = planning.node_template_choice(node, kind, side)
             if active:
                 self.server.state["pelvic_" + key] = choice
             role = planning.TOOLS[key][1]
             anchors = points(role)
+            self.server.state[f"pelvic_placed_{side}_{kind}"] = planning.implant_report(side, kind, choice) if anchors and choice else None
             path = []
             if anchors:
                 axes = planning.plan_axes(node, *self.current_image_node().planning_axes)

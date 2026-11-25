@@ -184,11 +184,11 @@ def read_help():
             "export_all": ("Export All", "Save an MRB scene, CSV and annotated PNG."),
             "export_csv": (
                 "Export CSV",
-                "Save measurement values, coordinates and comments.",
+                "Save measurements, landmarks, placed implant details and comments.",
             ),
             "export_image": (
                 "Export Image",
-                "Save the radiograph with visible annotations and optional measurement values.",
+                "Save visible annotations and placed implant labels. Measurement values are optional.",
             ),
             "export_scene": (
                 "Export Scene",

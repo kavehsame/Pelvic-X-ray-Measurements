@@ -652,9 +652,8 @@ class MeasurementCalculationMixin:
             key = "template_" + kind
             role = planning.TOOLS[key][1]
             anchor = points(role)
-            choice = planning.template_choice(kind, node(role).GetAttribute(planning.TEMPLATE_ATTRIBUTE), side_key, allow_missing=True)
-            if anchor and choice and not node(role).GetAttribute(planning.TEMPLATE_ATTRIBUTE):
-                node(role).SetAttribute(planning.TEMPLATE_ATTRIBUTE, json.dumps(choice))
+            choice = planning.node_template_choice(node(role), kind, side_key)
+            side[key]["implant"] = planning.implant_report(side_key, kind, choice) if anchor and choice else None
             path = []
             if anchor and image_node is not None:
                 axes = planning.plan_axes(node(role), *template_display.axes(image_node))

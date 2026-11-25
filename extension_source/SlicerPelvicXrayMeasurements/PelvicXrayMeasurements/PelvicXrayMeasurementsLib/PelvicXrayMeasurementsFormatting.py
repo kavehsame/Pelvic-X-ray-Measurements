@@ -217,8 +217,8 @@ def build_measurement_overlay_text(
             when provided.
         entries_per_line: Maximum number of measurement entries per rendered
             line. Defaults to the module-wide overlay layout constant.
-        include_measurements: Whether to include numeric measurement strings in
-            addition to the annotator line.
+        include_measurements: Whether to include numeric values alongside the
+            annotator and labels for placed implants.
 
     Returns:
         The newline-delimited overlay text block used by the annotated PNG
@@ -229,6 +229,11 @@ def build_measurement_overlay_text(
     lines: list[str] = []
     if annotator_text:
         lines.append(annotator_text)
+    for side in IMAGE_OVERLAY_SIDE_ORDER:
+        for component in ("cup", "stem"):
+            implant = results["sides"][side].get("template_" + component, {}).get("implant")
+            if implant:
+                lines.append(implant["caption"])
     if not entries:
         return "\n".join(lines)
 

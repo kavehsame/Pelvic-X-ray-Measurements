@@ -30,7 +30,7 @@ from PelvicXrayMeasurementsConstants import (
 )
 from PelvicXrayMeasurementsGeometry import sanitize_filename
 from PelvicXrayMeasurementsNodeSpecs import EXPORT_FIELDS
-from PelvicXrayMeasurementsPlanning import FRAGMENT_ANGLE, FRAGMENT_CUT, LENGTH_FIELDS, TEMPLATE_ATTRIBUTE, VIEW_AXES, TOOLS, default_template
+from PelvicXrayMeasurementsPlanning import COMPONENTS, FRAGMENT_ANGLE, FRAGMENT_CUT, LENGTH_FIELDS, TEMPLATE_ATTRIBUTE, VIEW_AXES, TOOLS
 
 CSV_EXPORT_ENCODING = "utf-8-sig"
 CURVE_POINTS_TXT_EXPORT_ENCODING = "utf-8"
@@ -548,16 +548,17 @@ class CaseExportMixin:
                 self._row(section="metadata", name="ImageDimensions", details=json.dumps(dimensions)),
             ))
         for side in SIDE_KEYS:
-            for key, spec in TOOLS.items():
+            for component in COMPONENTS:
+                implant = results["sides"][side]["template_" + component].get("implant")
+                if implant:
+                    rows.extend(self._row(section="metadata", name=name, details=value)
+                                for name, value in implant["metadata"].items())
+            for spec in TOOLS.values():
                 role = self.side_role(spec[1], side)
                 node = self.get_node(role)
                 if node is None or not node.GetNumberOfDefinedControlPoints():
                     continue
                 attrs = {k: node.GetAttribute(k) for k in (TEMPLATE_ATTRIBUTE, FRAGMENT_CUT, FRAGMENT_ANGLE, VIEW_AXES) if node.GetAttribute(k)}
-                if key.startswith("template_") and TEMPLATE_ATTRIBUTE not in attrs:
-                    choice = default_template(key.removeprefix("template_"), side)
-                    if choice:
-                        attrs[TEMPLATE_ATTRIBUTE] = json.dumps(choice)
                 if attrs:
                     rows.append(self._row(section="metadata", name=role + "_attributes", details=json.dumps(attrs, sort_keys=True)))
         neck_axis_options = self.neck_axis_export_options()

@@ -23,8 +23,7 @@ for (const target of document.querySelectorAll("[data-icon]")) target.innerHTML 
 const tools = new Map(), valueBoxes = new Map();
 const resultLabels = {
   calibration: "Calibration", reference: "Reference", lld: "LLD",
-  straight_resection: "Straight cut", step_medial: "Stepped cut · medial", step_lateral: "Stepped cut · lateral",
-  stepped_resection: "Stepped cut · total", inlay_wear: "Inlay wear estimate",
+  inlay_wear: "Inlay wear estimate",
   head: "Head Dia.", ccd: "CCD Angle", tonnis: "AI (Tönnis)", sharp: "Sharp", lce: "LCE",
   acetabular_offset: "Acetab. Off.", femoral_offset: "Femoral Off.", global_offset: "Global Off.",
   extrusion: "Extr. Idx", ccr: "CCR", cti: "CTI", cfi: "CFI",
@@ -33,7 +32,7 @@ const resultLabels = {
   post_acetabular_offset: "Post Acetab. Off.", post_femoral_offset: "Post Femoral Off.", post_global_offset: "Post Global Off.",
 };
 const resultOrder = ["head", "ccd", "tonnis", "sharp", "lce", "acetabular_offset", "femoral_offset", "global_offset", "extrusion",
-  "ccr", "cti", "cfi", "straight_resection", "step_medial", "step_lateral", "stepped_resection", "implant_head", "inlay_wear", "inclination", "ellipse_inclination", "cup_version", "implant_ccd", "stem_alignment",
+  "ccr", "cti", "cfi", "implant_head", "inlay_wear", "inclination", "ellipse_inclination", "cup_version", "implant_ccd", "stem_alignment",
   "post_acetabular_offset", "post_femoral_offset", "post_global_offset"];
 const ioError = (error) => error?.name === "AbortError";
 
