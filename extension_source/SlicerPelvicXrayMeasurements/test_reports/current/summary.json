@@ -4,7 +4,7 @@
   "live_slicer": true,
   "clinical_validation_completed": false,
   "validation_study": "in progress; comparison with established medical software",
-  "started_utc": "20261125T002324Z",
+  "started_utc": "20261125T005037Z",
   "platform": "Darwin",
   "machine": "arm64",
   "python": "3.13.9",
@@ -52,7 +52,7 @@
   ],
   "source_unchanged": true,
   "edition": "slicer",
-  "unit_tests": 117,
+  "unit_tests": 118,
   "runtime": {
     "version": "5.12.3",
     "revision": "9034c71"

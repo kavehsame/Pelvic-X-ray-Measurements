@@ -13,9 +13,15 @@
   ],
   "sampled_pixels": 5,
   "native_csv_rows": {
-    "metadata": 19,
+    "metadata": 32,
     "measurement": 57,
-    "point": 23,
+    "point": 24,
     "derived_point": 1
-  }
+  },
+  "placed_implants": 3,
+  "historical_planning_exports": [
+    "1.8.0 web",
+    "1.8.0 Slicer"
+  ],
+  "native_png_captions_with_and_without_measurements": true
 }
