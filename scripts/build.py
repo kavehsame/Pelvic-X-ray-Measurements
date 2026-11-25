@@ -81,18 +81,21 @@ def render_site():
 <div class="card"><span class="number">1</span><h3>Start the tool</h3><p>Open the web app and select Start. Your browser prepares the software in the background. No separate installation is needed.</p></div>
 <div class="card"><span class="number">2</span><h3>Open images from your computer</h3><p>Choose an image or folder. Place and adjust the landmarks while the browser calculates the measurements on your device.</p></div>
 <div class="card"><span class="number">3</span><h3>Save your work locally</h3><p>Export measurements, an annotated image or an editable scene to your computer. Your images and annotations are not uploaded to the website.</p></div></div>
-<p class="small">The first Start downloads about {download_mb:.1f} MB of software and models. The browser reuses the verified package when it remains cached. Folder exports work best in Chrome or Edge. <a href="docs/privacy.html">Read about local files and website access logs.</a></p></section>
+<p class="small">The first Start downloads about {download_mb:.1f} MB of software, models and processed implant overlays. The browser reuses the verified package when it remains cached. Folder exports work best in Chrome or Edge. <a href="docs/privacy.html">Read about local files and website access logs.</a></p></section>
 <section class="study" aria-labelledby="study"><h2 id="study">Validation study in progress</h2><p>A validation study is being performed to compare the tool with established medical software. This ongoing study is separate from the automated software checks and does not imply completed clinical validation.</p><a href="tests/">View the software test evidence</a></section>
-<section><h2>What can you measure?</h2><p>The tools cover native and implant head fitting, shaft and neck axes, acetabular angles, offsets, leg-length discrepancy, femoral morphology, cup opening geometry and contours. Custom points, lines and angles support additional annotations.</p><p>Smart Point Placement suggests editable landmarks after calibration, reference and head fitting. Inspect each suggestion and adjust it to the image before using the measurements.</p><a href="manuals.html">Read the user manuals</a></section>
+<section><h2>What can you measure?</h2><p>The tools cover native and implant head fitting, shaft and neck axes, acetabular angles, offsets, leg-length discrepancy, femoral morphology, cup opening geometry, a single-film estimate of inlay wear and contours. Custom points, lines and angles support additional annotations.</p><p>Smart Point Placement suggests editable landmarks after calibration, reference and head fitting. Inspect each suggestion and adjust it to the image before using the measurements.</p><p>Planning includes straight and stepped femoral neck cuts, a movable bone fragment and 794 AP implant entries. <a href="docs/implant-overlays.html">How implant overlays work</a>.</p><a href="manuals.html">Read the user manuals</a></section>
 <section><h2>Prefer to work in Slicer?</h2><p>The extension adds the measurement panel to an existing 3D Slicer installation. The release bundle includes its resources and Smart Point Placement models. Installation through the Slicer extension catalogue remains a separate publication step.</p><a href="docs/installation.html">Installation and download guide</a></section>"""
     put(site / "index.html", shell(settings["name"], landing))
     put(
         site / "manuals.html",
         shell(
             "User manuals",
-            '<h1>User manuals</h1><p>Choose the guide for the edition you are using.</p><div class="actions"><a class="button" href="docs/web-manual.html">Web manual</a><a class="button secondary" href="docs/slicer-manual.html">Slicer manual</a></div><p><a href="docs/installation.html">Installation</a> · <a href="docs/models.html">Smart Point Placement</a> · <a href="docs/testing.html">Testing and validation</a></p>',
+            '<h1>User manuals</h1><p>Choose the guide for the edition you are using.</p><div class="actions"><a class="button" href="docs/web-manual.html">Web manual</a><a class="button secondary" href="docs/slicer-manual.html">Slicer manual</a></div><p><a href="docs/implant-overlays.html">How implant overlays work</a> explains drawing preparation, scale and how to import a pack.</p><p><a href="docs/installation.html">Installation</a> · <a href="docs/models.html">Smart Point Placement</a> · <a href="docs/testing.html">Testing and validation</a></p>',
         ),
     )
+    copy(ROOT / "docs/implant-overlays.html", site / "docs/implant-overlays.html")
+    for name in ("overlay-example.json", "overlay.schema.json"):
+        copy(ROOT / "docs" / name, site / "docs" / name)
     articles = {
         p.name: p for p in (ROOT / "docs").glob("*.md") if p.name != "README.md"
     }
@@ -103,11 +106,13 @@ def render_site():
         }
     )
     for name, source in articles.items():
-        body = markdown(source.read_text(), extensions=("tables", "fenced_code"))
+        body = markdown(source.read_text(), extensions=("tables", "fenced_code", "toc"))
         body = (
             body.replace('href="LICENSE.txt"', 'href="../licences/LICENSE.txt"')
             .replace('href="NOTICE.md"', 'href="../licences/NOTICE.md"')
             .replace('href="THIRD_PARTY.md"', 'href="third-party.html"')
+            .replace('href="../THIRD_PARTY.md#', 'href="third-party.html#')
+            .replace('href="PelvicXrayMeasurements/Resources/implant-overlays.html', 'href="implant-overlays.html')
         )
         for other in articles:
             body = body.replace(f'href="{other}"', f'href="{other[:-3]}.html"')

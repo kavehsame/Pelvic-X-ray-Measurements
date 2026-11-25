@@ -29,6 +29,8 @@ or browser runtime. Do not put model weights or generated builds into source his
 
 ## Updates
 
+Version 1.8.0 restores its processed implant catalogue and PNG overlays from the [template asset release](https://github.com/kavehsame/Pelvic-X-ray-Measurements/releases/tag/templates-v1.8.0). The two filenames, byte counts and SHA-256 hashes are in `implant-assets.json`. Both the website build and the complete Slicer bundle use those same files. For a revised catalogue, create a new asset tag and update the manifest and Slicer build references together. Publish the asset release before the Pages build and keep the software release marked as latest.
+
 Use a new software version and a new release for a changed distribution. Run both
 editions through the common verifier, select the passing evidence, rebuild the
 website and package the new downloads. Keep earlier releases. Reuse the same model

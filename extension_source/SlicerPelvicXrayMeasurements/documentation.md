@@ -7,6 +7,12 @@ software. Completed clinical validation is not claimed.
 
 ## Version changelog
 
+### V1.8.0
+
+- Add straight and stepped femoral neck cuts, a movable bone fragment and 794 calibrated AP implant templates.
+- Add an independent cup-shell circle and a single-film estimate of inlay wear.
+- Restore editable annotations by their recorded names and point indices when reading earlier or reordered PXM CSVs.
+
 ### V1.7.1
 
 - Matches the version of the web release.
@@ -669,7 +675,34 @@ Two landmark points are compared using a pelvic baseline and parallel projection
 - The absolute value is shown as the magnitude.
 - Signed raw and signed corrected values are retained in the result structure and CSV.
 
-## 3. Post-Operative (THA)
+## 3. Planning
+
+Select the side you want to work on. Use a calibration ball at hip level when available. PXM uses the horizontal and vertical pixel spacing recorded in the image. A fitted ball corrects the scale for magnification and immediately resizes placed implants around their pivots. Detector spacing alone or an ordinary PNG requires a ball. Each side can hold one straight cut, one stepped cut, one movable fragment, one cup template and one stem template.
+
+Each bundled implant uses the scale on its own manufacturer's drawing. A 40 mm interval on the drawing represents 40 mm on a calibrated image. The catalogue size can differ from the width of the drawn shell. For a manual comparison, use the mm value in the Line result after fitting the ball.
+
+1. **Straight Neck Resection**. Click the medial and lateral cortices at the proposed cut. The result is the distance between those points. For a **Stepped Neck Resection**, add the medial end, the corner and the lateral end in that order. The results show each segment and their sum. Drag a landmark to revise the cut.
+2. **Retained Bone Fragment Placement**. Click once after completing a neck cut. If both cuts are present, choose the one to use. PXM follows the cut, clears the trochanter regions and uses the image borders to enclose the distal femur. Existing head, lesser-trochanter and shaft landmarks help orient the region. This geometric selection can include soft tissue or overlapping pelvic anatomy. Drag the fragment or its point to move it. Drag the round handle to rotate about that point, or enter an angle in **Rotation** beside **Trace manually**. Click **Retained Bone Fragment Placement** again to clear the fragment and its movement on this side. If you edit the cut or shaft landmarks, clear and select the fragment again to recalculate its boundary.
+3. **Trace manually** lets you adjust which tissue moves. The boundary starts at the lateral cut end. Place points around the retained bone, including beyond the film edge when necessary. Right-click to close at the medial end. The original straight or stepped cut completes the border. The tracing disappears after selection.
+4. **Import overlay pack…** opens a local JSON file of AP outlines in millimetres. Imported sizes remain available across cases for this session. If you reopen a plan that uses an external template, import the same pack to display it again. Select **How It Works** beside the import button to open the guide in your browser.
+5. **Place Cup Template** and **Place Stem Template**. Select a family and size, then place its pivot on the calibrated image. Drag the implant to translate it. Drag the round handle to rotate it around the pivot, or enter the angle in **Rotation**. Select an existing implant by clicking its body or pivot. The pivot may lie away from the joint centre.
+
+**Making a pack.** The [implant overlay guide](PelvicXrayMeasurements/Resources/implant-overlays.html) explains the PDF conversion, the physical scale of each drawing, size verification and the complete import format. It includes a downloadable synthetic example and the JSON Schema.
+
+The local library contains 794 AP entries from Medacta and Mathys. Cups and reinforcement cages appear under **Place Cup Template**. Complete stems and proximal or distal components appear under **Place Stem Template**. The two slots on each side hold one acetabular and one femoral drawing at a time. Rotation starts in the printed AP position. PXM mirrors a neutral drawing for the opposite hip and offers a side-specific reference only on its designated side. Check the radiograph’s side marker, especially on an image without orientation metadata.
+
+The drawings retain their original size and guide marks. Dots, crosshairs and extended lines can project outside the implant. Use the shell or stem body when judging fit. Export the annotated PNG to show the plan. Use the CSV or MRB to resume editing with the same library installed.
+
+### Implant references
+
+1. OsiriX Team and volz.io. *Hip Arthroplasty Templating Plugin* [software for OsiriX]. Version 3.6.5. OsiriX Foundation. [Plugin record](https://www.osirixfoundation.com/medacta/).
+2. Medacta International. *MEDACTA Templates* [hip implant drawings and product records]. Distributed with Hip Arthroplasty Templating Plugin, version 3.6.5. OsiriX Foundation. [Medacta collection record](https://github.com/aglv/HipArthroplastyTemplating/blob/270476e057eecb6dec4eb6b7fb4e49dbab8e90e9/.gitmodules#L9-L12).
+3. Mathys Ltd. Bettlach. *Mathys Templates* [hip implant drawings and product records]. Distributed with Hip Arthroplasty Templating Plugin, version 3.6.5. OsiriX Foundation. [Mathys collection record](https://github.com/aglv/HipArthroplastyTemplating/blob/270476e057eecb6dec4eb6b7fb4e49dbab8e90e9/.gitmodules#L5-L8).
+4. Holzer N, Christofilopoulos P, Volz A, Ratib O, Peter R. *Filmless total hip arthroplasty templating on surgeon’s own personal computers: a reliable & user friendly solution at no cost* [conference abstract]. Swiss Medical Weekly. 2011, 141(Suppl 186), 6S–7S. Abstract FM21. [Journal abstract](https://smw.ch/index.php/smw/article/download/5290/6514#page=7).
+
+[Licence terms](PelvicXrayMeasurements/Resources/implant-overlays.html#sources) · [Publisher's terms](https://www.osirixfoundation.com/medacta/)
+
+## 4. Post-Operative (THA)
 
 The `Post-Operative (THA)` section also shows `Femoral Shaft Axis` below `Implant Neck Axis`.
 This is the same shared bilateral shaft-axis tool described above, not a separate post-operative
@@ -698,6 +731,12 @@ Three points are placed on the visible implant head contour.
 
 - Same 3-point circle fit logic as the native femoral head.
 - Reports raw diameter and corrected diameter if calibration is available.
+
+### Cup Center and inlay wear estimate
+
+Place three well-separated points on the visible spherical outer margin of the metal shell, away from the cup opening, screw holes and projections. PXM fits a circle through those points. The separate six-point **Cup Opening Ellipse Fit** serves inclination and version.
+
+When **Implant Head Center** and **Cup Center** are both defined on the same side, **Inlay wear estimate** shows the distance between their centres in the AP image plane. It is reported in millimetres after calibration and in scene units (su) otherwise. A concentric fit gives zero. If either circle cannot be fitted, the result stays blank. This single-film measurement describes projected head eccentricity. Implant design, initial liner deformation and projection can all contribute. Assessing change over time requires comparable dated radiographs.
 
 ### Acetabular Inclination Angle (Free Hand)
 
@@ -941,7 +980,7 @@ It summarizes the combined post-operative acetabular and femoral offset reconstr
 
 - `Post-Op Global Offset = Post-Op Acetabular Offset + Post-Op Femoral Offset`
 
-## 4. Points & Lines & Angles
+## 5. Points & Lines & Angles
 
 ### Point
 
@@ -1021,7 +1060,7 @@ Useful for custom geometric checks that are not covered by the predefined tools.
 - The reported angle is the acute angle between the two arms.
 - Locking affects the first arm geometry before the angle is evaluated.
 
-## 5. Contours
+## 6. Contours
 
 ### Pelvic contour tools
 
@@ -1162,12 +1201,13 @@ The repeatable `Line` and `Angle` tools both provide optional reference-lock che
 
 ## Results panel
 
-The results panel is organized into:
+The results panel groups the values under these headings.
 
-1. `Setup`
-2. `Pre-Operative`
-3. `Post-Operative (THA)`
-4. `Points & Lines & Angles`
+1. **Setup**
+2. **Pre-Operative**
+3. **Planning**
+4. **Post-Operative (THA)**
+5. **Points & Lines & Angles**
 
 ### Units
 
@@ -1279,6 +1319,9 @@ If an MRB, CSV, or PNG of the same name already exists, the module asks whether 
   - `<case>_annotated.png`
 
 ## CSV Output
+
+To restore a coordinate CSV, open the same radiograph and select **Open a CSV…**. The folder workflow also restores a CSV when a matching saved scene is absent. Landmark roles, named columns and saved point indices identify each measurement. Rows and columns can move. Older files can omit new features. Use the same geometry and orientation as the original case. The app recalculates fitted geometry and measurement values from the saved editable points.
+
 
 The CSV is intentionally detailed.
 

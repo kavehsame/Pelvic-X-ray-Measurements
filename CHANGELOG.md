@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.8.0
+
+- Add automatic retained-bone selection, manual border tracing, rotation handles for fragments and implants, and local session overlay packs.
+- Add straight and stepped femoral neck cuts, a movable bone fragment and 794 calibrated AP implant templates.
+- Add an independent cup-shell circle and a single-film estimate of inlay wear.
+- Restore editable annotations by their recorded names and point indices when reading earlier or reordered PXM CSVs.
+
 ## 1.7.1
 
 - Use the arrow cursor in the web viewer and show the hand only while dragging to pan.

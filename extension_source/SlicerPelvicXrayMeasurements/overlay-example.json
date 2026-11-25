@@ -1,0 +1,53 @@
+{
+  "format": "pxm-overlay-pack-1",
+  "units": "mm",
+  "view": "AP",
+  "axes": "x-lateral-y-superior",
+  "items": [
+    {
+      "id": "example/asymmetric-stem/1",
+      "manufacturer": "PXM demonstration",
+      "family": "Synthetic demonstration",
+      "size": "1",
+      "reference": "PXM-DEMO-1",
+      "source": "Constructed geometry for software testing",
+      "scale_method": "Vertices specified directly in millimetres",
+      "component": "stem",
+      "side": "both",
+      "pivot": [
+        0,
+        0
+      ],
+      "outline": [
+        [
+          -6,
+          5
+        ],
+        [
+          7,
+          10
+        ],
+        [
+          8,
+          -18
+        ],
+        [
+          2,
+          -41
+        ],
+        [
+          -1,
+          -41
+        ],
+        [
+          -4,
+          -10
+        ],
+        [
+          -6,
+          5
+        ]
+      ]
+    }
+  ]
+}

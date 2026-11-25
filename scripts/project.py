@@ -9,6 +9,22 @@ ROOT = Path(__file__).resolve().parents[1]
 WEB = ROOT / "web"
 EXTENSION = ROOT / "extension_source/SlicerPelvicXrayMeasurements"
 BUILD = ROOT / "build"
+IMPLANT_FOLDERS = (WEB / "core", EXTENSION / "PelvicXrayMeasurements/Resources")
+
+
+def implant_manifest():
+    return json.loads((ROOT / "implant-assets.json").read_bytes())
+
+
+def implant_files(folder):
+    """Read the two processed assets used by a complete release."""
+    files = {}
+    for name, record in implant_manifest()["files"].items():
+        content = within(folder / name).read_bytes()
+        if len(content) != record["bytes"] or hashlib.sha256(content).hexdigest() != record["sha256"]:
+            raise ValueError(f"Implant asset differs from its release checksum: {name}")
+        files[name] = content
+    return files
 
 
 def within(path):
@@ -38,6 +54,7 @@ def source_files():
         "test_runs",
     }
     models = {"auto_point_model.json", "auto_point_image_model.npz"}
+    implants = set(implant_manifest()["files"])
     paths = []
     for folder, directories, names in os.walk(ROOT, followlinks=False):
         directories[:] = sorted(d for d in directories if d not in ignored)
@@ -51,6 +68,8 @@ def source_files():
             path = Path(folder) / name
             rel = path.relative_to(ROOT)
             if name in models or name == ".DS_Store":
+                continue
+            if path.parent in IMPLANT_FOLDERS and name in implants:
                 continue
             if rel.parts[:2] == ("web", "runtime") and name != "manifest.json":
                 continue

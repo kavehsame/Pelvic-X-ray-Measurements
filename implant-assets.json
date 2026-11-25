@@ -1,0 +1,17 @@
+{
+  "version": "templates-v1.8.0",
+  "entries": 794,
+  "drawings": 757,
+  "files": {
+    "planning_templates.json": {
+      "bytes": 381101,
+      "sha256": "87c80343c612de592103e968c7e96d078f5efc675d57590ebd598372294fa771",
+      "url": "https://github.com/kavehsame/Pelvic-X-ray-Measurements/releases/download/templates-v1.8.0/planning_templates.json"
+    },
+    "planning_artwork.zip": {
+      "bytes": 32795568,
+      "sha256": "b4284a15497b9a9a26451ae98c6080e61c50784fe5a8809f3aa9263be9c9d649",
+      "url": "https://github.com/kavehsame/Pelvic-X-ray-Measurements/releases/download/templates-v1.8.0/planning_artwork.zip"
+    }
+  }
+}

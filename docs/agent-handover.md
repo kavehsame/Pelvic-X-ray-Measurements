@@ -6,6 +6,18 @@ alongside this document. User workflows are in the [web manual](web-manual.md)
 and the Slicer extension's `documentation.md`. Testing methods and limitations
 are in [testing](testing.md).
 
+## Planning and implant overlays
+
+Maintain the shared [implant overlay guide](implant-overlays.html) in `docs/implant-overlays.html`. Its downloadable sample and schema come from the adjacent JSON files. Run `python -B scripts/sync_metadata.py` after editing them or the guide, then run it with `--check`. The web build embeds the self-contained HTML for offline use and ships a separate readable copy. The Slicer package installs the same bytes in the module's Resources directory and opens them with the system browser. Keep the PDF conversion method, source attribution and sheet-scale checks aligned with the catalogue when it changes.
+
+The paired planning modules in the web core and the Slicer helper library share stable role names, physical outline coordinates, saved template identifiers and fragment transforms. The paired CSV readers group points by role and explicit index. Preserve these identifiers when adding a tool. Keep the historical CSV fixtures and run the planning interaction tests in both editions.
+
+**Retained Bone Fragment Placement** computes a lateral-to-medial boundary in physical image axes, using any available head, shaft and lesser-trochanter landmarks. Manual points can extend beyond the film. Both modes store the same explicit boundary and cut type. A completed trace is hidden. The web canvas and Slicer red-view event handlers translate and rotate both the fragment and implants. The fragment uses its existing fragmentTarget position, saved view axes and FragmentAngle on both sides. Its Hide control covers the image patch and pivot. Keep the internal fragment_pose workflow key and fragmentTarget markup role when revising this panel. Interactive rotation handles stay out of PNG and CSV exports. The optional session import uses the shared atomic validator described in [Overlay format](overlay-standard.md). Its pose is a rigid transform about the midpoint of the cut ends. The Slicer preview is a disposable foreground volume. The web viewer uses the same transform when drawing the source pixels into the canvas and exported PNG. The source image and its landmarks stay in their original frame. Cup-shell and head circles are independent. Wear is their projected centre separation on one image.
+
+Both release builds include the catalogue and the processed AP overlays. Each bundled AP record stores a PNG checksum, physical pixel pitch, pivot in cropped-image pixels, drawing side and permitted patient side. A missing reference retains its saved ID and anchor. Use the same four-corner map for the live view and image export. Local patient pixel spacing defines the base scale. A measured ball provides one magnification correction. The web preparation includes the artwork in its verified cache. The original session JSON format continues to accept vector outlines. Restore both processed files from the versioned release specified in `implant-assets.json`. The build verifies the catalogue and image archive before packaging them. [Third-party materials](../THIRD_PARTY.md#implant-planning-drawings)
+
+Each bundled raster record links to its source sheet through `scaleSheet`. The catalogue's `scaleSheets` stores the physical reference interval and its vector in original PNG pixels. The physical pixel pitch comes from that sheet's ruler, its printed 1:1 scale, or its dimensioned head-centre marks. Preserve the scale when cropping, rotating or mirroring. Recheck the original sheet when replacing artwork. The numerical tests in both editions exercise every sheet through the template placement transform.
+
 ## Product and current scope
 
 The maintained editions are a 3D Slicer scripted extension and a static website
@@ -13,7 +25,7 @@ whose measurement workspace runs entirely in the visitor's browser. Their common
 measurement definitions and saved-data meaning must agree. The web interface is
 purpose-built for one radiograph and does not reproduce Slicer's full interface.
 
-Version 1.7.1 makes landmark selection easier, keeps pixels sharp during high-zoom
+Version 1.8.0 adds bilateral hip templating, femoral resection and fragment placement, CSV import by field and a single-film wear estimate. Version 1.7.1 makes landmark selection easier, keeps pixels sharp during high-zoom
 panning and adds direct case navigation in the web viewer. Version 1.7.0 introduced
 high-resolution exports, a bottom-centre web PNG summary, bilateral acetabular
 wall contours, curved web placement previews and larger morphology help. The wall

@@ -7,7 +7,7 @@ from pathlib import Path
 import shutil
 from zipfile import ZIP_DEFLATED, ZipFile, ZipInfo
 
-from project import BUILD, EXTENSION, ROOT, WEB, config, within
+from project import BUILD, EXTENSION, IMPLANT_FOLDERS, ROOT, WEB, config, implant_files, within
 
 
 def archive(destination, files):
@@ -35,6 +35,8 @@ def main():
         "--output", type=Path, help="New release directory inside the repository"
     )
     args = parser.parse_args()
+    for folder in IMPLANT_FOLDERS:
+        implant_files(folder)
     version = config()["version"]
     out = within(args.output or BUILD / "releases" / ("v" + version))
     out.mkdir(parents=True, exist_ok=False)
@@ -72,7 +74,7 @@ def main():
     web_files.update(
         {
             name: (ROOT / name).read_bytes()
-            for name in ("LICENSE.txt", "NOTICE.md", "CREDITS.md", "THIRD_PARTY.md")
+            for name in ("LICENSE.txt", "NOTICE.md", "CREDITS.md", "THIRD_PARTY.md", "CITATION.cff")
         }
     )
     web_files["README.md"] = (

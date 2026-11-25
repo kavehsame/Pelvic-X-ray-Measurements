@@ -17,8 +17,8 @@ There are no third-party runtime downloads during a visitor's session.
 
 Each JSON document contains a labelled base64 segment of the compressed runtime,
 with its checksum and position. The browser checks every segment and the complete
-package before starting. The unchanged runtime includes WebAssembly, Python
-libraries and aggregate Smart Point Placement models. Some internal Python
+package before starting. The package includes WebAssembly, Python
+libraries, aggregate Smart Point Placement models and processed implant overlays. Some internal Python
 library packages use ZIP format. Content inspection may therefore still block the
 runtime even when JSON requests are permitted. This delivery format does not
 override an organisation's network or software policy; access may need IT approval.

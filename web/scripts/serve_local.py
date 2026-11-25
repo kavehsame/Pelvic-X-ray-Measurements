@@ -11,6 +11,7 @@ DIST = Path(__file__).resolve().parents[2] / "build" / "web"
 ASSETS = {
     "/": ("index.html", "text/html; charset=utf-8"),
     "/index.html": ("index.html", "text/html; charset=utf-8"),
+    "/implant-overlays.html": ("implant-overlays.html", "text/html; charset=utf-8"),
 }
 
 

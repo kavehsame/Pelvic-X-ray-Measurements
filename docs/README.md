@@ -1,5 +1,7 @@
 # Documentation
 
+[Implant overlays and import packs](implant-overlays.html) covers source drawings, scale verification, references for the plugin and its implant drawings, licence terms and a working example.
+
 - [Web user manual](web-manual.md): start, local files, every measurement, editing and export.
 - [Slicer user manual](../extension_source/SlicerPelvicXrayMeasurements/documentation.md): the complete Slicer workflow.
 - [Installation and downloads](installation.md): choose the right release file.
@@ -10,6 +12,7 @@
 - [Agent handover](agent-handover.md): architecture, data contracts, invariants, commands and release continuity.
 - [Publishing](publishing.md): GitHub Releases, GitHub Pages and the separate Slicer catalogue process.
 - [Restricted networks](network-access.md): startup errors and information for IT support.
+- [Version 1.8.0 release notes](releases/v1.8.0.md).
 - [Version 1.7.1 release notes](releases/v1.7.1.md).
 - [Version 1.7.0 release notes](releases/v1.7.0.md).
 - [Version 1.6.1 release notes](releases/v1.6.1.md).

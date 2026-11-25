@@ -1,29 +1,39 @@
-# Model weights stay out of Git. Source release kits contain them; fresh Slicer
-# factory checkouts fetch approved, immutable release assets while building.
-# Installed users never need a model download or an extra Python dependency.
-set(PELVIC_MODEL_NAMES auto_point_model.json auto_point_image_model.npz)
-set(PELVIC_MODEL_HASHES
-  0884740f04ab921995de9ae73cb116a92273a5f782b7ff7b74d3a420ef23550e
+# Restore build assets into the complete Slicer module. Installed users receive
+# the same verified files in the extension bundle.
+function(pxm_resolve_asset directory url name expected)
+  set(asset "${directory}/${name}")
+  file(MAKE_DIRECTORY "${directory}")
+  file(LOCK "${CMAKE_CURRENT_BINARY_DIR}/pxm-${name}.lock" GUARD FUNCTION TIMEOUT 180)
+  if(NOT EXISTS "${asset}")
+    if(NOT url MATCHES "^https://github[.]com/[^/]+/[^/]+/releases/download/[^/]+$")
+      message(FATAL_ERROR "Missing release URL for ${name}")
+    endif()
+    file(DOWNLOAD "${url}/${name}" "${asset}.download" TLS_VERIFY ON STATUS status TIMEOUT 180)
+    list(GET status 0 error)
+    if(NOT error EQUAL 0)
+      file(REMOVE "${asset}.download")
+      message(FATAL_ERROR "Could not download ${name}: ${status}")
+    endif()
+    file(SHA256 "${asset}.download" actual)
+    if(NOT actual STREQUAL expected)
+      file(REMOVE "${asset}.download")
+      message(FATAL_ERROR "Downloaded asset checksum mismatch: ${name}")
+    endif()
+    file(RENAME "${asset}.download" "${asset}")
+  else()
+    file(SHA256 "${asset}" actual)
+    if(NOT actual STREQUAL expected)
+      message(FATAL_ERROR "Installed asset checksum mismatch: ${name}")
+    endif()
+  endif()
+endfunction()
+
+set(resources "${CMAKE_CURRENT_LIST_DIR}/PelvicXrayMeasurements/Resources")
+pxm_resolve_asset("${resources}/AutoPlacement" "${PELVIC_MODEL_BASE_URL}" auto_point_model.json
+  0884740f04ab921995de9ae73cb116a92273a5f782b7ff7b74d3a420ef23550e)
+pxm_resolve_asset("${resources}/AutoPlacement" "${PELVIC_MODEL_BASE_URL}" auto_point_image_model.npz
   b1e0dcc0bc7be8bbd4af9d1510ef955fc469adea15eed665d645a6da1a699ebc)
-set(_model_directory "${CMAKE_CURRENT_SOURCE_DIR}/PelvicXrayMeasurements/Resources/AutoPlacement")
-foreach(_index RANGE 0 1)
-  list(GET PELVIC_MODEL_NAMES ${_index} _name)
-  list(GET PELVIC_MODEL_HASHES ${_index} _hash)
-  set(_model "${_model_directory}/${_name}")
-  if(NOT EXISTS "${_model}")
-    if(NOT PELVIC_MODEL_BASE_URL MATCHES "^https://github.com/[^/]+/[^/]+/releases/download/[^/]+$")
-      message(FATAL_ERROR "Missing ${_name}. Supply the model release kit or configure the approved GitHub model-release URL in Publication.cmake.")
-    endif()
-    file(MAKE_DIRECTORY "${_model_directory}")
-    file(DOWNLOAD "${PELVIC_MODEL_BASE_URL}/${_name}" "${_model}"
-      EXPECTED_HASH "SHA256=${_hash}" TLS_VERIFY ON STATUS _status)
-    list(GET _status 0 _code)
-    if(NOT _code EQUAL 0)
-      message(FATAL_ERROR "Could not retrieve approved model ${_name}: ${_status}")
-    endif()
-  endif()
-  file(SHA256 "${_model}" _actual)
-  if(NOT _actual STREQUAL _hash)
-    message(FATAL_ERROR "Model checksum mismatch: ${_name}; existing model was not replaced.")
-  endif()
-endforeach()
+pxm_resolve_asset("${resources}" "${PELVIC_IMPLANT_BASE_URL}" planning_templates.json
+  87c80343c612de592103e968c7e96d078f5efc675d57590ebd598372294fa771)
+pxm_resolve_asset("${resources}" "${PELVIC_IMPLANT_BASE_URL}" planning_artwork.zip
+  b4284a15497b9a9a26451ae98c6080e61c50784fe5a8809f3aa9263be9c9d649)

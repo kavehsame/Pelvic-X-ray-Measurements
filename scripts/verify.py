@@ -114,6 +114,8 @@ def main():
                 ],
             )
         )
+    if args.slicer:
+        commands.append(("planning_interchange", [*python, str(WEB / "scripts/check_planning_interop.py"), "--slicer", args.slicer]))
     commands.extend(
         [
             ("core_replay", [*python, str(WEB / "scripts/check_core.py")]),

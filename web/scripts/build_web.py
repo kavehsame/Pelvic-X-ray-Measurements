@@ -9,6 +9,7 @@ from io import BytesIO
 import json
 from pathlib import Path
 import struct
+import sys
 from zipfile import ZIP_DEFLATED, ZipFile, ZipInfo
 
 from markdown import markdown
@@ -17,6 +18,8 @@ SCRIPTS = Path(__file__).resolve().parents[1]
 CORE = SCRIPTS / "core"
 REFERENCE_ASSETS = SCRIPTS / "assets"
 STEP = SCRIPTS.parent
+sys.path.insert(0, str(STEP / "scripts"))
+from project import implant_files
 WEB = SCRIPTS / "ui"
 RUNTIME = SCRIPTS / "runtime"
 OUTPUT = STEP / "build"
@@ -48,6 +51,7 @@ def archive_core(model_files):
     with ZipFile(buf, "w", compression=ZIP_DEFLATED, compresslevel=6) as archive:
         sources = {f"core/{p.name}": p.read_bytes() for p in CORE.glob("*.py")}
         sources["core/__init__.py"] = b""
+        sources.update({f"core/{name}": data for name, data in implant_files(CORE).items()})
         sources.update(
             {f"core/resources/{name}": content for name, content in model_files.items()}
         )
@@ -239,8 +243,13 @@ def main():
     payload, omitted = build_payload(binaries, models)
     transport = gzip.compress(payload, compresslevel=9, mtime=0)
     components, component_files = component_documents(transport, digest(payload))
-    if sum(len(content) for content in component_files.values()) > len(payload):
-        raise ValueError("The component transfer must not exceed the previous binary-package size.")
+    # Preserve the original engine budget. Compressed manufacturer PNGs incur
+    # up to one extra base64 character per three bytes in the JSON transport.
+    artwork = CORE / "planning_artwork.zip"
+    image_overhead = (artwork.stat().st_size + 2) // 3 if artwork.is_file() else 0
+    if sum(map(len, component_files.values())) > len(payload) + image_overhead:
+        raise ValueError("The component download exceeds the engine and PNG transport budget.")
+    overlay_guide = (STEP / "docs" / "implant-overlays.html").read_bytes()
     app_config = {
         "version": version,
         # Preserve the checksum-keyed local cache used by the earlier loader.
@@ -253,6 +262,7 @@ def main():
         "transportHash": digest(transport),
         "componentTimeoutMs": 30_000,
         "help": read_help(),
+        "overlayGuide": overlay_guide.decode("utf-8"),
         "schematic": data_uri(ASSETS / "morphology_parameters_pothong_2023.png"),
     }
     js = "\n".join(
@@ -282,7 +292,7 @@ def main():
     if not DIST.resolve().is_relative_to(STEP):
         raise RuntimeError("The distribution folder escapes this repository.")
     DIST.mkdir(exist_ok=True)
-    files = {**component_files, "index.html": template.encode()}
+    files = {**component_files, "index.html": template.encode(), "implant-overlays.html": overlay_guide}
     for name, data in files.items():
         (DIST / name).parent.mkdir(parents=True, exist_ok=True)
         write(DIST / name, data)

@@ -6,6 +6,14 @@ scene, coordinate CSV or annotated image.
 
 **Research use only.** This software is a research tool, not a medical device. It is not intended for diagnosis, treatment planning or other clinical decision-making.
 
+## Planning and implant wear
+
+In **Planning**, **How It Works** explains how to prepare and verify an implant overlay. [Implant overlay guide](PelvicXrayMeasurements/Resources/implant-overlays.html)
+
+The catalogue uses *MEDACTA Templates* (Medacta International) and *Mathys Templates* (Mathys Ltd. Bettlach), distributed with the OsiriX Team and volz.io’s *Hip Arthroplasty Templating Plugin*, version 3.6.5. [References and licence](PelvicXrayMeasurements/Resources/implant-overlays.html#sources)
+
+Version 1.8.0 includes 794 AP implant entries, straight and stepped cuts, retained-fragment placement and a single-film estimate of inlay wear. The full workflow is in [the extension manual](documentation.md#3-planning).
+
 ## Install the extension bundle
 
 1. Install the Slicer version listed in the release notes.
@@ -16,9 +24,9 @@ scene, coordinate CSV or annotated image.
    **PelvicXrayMeasurements.py**. Keep its helper and Resources folders intact.
 5. Restart Slicer and open **Pelvic Xray Measurements**, under **Orthopaedics**.
 
-This bundle includes Smart Point Placement models. GitHub's automatically generated
+This bundle includes the processed implant overlays and Smart Point Placement models. GitHub's automatically generated
 source archive does not include those separately distributed assets. Developers
-building from a checkout must retrieve the checksum-pinned models first.
+building from a checkout can restore both sets of assets with the repository’s build instructions.
 An Extensions Manager listing is planned; direct bundle installation is available
 independently of catalog approval. Do not install this source ZIP as a compiled
 Extensions Manager package.
@@ -36,7 +44,7 @@ landmark, option and export format. Tests are included under **Testing**.
 
 ## License, credit and evidence
 
-**Selected software checks: 116 unit tests; a full replay covering all 413 reference
+**Selected software checks: 117 unit tests; a full replay covering all 413 reference
 CSV rows; Smart Point Placement; and live multi-guide, morphology, leg-length,
 circle-visibility and shaft-contour workflows.** The selected results are available
 in the source tree's [interactive test review](test_reports/current/index.html),

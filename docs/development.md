@@ -28,8 +28,7 @@ components, then verified and expanded inside the browser.
 **build/site/** contains the landing page, app, rendered manuals and test review
 for GitHub Pages. Only build output is deployed, never the repository or test data.
 
-The fetch command restores model assets from their versioned GitHub release and
-the browser runtime from pinned upstream distributions. It verifies checksums and
+The fetch command restores the models and processed implant assets from their versioned GitHub releases. It also restores the browser runtime from pinned upstream distributions. It verifies checksums and
 does not accept changed files. All caches and build products remain inside the
 repository and are ignored by Git. After asset restoration, builds can run offline.
 

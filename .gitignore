@@ -12,6 +12,10 @@ __pycache__/
 **/test_runs/
 **/Testing/Python/test_runs/
 
+# Processed implant assets are restored from their versioned release.
+planning_templates.json
+planning_artwork.zip
+
 # Versioned aggregate weights are GitHub Release assets.
 auto_point_model.json
 auto_point_image_model.npz

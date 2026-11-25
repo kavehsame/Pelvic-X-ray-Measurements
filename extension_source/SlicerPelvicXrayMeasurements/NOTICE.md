@@ -10,6 +10,17 @@ See LICENSE.txt for the complete terms. Unless required by applicable law or
 agreed to in writing, the software is distributed on an “AS IS” BASIS, WITHOUT
 WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 
+## Implant planning drawings
+
+1. OsiriX Team and volz.io. *Hip Arthroplasty Templating Plugin* [software for OsiriX]. Version 3.6.5. OsiriX Foundation. [Plugin record](https://www.osirixfoundation.com/medacta/).
+2. Medacta International. *MEDACTA Templates* [hip implant drawings and product records]. Distributed with Hip Arthroplasty Templating Plugin, version 3.6.5. OsiriX Foundation. [Medacta collection record](https://github.com/aglv/HipArthroplastyTemplating/blob/270476e057eecb6dec4eb6b7fb4e49dbab8e90e9/.gitmodules#L9-L12).
+3. Mathys Ltd. Bettlach. *Mathys Templates* [hip implant drawings and product records]. Distributed with Hip Arthroplasty Templating Plugin, version 3.6.5. OsiriX Foundation. [Mathys collection record](https://github.com/aglv/HipArthroplastyTemplating/blob/270476e057eecb6dec4eb6b7fb4e49dbab8e90e9/.gitmodules#L5-L8).
+4. Holzer N, Christofilopoulos P, Volz A, Ratib O, Peter R. *Filmless total hip arthroplasty templating on surgeon’s own personal computers: a reliable & user friendly solution at no cost* [conference abstract]. Swiss Medical Weekly. 2011, 141(Suppl 186), 6S–7S. Abstract FM21. [Journal abstract](https://smw.ch/index.php/smw/article/download/5290/6514#page=7).
+
+The plugin credits © 2007–2026 OsiriX Team & volz.io. The Foundation describes its calculations, measurements and images as research material, asks for acknowledgement in publications and disclaims warranties. Redistribution, sale or commercial use of the plugin requires prior approval from its authors. [OsiriX Foundation](https://www.osirixfoundation.com/medacta/)
+
+The Apache License 2.0 covers PXM's original software and synthetic example pack.
+
 ## Developed by
 
 **Kaveh Same, MD, MPH, PhD Candidate**

@@ -105,7 +105,11 @@ def main():
             else {"browser": chrome["chrome"]},
         }
         (target / "summary.json").write_text(json.dumps(selected, indent=2) + "\n")
+        interchange = run / "web/planning_interchange/result.json"
+        assert load(interchange)["status"] == "passed"
+        shutil.copyfile(interchange, target / "planning_interchange.json")
         body = config + f"<p>All {len(rows)} unit tests passed.</p>"
+        body += '<p>The <a href="planning_interchange.json">Planning CSV round trip</a> checks template coordinates, wear and fragment pixels from web to Slicer and back.</p>'
         if edition == "slicer":
             body += (
                 "<p>Slicer "

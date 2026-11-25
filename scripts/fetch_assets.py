@@ -1,4 +1,4 @@
-"""Restore fixed model and browser dependencies; never accept changed content."""
+"""Restore the pinned models, processed implant assets and browser runtime."""
 
 import argparse
 import hashlib
@@ -6,28 +6,24 @@ import json
 from pathlib import Path
 import subprocess
 import sys
+from tempfile import TemporaryDirectory
 from urllib.request import Request, urlopen
 
-from project import EXTENSION, ROOT, WEB, within
+from project import EXTENSION, IMPLANT_FOLDERS, ROOT, WEB, implant_manifest, within
 
 
-def models(local=None):
-    manifest = json.loads((ROOT / "model-assets.json").read_text())
+def restore_assets(manifest, folders, local=None):
     for name, record in manifest["files"].items():
         if Path(name).name != name:
-            raise ValueError("Invalid model asset filename")
-        destinations = (
-            EXTENSION / "PelvicXrayMeasurements/Resources/AutoPlacement" / name,
-            WEB / "assets" / name,
-        )
+            raise ValueError("Invalid release asset filename")
+        destinations = [within(folder / name) for folder in folders]
         content = None
         for dest in destinations:
-            within(dest)
             if dest.exists():
                 existing = dest.read_bytes()
                 if hashlib.sha256(existing).hexdigest() != record["sha256"]:
                     raise ValueError(
-                        f"Existing model differs from its published checksum: {dest.name}"
+                        f"Existing asset differs from its published checksum: {dest.name}"
                     )
                 content = existing
         if content is None:
@@ -43,12 +39,14 @@ def models(local=None):
             len(content) != record["bytes"]
             or hashlib.sha256(content).hexdigest() != record["sha256"]
         ):
-            raise ValueError(f"Model failed its size or checksum check: {name}")
+            raise ValueError(f"Asset failed its size or checksum check: {name}")
         for dest in destinations:
             if not dest.exists():
                 dest.parent.mkdir(parents=True, exist_ok=True)
-                with dest.open("xb") as stream:
-                    stream.write(content)
+                with TemporaryDirectory(dir=dest.parent) as temp:
+                    staged = Path(temp) / name
+                    staged.write_bytes(content)
+                    staged.replace(dest)
 
 
 def runtime_ready():
@@ -69,8 +67,12 @@ def main():
         help="Existing release assets, still checked against fixed hashes",
     )
     parser.add_argument("--models-only", action="store_true")
+    parser.add_argument("--local-implants", type=Path, help="Folder containing the two processed release assets")
     args = parser.parse_args()
-    models(args.local_models)
+    restore_assets(json.loads((ROOT / "model-assets.json").read_bytes()),
+                   (EXTENSION / "PelvicXrayMeasurements/Resources/AutoPlacement", WEB / "assets"), args.local_models)
+    if not args.models_only:
+        restore_assets(implant_manifest(), IMPLANT_FOLDERS, args.local_implants)
     if not args.models_only and not runtime_ready():
         for script in ("fetch_runtime.py", "fetch_codecs.py"):
             subprocess.run(

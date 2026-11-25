@@ -6,6 +6,12 @@ A validation study is being performed to compare the tool with established
 medical software. That study is separate from the software checks; completed
 clinical validity or regulatory approval is not claimed.
 
+## Planning checks
+
+The Planning checks place both cuts, trace and move a fragment, fit the spherical cup shell and choose concrete implant references on synthetic images. A head offset of three pixels in one direction and four in the other yields five pixels, or 6.25 mm at 1.25 mm per pixel. A concentric fit gives zero. A collinear shell fit leaves the value undefined.
+
+The interchange check rotates and mirrors an oblique image, saves a browser CSV, reorders its rows and columns, opens it in Slicer and returns a Slicer CSV to the web engine. It compares eight groups of landmarks and template vertices, the wear estimate and sampled fragment intensities. Both editions also open historical CSV fixtures. The accepted numerical replay for the published version remains a separate regression check.
+
 ## Selected evidence
 
 The [interactive review](https://kavehsame.github.io/Pelvic-X-ray-Measurements/tests/)
@@ -13,10 +19,10 @@ links the selected Slicer and web runs. Each edition retains one selected eviden
 folder in source. New development runs go to an ignored build folder. Generated
 results do not enter the downloadable Slicer or web bundles.
 
-- **Slicer:** 116 unit tests; a full CSV replay matching 413 reference rows; Smart
+- **Slicer:** 117 unit tests; a full CSV replay matching 413 reference rows; Smart
   Point Placement; live multi-guide axes, morphology, bilateral leg-length lines,
   circle visibility and advancement through four shaft contours.
-- **Web:** 37 unit tests covering import, image frames, editing regressions and
+- **Web:** 69 unit tests covering import, image frames, editing regressions and
   component packaging; a core measurement replay; and 18 Chrome workflow groups that exercise the built
   app, including offline operation, export, resume and compressed image decoding.
 - **Startup:** 11 browser scenarios covering blocked binary routes, temporary and
@@ -39,10 +45,11 @@ rounding across operating systems. The report lists these fields separately and
 records whether the file bytes are identical. This is a numerical regression rule,
 not a clinical accuracy threshold.
 
-Eight presentation checks cover full-frame low-resolution PNG export, the centred
+Ten presentation checks cover full-frame low-resolution PNG export, the centred
 translucent summary, bilateral wall controls, curved provisional drawing, larger
 morphology help, picking and dragging overlapping points, pixel rendering during
 a high-zoom pan and jumping within a 1,000-image list while retaining edits.
+They also exercise the Planning controls and open the implant guide offline.
 
 ## Run the checks
 

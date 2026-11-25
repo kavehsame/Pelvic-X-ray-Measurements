@@ -12,7 +12,7 @@ from zipfile import ZipFile
 
 import yaml
 
-from project import BUILD, EXTENSION, ROOT, WEB, config, source_files, within
+from project import BUILD, EXTENSION, IMPLANT_FOLDERS, ROOT, WEB, config, implant_files, implant_manifest, source_files, within
 
 PRIVATE = re.compile(
     r"/Users/[^\s<\"']+|/Volumes/[^\s<\"']+|C:\\\\Users\\|/home/(?:runner|[a-z][a-z0-9_-]*)/|\b(?:ghp|github_pat)_[A-Za-z0-9_]{15,}|BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY"
@@ -60,6 +60,20 @@ def scan_text(name, content):
 
 
 def audit_source():
+    from io import BytesIO
+
+    assets = implant_files(IMPLANT_FOLDERS[0])
+    assert assets == implant_files(IMPLANT_FOLDERS[1])
+    records = json.loads(assets["planning_templates.json"])["items"]
+    limits = implant_manifest()
+    assert len(records) == len({item["id"] for item in records}) == limits["entries"]
+    drawings = {item["image"] + ".png" for item in records}
+    with ZipFile(BytesIO(assets["planning_artwork.zip"])) as artwork:
+        assert len(artwork.namelist()) == len(drawings) == limits["drawings"]
+        assert set(artwork.namelist()) == drawings
+        for name in drawings:
+            data = artwork.read(name)
+            assert data.startswith(b"\x89PNG\r\n\x1a\n") and hashlib.sha256(data).hexdigest() + ".png" == name
     for edition in (EXTENSION, WEB):
         reports = edition / "test_reports"
         if sorted(path.name for path in reports.iterdir()) != ["current"]:
@@ -178,6 +192,9 @@ def main():
         for path in archives:
             with ZipFile(path) as archive:
                 assert archive.testzip() is None
+                if path.name.endswith("_Slicer_extension.zip"):
+                    for name in implant_manifest()["files"]:
+                        assert "SlicerPelvicXrayMeasurements/PelvicXrayMeasurements/Resources/" + name in archive.namelist()
                 assert not any(
                     "test_reports/" in n or "test_runs/" in n or "__pycache__" in n
                     for n in archive.namelist()

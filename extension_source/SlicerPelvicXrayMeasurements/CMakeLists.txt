@@ -23,7 +23,10 @@ add_subdirectory(PelvicXrayMeasurements)
 # Ship executable verification tooling with the Extensions Manager package too.
 install(DIRECTORY Testing/ DESTINATION ${Slicer_INSTALL_QTSCRIPTEDMODULES_LIB_DIR}/PelvicXrayMeasurementsVerification/Testing
   PATTERN "__pycache__" EXCLUDE PATTERN ".pytest_cache" EXCLUDE PATTERN "test_runs" EXCLUDE)
-install(FILES README.md documentation.md LICENSE.txt NOTICE.md CREDITS.md THIRD_PARTY.md CITATION.cff DESTINATION ${Slicer_INSTALL_QTSCRIPTEDMODULES_LIB_DIR}/PelvicXrayMeasurementsVerification)
+install(FILES README.md documentation.md overlay-standard.md overlay.schema.json overlay-example.json
+  LICENSE.txt NOTICE.md CREDITS.md THIRD_PARTY.md CITATION.cff DESTINATION ${Slicer_INSTALL_QTSCRIPTEDMODULES_LIB_DIR}/PelvicXrayMeasurementsVerification)
+install(FILES PelvicXrayMeasurements/Resources/implant-overlays.html
+  DESTINATION ${Slicer_INSTALL_QTSCRIPTEDMODULES_LIB_DIR}/PelvicXrayMeasurementsVerification/PelvicXrayMeasurements/Resources)
 
 include(${Slicer_EXTENSION_GENERATE_CONFIG})
 include(${Slicer_EXTENSION_CPACK})

@@ -6,8 +6,58 @@ authors:
   - family-names: Same
     given-names: Kaveh
     affiliation: "Michael Ogon Laboratory for Orthopedic Research, Orthopedic Hospital Speising, Vienna, Austria"
-version: 1.7.1
+version: 1.8.0
 license: Apache-2.0
+references:
+  - type: software
+    title: "Hip Arthroplasty Templating Plugin"
+    version: "3.6.5"
+    authors:
+      - name: "OsiriX Team"
+      - name: "volz.io"
+    publisher:
+      name: "OsiriX Foundation"
+    repository-code: "https://github.com/aglv/HipArthroplastyTemplating"
+    url: "https://www.osirixfoundation.com/medacta/"
+  - type: data
+    title: "MEDACTA Templates"
+    authors:
+      - name: "Medacta International"
+    data-type: "Hip implant drawings and product records"
+    collection-title: "Hip Arthroplasty Templating Plugin, version 3.6.5"
+    publisher:
+      name: "OsiriX Foundation"
+    url: "https://github.com/aglv/HipArthroplastyTemplating/blob/270476e057eecb6dec4eb6b7fb4e49dbab8e90e9/.gitmodules#L9-L12"
+  - type: data
+    title: "Mathys Templates"
+    authors:
+      - name: "Mathys Ltd. Bettlach"
+    data-type: "Hip implant drawings and product records"
+    collection-title: "Hip Arthroplasty Templating Plugin, version 3.6.5"
+    publisher:
+      name: "OsiriX Foundation"
+    url: "https://github.com/aglv/HipArthroplastyTemplating/blob/270476e057eecb6dec4eb6b7fb4e49dbab8e90e9/.gitmodules#L5-L8"
+  - type: conference-paper
+    title: "Filmless total hip arthroplasty templating on surgeon’s own personal computers: a reliable & user friendly solution at no cost"
+    authors:
+      - family-names: Holzer
+        given-names: "N."
+      - family-names: Christofilopoulos
+        given-names: "P."
+      - family-names: Volz
+        given-names: "A."
+      - family-names: Ratib
+        given-names: "O."
+      - family-names: Peter
+        given-names: "R."
+    journal: "Swiss Medical Weekly"
+    year: 2011
+    volume: "141"
+    issue: "Suppl 186"
+    start: "6S"
+    end: "7S"
+    notes: "Conference abstract FM21."
+    url: "https://smw.ch/index.php/smw/article/download/5290/6514#page=7"
 repository-code: "https://github.com/kavehsame/Pelvic-X-ray-Measurements"
 url: "https://github.com/kavehsame/Pelvic-X-ray-Measurements"
 abstract: "An editable, calibrated pelvic radiograph measurement tool for research, provided as a 3D Slicer extension and a browser-based web application. Not intended for clinical decision-making."
