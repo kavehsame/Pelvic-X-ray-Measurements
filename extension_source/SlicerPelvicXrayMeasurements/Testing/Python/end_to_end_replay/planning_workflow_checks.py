@@ -111,12 +111,21 @@ def check_planning(widget, volume, points, events):
     assert widget._selected_plan_kind == "fragment" and widget._plan_view[2].GetVisibility()
     start = np.rint(widget._screen(logic._defined_points(target)[0])).astype(int)
     end = np.rint(widget._screen([80,32,0])).astype(int)
+    # Keep a regular landmark selectable even inside the pivot's seven-pixel picking radius.
+    neighbour = logic.get_node("otherPoint_1", create_if_missing=True)
+    nearby = start + [0, 4]
+    widget._set_plan_points(neighbour, [widget._world(nearby)])
+    neighbour.SetDisplayVisibility(True)
+    assert widget._hit_plan(nearby) is None
+    assert widget._hit_plan(start)[:2] == ("move", "fragment")
+    widget._set_plan_points(neighbour, [widget._world(start)])
     iren.SetEventPosition(*map(int, start))
     iren.InvokeEvent("LeftButtonPressEvent")
     assert widget._plan_drag[:2] == ("move", "fragment")
     iren.SetEventPosition(*map(int, end))
     iren.InvokeEvent("MouseMoveEvent")
     iren.InvokeEvent("LeftButtonReleaseEvent")
+    widget._set_plan_points(neighbour, [])
     events()
     preview = logic._fragment_preview
     assert preview and preview.GetAttribute("PXM.FragmentSource") == volume.GetID()

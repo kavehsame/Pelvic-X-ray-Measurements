@@ -298,19 +298,28 @@ class PlanInteractionMixin:
             return None
         if selected:
             info = self._plan_screen(selected)
-            if info and np.linalg.norm(info.handle - at) <= 10:
-                return ("rotate", selected, self._world(info.handle) - self._world(at))
-        # Preserve the normal markup editor when another visible control point is under the cursor.
-        for node_id in tuple(self.logic._node_cache.values()):
+            if info:
+                if np.linalg.norm(info.handle - at) <= 10:
+                    return ("rotate", selected, self._world(info.handle) - self._world(at))
+                # Two landmarks can occupy the same display pixel when zoomed out.
+                if not info.node.GetLocked() and np.array_equal(np.rint(info.center), at):
+                    return ("move", selected, info.pivot - self._world(at))
+        anchor_roles = {self.logic.side_role(base, side): kind for kind, base in planning.ROTATION_ROLES.items()}
+        nearest = None
+        distance_limit = 7.0
+        for role, node_id in tuple(self.logic._node_cache.items()):
             node = slicer.mrmlScene.GetNodeByID(node_id)
             if not node or not node.IsA("vtkMRMLMarkupsNode") or node.GetLocked() or not node.GetDisplayVisibility():
                 continue
             for p in self.logic._defined_points(node):
-                if np.linalg.norm(self._screen(p) - at) < 7:
-                    for kind, base in planning.ROTATION_ROLES.items():
-                        if node == self._plan_node(base):
-                            return ("move", kind, p - self._world(at))
-                    return None
+                distance = np.linalg.norm(self._screen(p) - at)
+                if distance < distance_limit:
+                    nearest = (anchor_roles.get(role), p)
+                    distance_limit = distance
+        if nearest is not None:
+            kind, point = nearest
+            # Ordinary landmarks remain editable through Slicer's normal markup editor.
+            return None if kind is None else ("move", kind, point - self._world(at))
         for kind in dict.fromkeys((selected, *planning.COMPONENTS)):
             if kind not in planning.COMPONENTS:
                 continue
