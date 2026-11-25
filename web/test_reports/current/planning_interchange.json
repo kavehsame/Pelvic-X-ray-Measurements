@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "calibrated_wear_mm": 6.249999999999978,
+  "coordinate_groups": [
+    "left_cupShellPoints",
+    "left_cupShellCenter",
+    "left_resectionStraight",
+    "left_resectionStepped",
+    "left_fragmentTarget",
+    "left_planningCupAnchorOutline",
+    "left_planningStemAnchorOutline",
+    "left_fragmentBoundary"
+  ],
+  "sampled_pixels": 5,
+  "native_csv_rows": {
+    "metadata": 19,
+    "measurement": 57,
+    "point": 23,
+    "derived_point": 1
+  }
+}

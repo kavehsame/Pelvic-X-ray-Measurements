@@ -4,7 +4,7 @@
   "live_slicer": true,
   "clinical_validation_completed": false,
   "validation_study": "in progress; comparison with established medical software",
-  "started_utc": "20261118T115157Z",
+  "started_utc": "20261125T000320Z",
   "platform": "Darwin",
   "machine": "arm64",
   "python": "3.13.9",
@@ -23,6 +23,10 @@
     },
     {
       "stage": "slicer",
+      "exit_code": 0
+    },
+    {
+      "stage": "planning_interchange",
       "exit_code": 0
     },
     {
@@ -48,8 +52,8 @@
   ],
   "source_unchanged": true,
   "edition": "web",
-  "unit_tests": 37,
+  "unit_tests": 69,
   "runtime": {
-    "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36"
+    "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/158.0.0.0 Safari/537.36"
   }
 }

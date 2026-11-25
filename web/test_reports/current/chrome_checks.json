@@ -1,7 +1,7 @@
 {
   "status": "passed",
   "patient_data": false,
-  "chrome": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36",
+  "chrome": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/158.0.0.0 Safari/537.36",
   "tests": [
     "The first Start downloads a verified software package through JSON components. The reloaded page starts from the verified cache after the server disconnects.",
     "The network policy blocked a same-origin POST before synthetic files were selected.",
@@ -30,122 +30,417 @@
     ],
     [
       "GET",
-      "/components/309389d82bcfbe8b9152e90b0f7787493df4a815a630a176a14ba792dfe3f504/002.json",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/002.json",
       200
     ],
     [
       "GET",
-      "/components/309389d82bcfbe8b9152e90b0f7787493df4a815a630a176a14ba792dfe3f504/001.json",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/001.json",
       200
     ],
     [
       "GET",
-      "/components/309389d82bcfbe8b9152e90b0f7787493df4a815a630a176a14ba792dfe3f504/000.json",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/000.json",
       200
     ],
     [
       "GET",
-      "/components/309389d82bcfbe8b9152e90b0f7787493df4a815a630a176a14ba792dfe3f504/003.json",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/005.json",
       200
     ],
     [
       "GET",
-      "/components/309389d82bcfbe8b9152e90b0f7787493df4a815a630a176a14ba792dfe3f504/005.json",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/004.json",
       200
     ],
     [
       "GET",
-      "/components/309389d82bcfbe8b9152e90b0f7787493df4a815a630a176a14ba792dfe3f504/004.json",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/003.json",
       200
     ],
     [
       "GET",
-      "/components/309389d82bcfbe8b9152e90b0f7787493df4a815a630a176a14ba792dfe3f504/008.json",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/008.json",
       200
     ],
     [
       "GET",
-      "/components/309389d82bcfbe8b9152e90b0f7787493df4a815a630a176a14ba792dfe3f504/006.json",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/006.json",
       200
     ],
     [
       "GET",
-      "/components/309389d82bcfbe8b9152e90b0f7787493df4a815a630a176a14ba792dfe3f504/007.json",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/007.json",
       200
     ],
     [
       "GET",
-      "/components/309389d82bcfbe8b9152e90b0f7787493df4a815a630a176a14ba792dfe3f504/009.json",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/009.json",
       200
     ],
     [
       "GET",
-      "/components/309389d82bcfbe8b9152e90b0f7787493df4a815a630a176a14ba792dfe3f504/010.json",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/010.json",
       200
     ],
     [
       "GET",
-      "/components/309389d82bcfbe8b9152e90b0f7787493df4a815a630a176a14ba792dfe3f504/011.json",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/011.json",
       200
     ],
     [
       "GET",
-      "/components/309389d82bcfbe8b9152e90b0f7787493df4a815a630a176a14ba792dfe3f504/013.json",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/012.json",
       200
     ],
     [
       "GET",
-      "/components/309389d82bcfbe8b9152e90b0f7787493df4a815a630a176a14ba792dfe3f504/012.json",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/013.json",
       200
     ],
     [
       "GET",
-      "/components/309389d82bcfbe8b9152e90b0f7787493df4a815a630a176a14ba792dfe3f504/014.json",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/014.json",
       200
     ],
     [
       "GET",
-      "/components/309389d82bcfbe8b9152e90b0f7787493df4a815a630a176a14ba792dfe3f504/015.json",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/015.json",
       200
     ],
     [
       "GET",
-      "/components/309389d82bcfbe8b9152e90b0f7787493df4a815a630a176a14ba792dfe3f504/016.json",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/016.json",
       200
     ],
     [
       "GET",
-      "/components/309389d82bcfbe8b9152e90b0f7787493df4a815a630a176a14ba792dfe3f504/017.json",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/017.json",
       200
     ],
     [
       "GET",
-      "/components/309389d82bcfbe8b9152e90b0f7787493df4a815a630a176a14ba792dfe3f504/018.json",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/019.json",
       200
     ],
     [
       "GET",
-      "/components/309389d82bcfbe8b9152e90b0f7787493df4a815a630a176a14ba792dfe3f504/019.json",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/020.json",
       200
     ],
     [
       "GET",
-      "/components/309389d82bcfbe8b9152e90b0f7787493df4a815a630a176a14ba792dfe3f504/020.json",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/018.json",
       200
     ],
     [
       "GET",
-      "/components/309389d82bcfbe8b9152e90b0f7787493df4a815a630a176a14ba792dfe3f504/022.json",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/021.json",
       200
     ],
     [
       "GET",
-      "/components/309389d82bcfbe8b9152e90b0f7787493df4a815a630a176a14ba792dfe3f504/021.json",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/023.json",
       200
     ],
     [
       "GET",
-      "/components/309389d82bcfbe8b9152e90b0f7787493df4a815a630a176a14ba792dfe3f504/023.json",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/022.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/024.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/026.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/025.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/027.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/028.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/029.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/030.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/032.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/031.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/035.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/033.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/034.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/036.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/038.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/037.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/041.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/039.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/040.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/043.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/044.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/042.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/045.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/046.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/047.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/050.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/048.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/049.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/051.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/053.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/052.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/055.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/054.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/056.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/059.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/057.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/058.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/061.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/062.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/060.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/063.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/065.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/064.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/066.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/068.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/067.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/069.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/070.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/071.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/073.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/072.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/074.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/075.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/076.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/077.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/080.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/078.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/079.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/082.json",
+      200
+    ],
+    [
+      "GET",
+      "/components/6076c434e09dee7ca6b3853277a0ed47b1e0f2179da10d1931f3b32263f48bbd/081.json",
       200
     ],
     [
@@ -154,10 +449,10 @@
       200
     ]
   ],
-  "http_responses_in_browser": 26,
+  "http_responses_in_browser": 85,
   "network_disconnected_before_image_selection": true,
   "blocked_same_origin_post": true,
-  "component_gets": 24,
+  "component_gets": 83,
   "binary_or_archive_gets": 0,
   "warm_start_from_cache_offline": true,
   "chrome_process_environment": "OS-only PATH and no inherited Conda, Python or dynamic loader overrides",
@@ -167,5 +462,5 @@
     "max_absolute_difference": 4.988010005035903e-12
   },
   "output_test_mode": "Chrome FileSystemDirectoryHandle (origin-private test folder)",
-  "run": "chrome_run_f10t4dc3"
+  "run": "chrome_run_2skb07ag"
 }
