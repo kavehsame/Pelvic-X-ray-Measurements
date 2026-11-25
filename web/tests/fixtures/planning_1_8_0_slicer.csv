@@ -1,0 +1,101 @@
+﻿section,name,index,label,x_ras,y_ras,z_ras,curve_type,curve_points_per_segment,raw_value,corrected_value_mm,units,details
+metadata,CaseName,,,,,,,,,,,Oblique
+metadata,ImageNode,,,,,,,,,,,Oblique
+metadata,Annotator,,,,,,,,,,,Synthetic reader
+metadata,Timestamp,,,,,,,,,,,2026-11-25T00:24:23.183737+00:00
+metadata,Comments,,,,,,,,,,,"Oblique, mirrored"
+metadata,CalibrationBall_NotPresent,,,,,,,,0,,flag,"1 means no calibration ball was present, so measurements are reported in su only."
+metadata,ImageIJKToRAS,,,,,,,,,,,"[[0.7568338748227098, 0.0, -0.32404302839486837, 42.0], [0.0, 0.8000000000000002, 0.0, -64.99999999999999], [0.25923442271589464, 0.0, 0.946042343528387, 14.999999999999996], [0.0, 0.0, 0.0, 1.0]]"
+metadata,ImageDimensions,,,,,,,,,,,"[128, 96]"
+metadata,left_fragmentTarget_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.FragmentAngle"": ""30.0"", ""PelvicXrayMeasurements.PlanningViewAxes"": ""[[0.0, 1.0, 0.0], [-0.9460423435283871, 0.0, -0.32404302839486826]]""}"
+metadata,left_planningCupAnchor_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.PlanningTemplate"": ""{\""id\"": \""Mathys/52.34.1006\"", \""angle\"": 17.0, \""frame\"": \""sheet\""}"", ""PelvicXrayMeasurements.PlanningViewAxes"": ""[[0.9460423435283871, 0.0, 0.32404302839486826], [0.0, -1.0, 0.0]]""}"
+metadata,left_planningStemAnchor_attributes,,,,,,,,,,,"{""PelvicXrayMeasurements.PlanningTemplate"": ""{\""id\"": \""Mathys/52.34.0201\"", \""angle\"": 17.0, \""frame\"": \""sheet\""}"", ""PelvicXrayMeasurements.PlanningViewAxes"": ""[[0.9460423435283871, 0.0, 0.32404302839486826], [0.0, -1.0, 0.0]]""}"
+metadata,FemoralNeckAxis_Left_LockToCenter,,,,,,,,0,,flag,1 means the left FemoralNeckAxis is forced to pass through the fitted head center.
+metadata,FemoralNeckAxis_Left_UseSingleGuide,,,,,,,,0,,flag,1 means the left FemoralNeckAxis is derived from only the first guide line.
+metadata,FemoralNeckAxis_Right_LockToCenter,,,,,,,,0,,flag,1 means the right FemoralNeckAxis is forced to pass through the fitted head center.
+metadata,FemoralNeckAxis_Right_UseSingleGuide,,,,,,,,0,,flag,1 means the right FemoralNeckAxis is derived from only the first guide line.
+metadata,ImplantNeckAxis_Left_LockToCenter,,,,,,,,1,,flag,1 means the left ImplantNeckAxis is forced to pass through the fitted head center.
+metadata,ImplantNeckAxis_Left_UseSingleGuide,,,,,,,,1,,flag,1 means the left ImplantNeckAxis is derived from only the first guide line.
+metadata,ImplantNeckAxis_Right_LockToCenter,,,,,,,,1,,flag,1 means the right ImplantNeckAxis is forced to pass through the fitted head center.
+metadata,ImplantNeckAxis_Right_UseSingleGuide,,,,,,,,1,,flag,1 means the right ImplantNeckAxis is derived from only the first guide line.
+measurement,CalibrationBall_KnownDiameter,,,,,,,,,25.0,mm,Known physical diameter of the calibration ball when available.
+measurement,CalibrationBall_MeasuredDiameter,,,,,,,,16.0,25.0,su -> mm,Circle fitted from 3 calibration ball points.
+measurement,CalibrationScaleFactor,,,,,,,,1.5625,,mm per scene unit,Applied automatically to corrected measurements when the calibration ball is present.
+measurement,ReferenceLine_Length,,,,,,,,,,su -> mm,
+measurement,Left_FemurHead_Diameter,,,,,,,,,,su -> mm,
+measurement,Left_CCDAngle,,,,,,,,,,degrees,"Angle between the femoral shaft axis and femoral neck axis, reported on the medial side of the intersection."
+measurement,Left_AcetabularIndexTonnis,,,,,,,,,,degrees,Signed angle between the user-defined Acetabular Index (Tönnis) line and the side-specific lateral horizontal arm; values above the reference arm are positive and below it are negative.
+measurement,Left_SharpAngle,,,,,,,,,,degrees,Signed angle between the user-defined Sharp line and the side-specific lateral horizontal arm; values above the reference arm are positive and below it are negative.
+measurement,Left_LCEAngle,,,,,,,,,,degrees,Signed angle from the femur head center to the LCE point against the superior line perpendicular to the reference line; medial points are negative.
+measurement,Left_FemoralHeadExtrusionIndex,,,,,,,,,,percent,Signed percent ratio of uncovered lateral femoral head width over total femoral head width; negative values indicate overcoverage beyond the lateral head margin.
+measurement,Left_CCR,,,,,,,,,,ratio,Canal-calcar ratio (B/A): width between the two inner 10 cm-below morphology points divided by the mid-LT guide-cap width.
+measurement,Left_CTI,,,,,,,,,,ratio,"Canal thickness index: outer 10 cm-below width minus inner 10 cm-below width, divided by outer 10 cm-below width."
+measurement,Left_CFI,,,,,,,,,,ratio,Canal flare index: 2 cm-above width divided by the width between the two inner 10 cm-below morphology points.
+measurement,Left_FemoralShaftAxis_DeviationGuideA,,,,,,,,,,degrees,
+measurement,Left_FemoralShaftAxis_DeviationGuideB,,,,,,,,,,degrees,
+measurement,Left_PreOp_AcetabularOffset,,,,,,,,,,su -> mm,
+measurement,Left_PreOp_FemoralOffset,,,,,,,,,,su -> mm,
+measurement,Left_PreOp_GlobalOffset,,,,,,,,,,su -> mm,Numerical sum of the pre-operative acetabular offset and femoral offset.
+measurement,Left_AcetabularInclinationAngle_FreeHand_PostOp,,,,,,,,,,degrees,Acute angle between the side-specific free-hand inclination line and the reference line.
+measurement,Left_CupOpeningEllipseFit_Inclination_PostOp,,,,,,,,,,degrees,Acute angle between the fitted cup opening ellipse major diameter and the reference line.
+measurement,Left_CupAnteversionRetroversionAngle_PostOp,,,,,,,,,,degrees,Theta = asin(minor diameter / major diameter) from the fitted cup opening ellipse diameters.
+measurement,Left_ImplantFemoralCCD_PostOp,,,,,,,,,,degrees,Obtuse medial-side angle between the femoral shaft axis and the implant neck axis.
+measurement,Left_PostOp_ImplantHead_Diameter,,,,,,,,16.0,25.0,su -> mm,
+measurement,Left_PostOp_AcetabularOffset,,,,,,,,,,su -> mm,
+measurement,Left_PostOp_FemoralOffset,,,,,,,,,,su -> mm,
+measurement,Left_PostOp_GlobalOffset,,,,,,,,,,su -> mm,Numerical sum of the post-operative acetabular offset and femoral offset.
+measurement,Left_StemAlignment,,,,,,,,,,degrees,Acute angle difference between the derived stem axis and the femoral shaft axis.
+measurement,Left_Planning_StraightResection_Length,,,,,,,,16.000000000000007,25.00000000000001,su -> mm,
+measurement,Left_Planning_SteppedResection_MedialLength,,,,,,,,4.000000000000006,6.25000000000001,su -> mm,
+measurement,Left_Planning_SteppedResection_LateralLength,,,,,,,,13.600000000000001,21.250000000000004,su -> mm,
+measurement,Left_Planning_SteppedResection_TotalLength,,,,,,,,17.60000000000001,27.500000000000014,su -> mm,
+measurement,Left_PostOp_ProjectedHeadPenetration,,,,,,,,4.000000000000016,6.250000000000025,su -> mm,Projected head-to-shell centre distance on this film (inlay wear estimate).
+measurement,Right_FemurHead_Diameter,,,,,,,,,,su -> mm,
+measurement,Right_CCDAngle,,,,,,,,,,degrees,"Angle between the femoral shaft axis and femoral neck axis, reported on the medial side of the intersection."
+measurement,Right_AcetabularIndexTonnis,,,,,,,,,,degrees,Signed angle between the user-defined Acetabular Index (Tönnis) line and the side-specific lateral horizontal arm; values above the reference arm are positive and below it are negative.
+measurement,Right_SharpAngle,,,,,,,,,,degrees,Signed angle between the user-defined Sharp line and the side-specific lateral horizontal arm; values above the reference arm are positive and below it are negative.
+measurement,Right_LCEAngle,,,,,,,,,,degrees,Signed angle from the femur head center to the LCE point against the superior line perpendicular to the reference line; medial points are negative.
+measurement,Right_FemoralHeadExtrusionIndex,,,,,,,,,,percent,Signed percent ratio of uncovered lateral femoral head width over total femoral head width; negative values indicate overcoverage beyond the lateral head margin.
+measurement,Right_CCR,,,,,,,,,,ratio,Canal-calcar ratio (B/A): width between the two inner 10 cm-below morphology points divided by the mid-LT guide-cap width.
+measurement,Right_CTI,,,,,,,,,,ratio,"Canal thickness index: outer 10 cm-below width minus inner 10 cm-below width, divided by outer 10 cm-below width."
+measurement,Right_CFI,,,,,,,,,,ratio,Canal flare index: 2 cm-above width divided by the width between the two inner 10 cm-below morphology points.
+measurement,Right_FemoralShaftAxis_DeviationGuideA,,,,,,,,,,degrees,
+measurement,Right_FemoralShaftAxis_DeviationGuideB,,,,,,,,,,degrees,
+measurement,Right_PreOp_AcetabularOffset,,,,,,,,,,su -> mm,
+measurement,Right_PreOp_FemoralOffset,,,,,,,,,,su -> mm,
+measurement,Right_PreOp_GlobalOffset,,,,,,,,,,su -> mm,Numerical sum of the pre-operative acetabular offset and femoral offset.
+measurement,Right_AcetabularInclinationAngle_FreeHand_PostOp,,,,,,,,,,degrees,Acute angle between the side-specific free-hand inclination line and the reference line.
+measurement,Right_CupOpeningEllipseFit_Inclination_PostOp,,,,,,,,,,degrees,Acute angle between the fitted cup opening ellipse major diameter and the reference line.
+measurement,Right_CupAnteversionRetroversionAngle_PostOp,,,,,,,,,,degrees,Theta = asin(minor diameter / major diameter) from the fitted cup opening ellipse diameters.
+measurement,Right_ImplantFemoralCCD_PostOp,,,,,,,,,,degrees,Obtuse medial-side angle between the femoral shaft axis and the implant neck axis.
+measurement,Right_PostOp_ImplantHead_Diameter,,,,,,,,,,su -> mm,
+measurement,Right_PostOp_AcetabularOffset,,,,,,,,,,su -> mm,
+measurement,Right_PostOp_FemoralOffset,,,,,,,,,,su -> mm,
+measurement,Right_PostOp_GlobalOffset,,,,,,,,,,su -> mm,Numerical sum of the post-operative acetabular offset and femoral offset.
+measurement,Right_StemAlignment,,,,,,,,,,degrees,Acute angle difference between the derived stem axis and the femoral shaft axis.
+measurement,LLD,,,,,,,,,,su -> mm,Absolute height difference measured perpendicular to the reference line.
+measurement,LLD_Signed_LeftMinusRight,,,,,,,,,,su -> mm,
+point,Hip Measurements - Calibration Ball Points,0,CalibrationBall_P1,57.1366774964542,-56.999999999999986,20.184688454317886,,,,,,calibrationPoints
+point,Hip Measurements - Calibration Ball Points,1,CalibrationBall_P2,49.56833874822709,-48.999999999999986,17.59234422715894,,,,,,calibrationPoints
+point,Hip Measurements - Calibration Ball Points,2,CalibrationBall_P3,57.1366774964542,-40.999999999999986,20.184688454317886,,,,,,calibrationPoints
+point,Hip Measurements - Left Implant Head Points,0,ImplantHead_Left_P1,72.27335499290838,-32.99999999999998,25.369376908635775,,,,,,left_implantHeadPoints
+point,Hip Measurements - Left Implant Head Points,1,ImplantHead_Left_P2,64.70501624468129,-24.99999999999998,22.777032681476832,,,,,,left_implantHeadPoints
+point,Hip Measurements - Left Implant Head Points,2,ImplantHead_Left_P3,72.27335499290838,-16.99999999999998,25.369376908635775,,,,,,left_implantHeadPoints
+point,Hip Measurements - Left Implant Head Center,0,ImplantHead_Left_Center,72.27335499290838,-24.99999999999998,25.36937690863578,,,,,,left_implantHeadCenter
+point,Hip Measurements - Left Straight Neck Resection,0,resectionStraight_Left_P1,79.84169374113549,-48.999999999999986,27.961721135794726,,,,,,left_resectionStraight
+point,Hip Measurements - Left Straight Neck Resection,1,resectionStraight_Left_P2,79.84169374113549,-32.99999999999998,27.961721135794726,,,,,,left_resectionStraight
+point,Hip Measurements - Left Stepped Neck Resection,0,resectionStepped_Left_P1,83.62586311524905,-48.999999999999986,29.2578932493742,,,,,,left_resectionStepped
+point,Hip Measurements - Left Stepped Neck Resection,1,resectionStepped_Left_P2,86.65319861453989,-46.59999999999998,30.294830940237777,,,,,,left_resectionStepped
+point,Hip Measurements - Left Stepped Neck Resection,2,resectionStepped_Left_P3,86.65319861453989,-32.99999999999998,30.294830940237777,,,,,,left_resectionStepped
+point,Hip Measurements - Left Retained Bone,0,Hip Measurements - Left Retained Bone-1,94.9783712375897,-32.99999999999998,33.14640959011262,linear,30,,,,left_fragmentBoundary
+point,Hip Measurements - Left Retained Bone,1,Hip Measurements - Left Retained Bone-2,94.9783712375897,-48.999999999999986,33.14640959011262,linear,30,,,,left_fragmentBoundary
+point,Hip Measurements - Left Position Bone Fragment,0,fragmentTarget_Left_P1,98.76254061170323,-13.799999999999976,34.44258170369209,,,,,,left_fragmentTarget
+point,Hip Measurements - Left Cup Center,0,cupShellPoints_Left_P1,75.30069049219924,-36.999999999999986,26.40631459949936,,,,,,left_cupShellPoints
+point,Hip Measurements - Left Cup Center,1,cupShellPoints_Left_P2,61.67768074539046,-22.599999999999973,21.740094990613255,,,,,,left_cupShellPoints
+point,Hip Measurements - Left Cup Center,2,cupShellPoints_Left_P3,75.30069049219924,-8.19999999999997,26.40631459949936,,,,,,left_cupShellPoints
+point,Hip Measurements - Left Place Cup Template,0,planningCupAnchor_Left_P1,88.92370023900801,-20.99999999999998,31.072534208385463,,,,,,left_planningCupAnchor
+point,Hip Measurements - Left Place Stem Template,0,planningStemAnchor_Left_P1,88.92370023900801,-20.99999999999998,31.072534208385463,,,,,,left_planningStemAnchor
+point,Hip Measurements - Left cupShellCenter,0,CupShell_left_Center,75.30069049219924,-22.599999999999977,26.406314599499364,,,,,,left_cupShellCenter
+point,Hip Measurements - Left inlayWearLine,0,Shell,75.30069049219924,-22.599999999999977,26.406314599499364,,,,,,left_inlayWearLine
+point,Hip Measurements - Left inlayWearLine,1,Head,72.27335499290838,-24.99999999999998,25.36937690863578,,,,,,left_inlayWearLine
+derived_point,CalibrationBall_Center,0,CalibrationBall_Center,57.13667749645419,-48.999999999999986,20.184688454317882,,,,,,

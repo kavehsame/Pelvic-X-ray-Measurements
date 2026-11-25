@@ -169,5 +169,34 @@ def test_unavailable_template_does_not_erase_other_measurements():
     }
     s.restore(saved)
     assert s.settings.pelvic_template_stem == {"id": "external-unknown", "angle": 5}
+    report = s.settings.pelvic_placed_left_stem
+    assert report["caption"] == "Left stem · external-unknown · Size unavailable"
+    assert report["metadata"]["Left_Planning_Stem_Size"] == ""
     assert s.controller._existing_model_for_role(role + "Outline") is None
     assert len(s.controller.points_for_role("referenceLine")) == 2
+
+
+def test_placed_custom_implant_identity_survives_without_its_pack(tmp_path, monkeypatch):
+    session = open_case()
+    controller = session.controller
+    place(controller, "calibration", [(10, 20), (20, 10), (30, 20)])
+    item = {"id": "qa/stem", "family": "Research, stem", "size": "2 / high offset",
+            "component": "stem", "side": "right", "outline": [[0, 0], [2, 0], [0, 8], [0, 0]]}
+    monkeypatch.setitem(planning.ITEMS, item["id"], item)
+    session.settings.pelvic_active_side = "right"
+    controller.planning_options({"key": "template_stem", "choice": {"id": item["id"], "angle": 11}})
+    assert session.settings.pelvic_placed_right_stem is None
+    place(controller, "template_stem", [(50, 50)])
+    path = tmp_path / "placed.csv"
+    write_case_csv(path, controller, session.case_name, "Test reader")
+    monkeypatch.delitem(planning.ITEMS, item["id"])
+    resumed = open_case()
+    resumed.restore(read_csv(shuffle_csv(path.read_bytes())))
+    assert resumed.settings.pelvic_placed_right_stem["caption"] == "Right stem · Research, stem · Size 2 / high offset"
+    assert resumed.settings.pelvic_placed_left_stem is None
+    restored = tmp_path / "restored.csv"
+    write_case_csv(restored, resumed.controller, resumed.case_name, "Test reader")
+    rows = csv.DictReader(io.StringIO(restored.read_text("utf-8-sig")))
+    fields = {r["name"]: r["details"] for r in rows if r["name"].startswith("Right_Planning_Stem_")}
+    assert fields == {"Right_Planning_Stem_Component": "stem", "Right_Planning_Stem_Family": item["family"],
+                      "Right_Planning_Stem_Size": item["size"], "Right_Planning_Stem_ID": item["id"]}

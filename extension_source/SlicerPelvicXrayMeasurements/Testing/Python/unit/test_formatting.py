@@ -143,6 +143,19 @@ def test_overlay_text_builder_can_emit_annotator_only() -> None:
     assert overlay_text == "Annotator: Example"
 
 
+def test_placed_implant_caption_is_independent_of_cut_lengths_and_numeric_overlay():
+    from PelvicXrayMeasurementsPlanning import implant_report
+
+    results = make_results()
+    choice = {"id": "test/42", "family": "Synthetic shell", "size": "42 mm"}
+    results["sides"]["right"]["template_cup"]["implant"] = implant_report("right", "cup", choice)
+    results["sides"]["left"]["straight_resection"].update(defined=True, rawValue=17, correctedValue=17)
+    for values in (True, False):
+        text = build_measurement_overlay_text(results, annotator_text="Annotator: Test", include_measurements=values)
+        assert text.splitlines()[:2] == ["Annotator: Test", "Right cup · Synthetic shell · Size 42 mm"]
+        assert "Straight cut" not in text and "Left cup" not in text
+
+
 def test_pretty_value_and_sanitize_filename() -> None:
     import PelvicXrayMeasurementsGeometry as geometry
     """Display formatting and filename cleanup should remain stable."""

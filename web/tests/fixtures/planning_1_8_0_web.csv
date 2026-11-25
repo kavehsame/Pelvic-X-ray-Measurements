@@ -1,0 +1,70 @@
+annotator,s,a,r,point_index,role,details,units,corrected_value_mm,raw_value,curve_points_per_segment,curve_type,z_ras,y_ras,x_ras,label,index,name,section
+Synthetic reader,0,77.600000000000023,36,2,left_implantHeadPoints,left_implantHeadPoints,,,,,,0,77.600000000000023,36,ImplantHead_Left_P2,1,Hip Measurements - Left Implant Head Points,point
+Synthetic reader,0,61.600000000000016,60,1,left_resectionStraight,left_resectionStraight,,,,,,0,61.600000000000016,60,resectionStraight_Left_P1,0,Hip Measurements - Left Straight Neck Resection,point
+Synthetic reader,,,,,,,,,,,,0.0,85.60000000000002,60.0,CalibrationBall_Center,0,CalibrationBall_Center,derived_point
+Synthetic reader,,,,,,2026-11-25T00:24:23.183737+00:00,,,,,,,,,,,Timestamp,metadata
+Synthetic reader,,,,,,"{""PelvicXrayMeasurements.PlanningTemplate"": ""{\""id\"": \""Mathys/52.34.0201\"", \""angle\"": 17.0, \""frame\"": \""sheet\""}"", ""PelvicXrayMeasurements.PlanningViewAxes"": ""[[0.0, -1.0, 0.0], [1.0, 0.0, 0.0]]"", ""PelvicXrayMeasurements.Role"": ""left_planningStemAnchor""}",,,,,,,,,,,left_planningStemAnchor_attributes,metadata
+Synthetic reader,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_cupShellPoints""}",,,,,,,,,,,left_cupShellPoints_attributes,metadata
+Synthetic reader,,,,,,"{""ball_diameter"": 25, ""active_side"": ""left"", ""annotator"": ""Synthetic reader"", ""comments"": ""Oblique, mirrored"", ""hidden_workflows"": [], ""export_measurements"": true, ""hidden_custom"": [], ""custom_locks"": {""pelvic_other_line_parallel"": false, ""pelvic_other_line_perpendicular"": false, ""pelvic_other_angle_parallel"": false, ""pelvic_other_angle_perpendicular"": false}, ""axis_options"": {""left_neck"": [false, false], ""left_implant_neck"": [true, true], ""right_neck"": [false, false], ""right_implant_neck"": [true, true]}, ""window"": [68.0, 1550.0], ""invert"": false, ""web_layout"": {""turns"": 1, ""mirrored"": true, ""shape"": [128, 96]}}",,,,,,,,,,,WebSceneState,metadata
+Synthetic reader,,,,,,,su -> mm,25.0,16.0,,,,,,,,Left_PostOp_ImplantHead_Diameter,measurement
+Synthetic reader,0,69.600000000000023,36,2,left_inlayWearLine,left_inlayWearLine,,,,,,0,69.600000000000023,36,Hip Measurements - Left inlayWearLine-2,1,Hip Measurements - Left inlayWearLine,derived_point
+Synthetic reader,0,66.400000000000034,33.600000000000009,1,left_inlayWearLine,left_inlayWearLine,,,,,,0,66.400000000000034,33.600000000000009,Hip Measurements - Left inlayWearLine-1,0,Hip Measurements - Left inlayWearLine,derived_point
+Synthetic reader,,,,,,Oblique.nrrd,,,,,,,,,,,CaseName,metadata
+Synthetic reader,0,69.600000000000023,44,1,left_implantHeadPoints,left_implantHeadPoints,,,,,,0,69.600000000000023,44,ImplantHead_Left_P1,0,Hip Measurements - Left Implant Head Points,point
+Synthetic reader,,,,,,False,flag,,0,,,,,,,,FemoralNeckAxis_Left_LockToCenter,metadata
+Synthetic reader,,,,,,,su -> mm,25.0,16.0,,,,,,,,Left_Planning_StraightResection_Length,measurement
+Synthetic reader,0,80.800000000000011,33.599999999999994,2,left_cupShellPoints,left_cupShellPoints,,,,,,0,80.800000000000011,33.599999999999994,cupShellPoints_Left_P2,1,Hip Measurements - Left Cup Center,point
+Synthetic reader,,,,,,False,flag,,0,,,,,,,,FemoralNeckAxis_Left_UseSingleGuide,metadata
+Synthetic reader,0,93.600000000000023,60,2,calibrationPoints,calibrationPoints,,,,,,0,93.600000000000023,60,CalibrationBall_P2,1,Hip Measurements - Calibration Ball Points,point
+Synthetic reader,,,,,,"{""PelvicXrayMeasurements.PlanningTemplate"": ""{\""id\"": \""Mathys/52.34.1006\"", \""angle\"": 17.0, \""frame\"": \""sheet\""}"", ""PelvicXrayMeasurements.PlanningViewAxes"": ""[[0.0, -1.0, 0.0], [1.0, 0.0, 0.0]]"", ""PelvicXrayMeasurements.Role"": ""left_planningCupAnchor""}",,,,,,,,,,,left_planningCupAnchor_attributes,metadata
+Synthetic reader,0,69.600000000000023,28,3,left_implantHeadPoints,left_implantHeadPoints,,,,,,0,69.600000000000023,28,ImplantHead_Left_P3,2,Hip Measurements - Left Implant Head Points,point
+Synthetic reader,,,,,,,mm per scene unit,,1.5625,,,,,,,,CalibrationScaleFactor,measurement
+Synthetic reader,0,52.000000000000014,32,1,left_planningCupAnchor,left_planningCupAnchor,,,,,,0,52.000000000000014,32,planningCupAnchor_Left_P1,0,Hip Measurements - Left Place Cup Template,point
+Synthetic reader,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_cupShellCenter""}",,,,,,,,,,,left_cupShellCenter_attributes,metadata
+Synthetic reader,,,,,,25.0,,,,,,,,,,,CalibrationBall_KnownDiameter,metadata
+Synthetic reader,0,54.400000000000013,44,3,left_resectionStepped,left_resectionStepped,,,,,,0,54.400000000000013,44,resectionStepped_Left_P3,2,Hip Measurements - Left Stepped Neck Resection,point
+Synthetic reader,,,,,,"{""PelvicXrayMeasurements.Role"": ""calibrationPoints""}",,,,,,,,,,,calibrationPoints_attributes,metadata
+Synthetic reader,,,,,,"{""lockToCenter"": false, ""useSingleGuide"": false}",,,,,,,,,,,left_neck_options,metadata
+Synthetic reader,,,,,,,su -> mm,25.0,16.0,,,,,,,,CalibrationBall_MeasuredDiameter,measurement
+Synthetic reader,,,,,,,su -> mm,27.500000000000004,17.6,,,,,,,,Left_Planning_SteppedResection_TotalLength,measurement
+Synthetic reader,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_resectionStepped""}",,,,,,,,,,,left_resectionStepped_attributes,metadata
+Synthetic reader,0,45.600000000000009,44,1,left_fragmentBoundary,left_fragmentBoundary,,,,30,0,0,45.600000000000009,44,Hip Measurements - Left Retained Bone-1,0,Hip Measurements - Left Retained Bone,point
+Synthetic reader,0,57.600000000000016,60,1,left_resectionStepped,left_resectionStepped,,,,,,0,57.600000000000016,60,resectionStepped_Left_P1,0,Hip Measurements - Left Stepped Neck Resection,point
+Synthetic reader,,,,,,False,flag,,0,,,,,,,,CalibrationBall_NotPresent,metadata
+Synthetic reader,,,,,,"{""lockToCenter"": true, ""useSingleGuide"": true}",,,,,,,,,,,left_implant_neck_options,metadata
+Synthetic reader,,,,,,True,flag,,1,,,,,,,,ImplantNeckAxis_Right_LockToCenter,metadata
+Synthetic reader,,,,,,"Oblique, mirrored",,,,,,,,,,,Comments,metadata
+Synthetic reader,0,41.600000000000009,24.799999999999997,1,left_fragmentTarget,left_fragmentTarget,,,,,,0,41.600000000000009,24.799999999999997,fragmentTarget_Left_P1,0,Hip Measurements - Left Position Bone Fragment,point
+Synthetic reader,0,52.000000000000014,32,1,left_planningStemAnchor,left_planningStemAnchor,,,,,,0,52.000000000000014,32,planningStemAnchor_Left_P1,0,Hip Measurements - Left Place Stem Template,point
+Synthetic reader,,,,,,"{""lockToCenter"": false, ""useSingleGuide"": false}",,,,,,,,,,,right_neck_options,metadata
+Synthetic reader,,,,,,Projected head-to-shell centre distance on this film (inlay wear estimate).,su -> mm,6.249999999999978,3.999999999999986,,,,,,,,Left_PostOp_ProjectedHeadPenetration,measurement
+Synthetic reader,,,,,,False,flag,,0,,,,,,,,FemoralNeckAxis_Right_UseSingleGuide,metadata
+Synthetic reader,,,,,,True,flag,,1,,,,,,,,ImplantNeckAxis_Right_UseSingleGuide,metadata
+Synthetic reader,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_resectionStraight""}",,,,,,,,,,,left_resectionStraight_attributes,metadata
+Synthetic reader,,,,,,"[[0.7568338748227097, 0.0, -0.32404302839486837, 42.0], [0.0, 0.8, 0.0, -65.0], [0.2592344227158947, 0.0, 0.946042343528387, 15.0], [0.0, 0.0, 0.0, 1.0]]",,,,,,,,,,,SourceImageIJKToRAS,metadata
+Synthetic reader,,,,,,True,flag,,1,,,,,,,,ImplantNeckAxis_Left_UseSingleGuide,metadata
+Synthetic reader,,,,,,Oblique.nrrd,,,,,,,,,,,ImageNode,metadata
+Synthetic reader,,,,,,"{""lockToCenter"": true, ""useSingleGuide"": true}",,,,,,,,,,,right_implant_neck_options,metadata
+Synthetic reader,,,,,,False,flag,,0,,,,,,,,FemoralNeckAxis_Right_LockToCenter,metadata
+Synthetic reader,0,66.400000000000034,33.600000000000009,1,left_cupShellCenter,left_cupShellCenter,,,,,,0,66.400000000000034,33.600000000000009,Hip Measurements - Left cupShellCenter-1,0,Hip Measurements - Left cupShellCenter,derived_point
+Synthetic reader,,,,,,,su -> mm,21.249999999999993,13.599999999999996,,,,,,,,Left_Planning_SteppedResection_LateralLength,measurement
+Synthetic reader,0,66.400000000000006,48,1,left_cupShellPoints,left_cupShellPoints,,,,,,0,66.400000000000006,48,cupShellPoints_Left_P1,0,Hip Measurements - Left Cup Center,point
+Synthetic reader,0,61.600000000000016,44,2,left_resectionStraight,left_resectionStraight,,,,,,0,61.600000000000016,44,resectionStraight_Left_P2,1,Hip Measurements - Left Straight Neck Resection,point
+Synthetic reader,0,85.600000000000023,68,1,calibrationPoints,calibrationPoints,,,,,,0,85.600000000000023,68,CalibrationBall_P1,0,Hip Measurements - Calibration Ball Points,point
+Synthetic reader,0,85.600000000000023,52,3,calibrationPoints,calibrationPoints,,,,,,0,85.600000000000023,52,CalibrationBall_P3,2,Hip Measurements - Calibration Ball Points,point
+Synthetic reader,0,66.400000000000006,19.199999999999996,3,left_cupShellPoints,left_cupShellPoints,,,,,,0,66.400000000000006,19.199999999999996,cupShellPoints_Left_P3,2,Hip Measurements - Left Cup Center,point
+Synthetic reader,0,54.400000000000013,57.599999999999994,2,left_resectionStepped,left_resectionStepped,,,,,,0,54.400000000000013,57.599999999999994,resectionStepped_Left_P2,1,Hip Measurements - Left Stepped Neck Resection,point
+Synthetic reader,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_implantHeadCenter""}",,,,,,,,,,,left_implantHeadCenter_attributes,metadata
+Synthetic reader,,,,,,,mm,25.0,,,,,,,,,CalibrationBall_KnownDiameter,measurement
+Synthetic reader,,,,,,"[[-0.8, 0.0, 0.0, 76.0], [0.0, -0.8000000000000002, 0.0, 101.60000000000002], [0.0, 0.0, 1.0, 0.0], [0.0, 0.0, 0.0, 1.0]]",,,,,,,,,,,ImageIJKToRAS,metadata
+Synthetic reader,,,,,,,su -> mm,6.250000000000008,4.000000000000005,,,,,,,,Left_Planning_SteppedResection_MedialLength,measurement
+Synthetic reader,0,69.600000000000023,36,1,left_implantHeadCenter,left_implantHeadCenter,,,,,,0,69.600000000000023,36,ImplantHead_Left_Center,0,Hip Measurements - Left Implant Head Center,derived_point
+Synthetic reader,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_implantHeadPoints""}",,,,,,,,,,,left_implantHeadPoints_attributes,metadata
+Synthetic reader,,,,,,Synthetic reader,,,,,,,,,,,Annotator,metadata
+Synthetic reader,0,45.600000000000009,60,2,left_fragmentBoundary,left_fragmentBoundary,,,,30,0,0,45.600000000000009,60,Hip Measurements - Left Retained Bone-2,1,Hip Measurements - Left Retained Bone,point
+Synthetic reader,,,,,,2,,,,,,,,,,,BrowserCSVSchema,metadata
+Synthetic reader,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_fragmentBoundary""}",,,,,,,,,,,left_fragmentBoundary_attributes,metadata
+Synthetic reader,,,,,,True,flag,,1,,,,,,,,ImplantNeckAxis_Left_LockToCenter,metadata
+Synthetic reader,,,,,,"{""PelvicXrayMeasurements.Role"": ""left_inlayWearLine""}",,,,,,,,,,,left_inlayWearLine_attributes,metadata
+Synthetic reader,,,,,,"{""PelvicXrayMeasurements.FragmentAngle"": ""30.0"", ""PelvicXrayMeasurements.PlanningViewAxes"": ""[[-1.0, 0.0, 0.0], [0.0, 1.0, 0.0]]"", ""PelvicXrayMeasurements.Role"": ""left_fragmentTarget""}",,,,,,,,,,,left_fragmentTarget_attributes,metadata
+Synthetic reader,,,,,,left,,,,,,,,,,,ActiveSide,metadata

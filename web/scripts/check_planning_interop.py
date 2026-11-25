@@ -20,6 +20,29 @@ from core.imaging import Radiograph
 from core.scene_files import append_csv_metadata, nrrd_bytes, read_csv
 
 
+def shuffled_table(source, destination):
+    with source.open(encoding="utf-8-sig", newline="") as stream:
+        reader = csv.DictReader(stream)
+        names, rows = list(reversed(reader.fieldnames)), list(reader)
+    random.Random(49).shuffle(rows)
+    with destination.open("w", encoding="utf-8", newline="") as stream:
+        writer = csv.DictWriter(stream, fieldnames=names)
+        writer.writeheader()
+        writer.writerows(rows)
+
+
+def check_implant_rows(csv_path, placements):
+    with csv_path.open(encoding="utf-8-sig", newline="") as stream:
+        fields = {row["name"]: row["details"] for row in csv.DictReader(stream)
+                  if row["section"] == "metadata" and any(t in row["name"] for t in ("_Planning_Cup_", "_Planning_Stem_"))}
+    expected = {}
+    for (side, kind), item in placements.items():
+        prefix = f"{side.title()}_Planning_{kind.title()}_"
+        for field, value in (("Component", kind), ("Family", item["family"]), ("Size", item["size"]), ("ID", item["id"])):
+            expected[prefix + field] = value
+    assert fields == expected, (csv_path.name, fields, expected)
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--slicer", type=Path, required=True)
@@ -61,12 +84,20 @@ def main():
     place("bone_fragment", [(40, 70), (20, 70)])
     place("fragment_pose", [(64, 75)])
     c.planning_options({"key": "fragment_pose", "angle": 30})
+    placed = {}
     for kind in ("cup", "stem"):
         choice = planning.default_template(kind)
         if choice:
             choice["angle"] = 17
             c.planning_options({"key": "template_" + kind, "choice": choice})
             place("template_" + kind, [(55, 62)])
+            placed["left", kind] = planning.ITEMS[choice["id"]]
+    s.settings.pelvic_active_side = "right"
+    c.update_derived()
+    right_cup = next(i for i in reversed(planning.ITEMS.values()) if i["component"] == "cup" and i["side"] in ("both", "right"))
+    c.planning_options({"key": "template_cup", "choice": {"id": right_cup["id"], "angle": -12}})
+    place("template_cup", [(72, 44)])
+    placed["right", "cup"] = right_cup
     snap = s.snapshot()
     roles = [
         "left_cupShellPoints",
@@ -97,19 +128,25 @@ def main():
         pixels.append([int(k), int(j), float(moved[y, x])])
     wear = c._numeric_results["pelvic_result_left_inlay_wear"][0]
     np.testing.assert_allclose(wear, 6.25)
-    (folder / "expected.json").write_text(json.dumps(dict(coords=coords, wear=wear, pixels=pixels)))
+    captions = [f"{side.title()} {kind} · {item['family']} · Size {item['size']}" for (side, kind), item in placed.items()]
+    (folder / "expected.json").write_text(json.dumps(dict(coords=coords, wear=wear, pixels=pixels, captions=captions)))
     out = folder / "web.csv"
     write_case_csv(out, c, s.case_name, "Synthetic reader")
     append_csv_metadata(out, s.get_settings(), s.base_image)
-    with out.open(encoding="utf-8-sig", newline="") as stream:
-        reader = csv.DictReader(stream)
-        names = list(reversed(reader.fieldnames))
-        rows = list(reader)
-    random.Random(49).shuffle(rows)
-    with out.open("w", newline="") as stream:
-        writer = csv.DictWriter(stream, fieldnames=names)
-        writer.writeheader()
-        writer.writerows(rows)
+    check_implant_rows(out, placed)
+    shuffled_table(out, out)
+    # These are actual 1.8.0 exports of this synthetic case, before labels were saved.
+    historical = {("left", "cup"): planning.ITEMS["Mathys/52.34.1006"], ("left", "stem"): planning.ITEMS["Mathys/52.34.0201"]}
+    for edition in ("slicer", "web"):
+        legacy = folder / f"legacy_{edition}.csv"
+        shuffled_table(ROOT / f"web/tests/fixtures/planning_1_8_0_{edition}.csv", legacy)
+        resumed = Session()
+        resumed.open("Oblique.nrrd", data)
+        resumed.restore(read_csv(legacy.read_bytes()))
+        migrated = folder / f"web_from_{edition}_180.csv"
+        write_case_csv(migrated, resumed.controller, resumed.case_name, "Synthetic reader")
+        check_implant_rows(migrated, historical)
+        np.testing.assert_allclose(resumed.controller._numeric_results["pelvic_result_left_inlay_wear"][0], wear)
     executable = args.slicer.resolve()
     if executable.is_dir():
         executable = executable / "Contents/MacOS/Slicer"
@@ -140,6 +177,9 @@ def main():
     reverse = Session()
     reverse.open("Oblique.nrrd", data)
     native = (folder / "slicer.csv").read_bytes()
+    check_implant_rows(folder / "slicer.csv", placed)
+    for edition in ("slicer", "web"):
+        check_implant_rows(folder / f"slicer_from_{edition}_180.csv", historical)
     reverse.restore(read_csv(native))
     again = reverse.snapshot()
     for item in recorded(again, reverse.controller):
@@ -159,6 +199,9 @@ def main():
                 coordinate_groups=list(coords),
                 sampled_pixels=len(pixels),
                 native_csv_rows=dict(sections),
+                placed_implants=len(placed),
+                historical_planning_exports=["1.8.0 web", "1.8.0 Slicer"],
+                native_png_captions_with_and_without_measurements=True,
             ),
             indent=2,
         )

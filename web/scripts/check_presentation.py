@@ -265,6 +265,43 @@ def check_overlay_guide(browser, root):
     assert browser.js("JSON.stringify([snap.image, snap.markups])") == scene
 
 
+def check_implant_export(browser, root):
+    """Inspect the text sent to the real PNG canvas and retain the rendered image in both modes."""
+    expected = browser.js("""["cup","stem"].map(kind => {
+      const selected = implantCatalog.find(item => item.id === snap.state["pelvic_template_" + kind].id);
+      return "Left " + kind + " · " + selected.family + " · Size " + selected.size;
+    })""")
+    assert browser.js("""!["straight_resection","step_medial","step_lateral","stepped_resection"].some(key =>
+      valueBoxes.has("pelvic_result_left_" + key) || valueBoxes.has("pelvic_result_right_" + key))""")
+    for values in (False, True):
+        result = browser.js("""(async (includeValues) => {
+          const lines = [], original = CanvasRenderingContext2D.prototype.fillText;
+          let blob;
+          try {
+            CanvasRenderingContext2D.prototype.fillText = function(line, ...args) {
+              lines.push(line);
+              return original.call(this, line, ...args);
+            };
+            blob = await viewer.exportPNG(snap, summarize(snap.state), "Synthetic reader", includeValues);
+          } finally {
+            CanvasRenderingContext2D.prototype.fillText = original;
+          }
+          const reader = new FileReader();
+          const url = await new Promise((resolve, reject) => {
+            reader.onload = () => resolve(reader.result); reader.onerror = reject; reader.readAsDataURL(blob);
+          });
+          return {lines, png:url.split(",")[1]};
+        })(%s)""" % json.dumps(values))
+        lines = result["lines"]
+        assert [line for line in lines if " · Size " in line] == expected
+        assert not any("Straight cut" in line or "Stepped cut" in line for line in lines)
+        assert any("Inlay wear estimate" in line for line in lines) == values
+        png = base64.b64decode(result["png"], validate=True)
+        with Image.open(BytesIO(png)) as image:
+            assert image.format == "PNG" and max(image.size) >= 2048
+        (root / f"web_implants_{int(values)}.png").write_bytes(png)
+
+
 def check_planning(browser, root):
     browser.click("#side-left")
     browser.wait("!busy")
@@ -382,6 +419,8 @@ def check_planning(browser, root):
         turn_planning_handle(browser)
         browser.wait(f"!busy && Math.abs(snap.state.pelvic_{key}.angle+15)>60", "Direct implant rotation")
     example = Path(__file__).resolve().parents[2]/"docs/overlay-example.json"
+    if browser.js("implantCatalog.length"):
+        check_implant_export(browser, root)
     browser.files("#overlay-file", [example])
     browser.wait("!busy && implantCatalog.some(t=>t.id==='example/asymmetric-stem/1')","Import session overlay")
     assert browser.js("Array.from(tools.get('template_stem').group.querySelector('select').options).some(o=>o.text==='Synthetic demonstration')")
@@ -510,7 +549,7 @@ def main():
                 check_planning(browser, root)
                 check_overlay_guide(browser, root)
                 checked.append("How It Works opened a separate offline tab, left the measured case intact, and supplied the example and schema on a narrow screen.")
-                checked.append("The fragment rotated around its translated pivot using the field and the live handle. The consolidated Planning controls, implant placement and rotation, moved pixels in the PNG and projected head-to-shell wear were checked on a synthetic film.")
+                checked.append("The fragment rotated around its translated pivot using the field and the live handle. The consolidated Planning controls, implant placement and rotation, implant labels with PNG measurements on and off, moved pixels in the PNG and projected head-to-shell wear were checked on a synthetic film.")
                 checked.append("The jump field below the case count accepts Enter and Go, jumps directly to cases 500 and 1,000, rejects invalid numbers and restores unsaved work on return.")
 
         finally:
