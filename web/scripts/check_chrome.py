@@ -36,8 +36,9 @@ CHROME = Path(
 
 
 class Chrome:
-    def __init__(self, socket):
+    def __init__(self, socket, port=None):
         self.socket = socket
+        self.port = port
         self.seq = 0
         self.events = []
 
@@ -236,7 +237,7 @@ def isolated_chrome(run_dir, url, binary):
                 tab["webSocketDebuggerUrl"], timeout=30, suppress_origin=True
             )
             try:
-                browser = Chrome(ws)
+                browser = Chrome(ws, port)
                 for command in ("Page.enable", "Runtime.enable", "Network.enable"):
                     browser.call(command)
                 browser.call("Page.navigate", url=url)

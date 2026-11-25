@@ -4,10 +4,12 @@ import csv
 import json
 from datetime import datetime, timezone
 import numpy as np
+from .planning import LENGTH_FIELDS
 from .scene import vtkStringArray
 from .geometry import angle_deviation_from_perpendicular
 
 MEASUREMENTS = {
+    **{key: name for key, name, _label in LENGTH_FIELDS},
     "head": "FemurHead_Diameter",
     "ccd": "CCDAngle",
     "tonnis": "AcetabularIndexTonnis",
@@ -124,7 +126,7 @@ def write_case_csv(path, controller, case_name, annotator):
             details = (
                 "Canal-calcar ratio (B/A): distal inner-canal width at 10 cm divided by proximal mid-LT guide-cap width."
                 if key == "ccr"
-                else ""
+                else "Projected head-to-shell centre distance on this film (inlay wear estimate)." if key == "inlay_wear" else ""
             )
             measurement(f"{side.title()}_{name}", value, suffix, corrected=True, details=details)
         shaft = controller.points_for_role(f"{side}_shaftAxis")

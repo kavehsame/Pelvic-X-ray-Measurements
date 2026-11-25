@@ -96,6 +96,29 @@ svg { display: block; width: 16px; height: 16px; flex: 0 0 auto; }
 .check { color: var(--subtle); display: inline-flex; align-items: center; gap: 5px; font-size: 12px; cursor: pointer; }
 .check:has(input:disabled) { opacity: .45; cursor: default; }
 .tool-options { grid-column: 1/-1; display: flex; flex-wrap: wrap; gap: 7px 15px; padding: 0 0 3px 3px; }
+.tool-row[data-help="bone_fragment"], .tool-row[data-help="template_stem"] { margin-top: 10px; }
+.overlay-import-row { margin: 12px 0 6px; padding-top: 10px; border-top: 1px solid var(--rule); }
+.overlay-import-row > button {
+  display: flex; justify-content: center; align-items: center; gap: 7px;
+  min-height: 32px; color: #c6deed; background: #20313d; border-color: #516f84;
+}
+.overlay-import-row > button:hover:not(:disabled) { background: #293e4b; border-color: #7c9bb0; }
+.overlay-guide-link { display: inline-flex; align-items: center; justify-content: center; min-height: 32px; padding: 4px 10px; border: 1px solid var(--rule); border-radius: 6px; color: var(--ink); font-size: 12px; font-weight: 550; text-decoration: none; }
+.overlay-guide-link:hover { background: #28343d; border-color: var(--rule-strong); }
+.overlay-guide-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.tool-options.plan-options {
+  display: grid; grid-template-columns: minmax(0, 1fr) 6rem; align-items: end;
+  gap: 6px 10px; padding: 1px 0 0;
+}
+.plan-options label { display: grid; min-width: 0; gap: 2px; color: var(--subtle); font-size: 12px; }
+.plan-options .plan-family { grid-column: 1 / -1; }
+.plan-options select, .plan-options input {
+  min-width: 0; width: 100%; height: 30px; padding: 3px 7px; border: 1px solid var(--rule-strong);
+  border-radius: 6px; background: #10161b; color: var(--ink); font: inherit; font-size: 13px;
+}
+.plan-options select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.plan-options :is(select, input):disabled { opacity: .55; }
+.fragment-controls button { min-height: 30px; padding: 4px 7px; font-size: 12px; }
 .tool-count { width: 100%; font-size: 12px; padding: 4px 5px; }
 .result-columns, .result-row { display: grid; grid-template-columns: 1.25fr 1fr 1fr; gap: 6px; align-items: center; }
 .result-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; flex-wrap: wrap; }

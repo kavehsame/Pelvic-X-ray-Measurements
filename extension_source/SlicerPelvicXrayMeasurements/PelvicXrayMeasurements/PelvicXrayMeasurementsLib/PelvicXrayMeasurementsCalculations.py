@@ -8,7 +8,10 @@ from __future__ import annotations
 
 from typing import Any
 
+import json
 import numpy as np
+import PelvicXrayMeasurementsPlanning as planning
+import PelvicXrayMeasurementsTemplateDisplay as template_display
 import vtk
 
 from PelvicXrayMeasurementsConstants import (
@@ -167,6 +170,7 @@ class MeasurementCalculationMixin:
                 self._update_side_sharp_angle(results, side_key, image_node, plane_normal)
                 self._update_side_femur_head(results, side_key)
                 self._update_side_implant_head(results, side_key)
+                self._update_side_planning(results, side_key, image_node, plane_normal)
                 self._update_side_lce_angle(results, side_key, image_node, plane_normal)
                 self._update_side_femoral_shaft_axis(results, side_key, image_node, plane_normal)
                 self._update_side_femoral_shaft_contours(results, side_key, image_node, plane_normal)
@@ -189,6 +193,7 @@ class MeasurementCalculationMixin:
             self._update_other_lines(results, image_node, plane_normal)
             self._update_other_angles(results, image_node, plane_normal)
             self.apply_measurement_visibility_preferences()
+            self.update_fragment_display(image_node)
 
             self.latest_results = results
         finally:
@@ -594,6 +599,153 @@ class MeasurementCalculationMixin:
         side_results["femurHead"]["correctedValue"] = self._correct_value(results, circle.diameter)
         side_results["femurHead"]["center"] = circle.center
         side_results["femurHead"]["normal"] = circle.normal
+
+    def _update_side_planning(self, results, side_key, image_node, normal):
+        def node(role):
+            return self.get_node(self.side_role(role, side_key))
+        def points(role):
+            return self._defined_points(node(role))
+        def model(role, path):
+            if path:
+                self._update_model_polydata(node(role), polydata_from_points(path))
+            elif node(role).GetPolyData() is not None:
+                self._clear_model(node(role))
+
+        side = results["sides"][side_key]
+        for spec in planning.TOOLS.values():
+            source = node(spec[1])
+            self._apply_labels(source, self.side_role(spec[1], side_key))
+        shell = points("cupShellPoints")
+        circle = circle_from_three_points(*shell[:3]) if len(shell) >= 3 else None
+        center_node, circle_node = node("cupShellCenter"), node("cupShellCircle")
+        values = planning.cut_lengths(points("resectionStraight"), points("resectionStepped"))
+        if circle is not None:
+            self._set_single_point(center_node, circle.center, f"CupShell_{side_key}_Center")
+            self._update_model_polydata(circle_node, sphere_polydata(circle.center, circle.radius))
+            side["cup_center"].update(defined=True, rawValue=circle.diameter, center=circle.center, normal=circle.normal)
+        else:
+            self._clear_markup(center_node)
+            self._clear_model(circle_node)
+        wear = node("inlayWearLine")
+        if circle is not None and side["implantHead"]["defined"]:
+            head = side["implantHead"]["center"]
+            delta = head - circle.center
+            unit = normal if normal is not None else circle.normal
+            projected = delta - np.dot(delta, unit) * unit
+            values["inlay_wear"] = float(np.linalg.norm(projected))
+            self._set_line_points(wear, circle.center, circle.center + projected, "Shell", "Head")
+        else:
+            self._clear_markup(wear)
+        for key, value in values.items():
+            side[key].update(defined=True, rawValue=value, correctedValue=self._correct_value(results, value))
+        step = points("resectionStepped")
+        model("resectionSteppedOutline", step if len(step) >= 2 else [])
+        cut_key = node("fragmentBoundary").GetAttribute(planning.FRAGMENT_CUT) or "straight"
+        cut = points(planning.CUT_ROLES[cut_key])
+        boundary = points("fragmentBoundary")
+        side["bone_fragment"]["defined"] = len(boundary) >= 2 and len(cut) == (2 if cut_key == "straight" else 3)
+        side["fragment_pose"]["defined"] = side["bone_fragment"]["defined"] and bool(points("fragmentTarget"))
+        if side["fragment_pose"]["defined"] and image_node is not None:
+            planning.plan_axes(node("fragmentTarget"), image_right_direction(image_node), image_up_direction(image_node))
+        model("fragmentSourceOutline", [*cut, *boundary, cut[0]] if getattr(self, "_tracing_fragment_side", None) == side_key and boundary and len(cut) >= 2 else [])
+        for kind in planning.COMPONENTS:
+            key = "template_" + kind
+            role = planning.TOOLS[key][1]
+            anchor = points(role)
+            choice = planning.template_choice(kind, node(role).GetAttribute(planning.TEMPLATE_ATTRIBUTE), side_key, allow_missing=True)
+            if anchor and choice and not node(role).GetAttribute(planning.TEMPLATE_ATTRIBUTE):
+                node(role).SetAttribute(planning.TEMPLATE_ATTRIBUTE, json.dumps(choice))
+            path = []
+            if anchor and image_node is not None:
+                axes = planning.plan_axes(node(role), *template_display.axes(image_node))
+                scale = template_display.scale(image_node, results["calibration"]["scaleFactor"])
+                path = planning.outline(choice, anchor[0], side_key, *axes, scale)
+            target = node(role + "Outline")
+            digest = planning.ITEMS.get(choice["id"], {}).get("image") if choice and path else None
+            target.SetAttribute("PXM.TemplateArtwork", digest)
+            if digest:
+                # Points define a texture mapping, and have no drawable contour cells.
+                frame = vtk.vtkPolyData()
+                vertices = vtk.vtkPoints()
+                vertices.SetDataTypeToDouble()
+                for p in path:
+                    vertices.InsertNextPoint(*p)
+                frame.SetPoints(vertices)
+                self._update_model_polydata(target, frame)
+            else:
+                model(role + "Outline", path)
+            side[key]["defined"] = bool(path)
+
+    def update_fragment_display(self, volume):
+        """Display the transformed radiograph as a disposable foreground. Keep the measured volume intact."""
+        import slicer
+        self._fragment_hit_plans = {}
+        if volume is None or volume.GetImageData() is None:
+            return
+        plans = []
+        matrix = vtk.vtkMatrix4x4()
+        volume.GetRASToIJKMatrix(matrix)
+        def to_pixel(p):
+            return matrix.MultiplyPoint([*p, 1.0])[:2]
+        for side in SIDE_KEYS:
+            boundary = self.get_node(self.side_role("fragmentBoundary", side))
+            boundary.SetDisplayVisibility(getattr(self,"_tracing_fragment_side",None) == side and self.measurement_visible(MeasurementKey.BONE_FRAGMENT, side))
+            if not self.measurement_visible(MeasurementKey.BONE_FRAGMENT, side):
+                continue
+            source = self.get_node(self.side_role("fragmentBoundary", side))
+            target = self.get_node(self.side_role("fragmentTarget", side))
+            if not source.GetNumberOfDefinedControlPoints() or not target.GetNumberOfDefinedControlPoints():
+                continue
+            cut = source.GetAttribute(planning.FRAGMENT_CUT) or "straight"
+            angle = planning.fragment_rotation(target, float(target.GetAttribute(planning.FRAGMENT_ANGLE) or 0),
+                                              image_right_direction(volume), image_up_direction(volume))
+            cut_points = self._defined_points(self.get_node(self.side_role(planning.CUT_ROLES[cut], side)))
+            if len(cut_points) != (2 if cut == "straight" else 3):
+                continue
+            plan = planning.fragment_projection(cut_points,
+                self._defined_points(source), self._defined_points(target), angle, to_pixel, volume.GetSpacing(), rows_down=True)
+            if plan:
+                self._fragment_hit_plans[side] = plan
+                plans.append(plan)
+        preview = getattr(self, "_fragment_preview", None)
+        if preview is not None and preview.GetScene() is None:
+            preview = self._fragment_preview = None
+        if not plans and preview is None:
+            return
+        if plans:
+            signature = (volume.GetID(), volume.GetMTime(), volume.GetImageData().GetMTime(), json.dumps(plans))
+            if signature != getattr(self, "_fragment_signature", None) or preview is None:
+                data = slicer.util.arrayFromVolume(volume)
+                if data.ndim != 3 or data.shape[0] != 1:
+                    return
+                if preview is None:
+                    preview = slicer.mrmlScene.CreateNodeByClass("vtkMRMLScalarVolumeNode")
+                    preview.SetName("PXM bone fragment preview")
+                    preview.SetHideFromEditors(True)
+                    preview.SetSaveWithScene(False)
+                    preview.SetAttribute("PXM.FragmentPreview", "1")
+                    slicer.mrmlScene.AddNode(preview)
+                    self._fragment_preview = preview
+                preview.SetAttribute("PXM.FragmentSource", volume.GetID())
+                preview.CopyOrientation(volume)
+                preview.SetAndObserveDisplayNodeID(volume.GetDisplayNodeID())
+                slicer.util.updateVolumeFromArray(preview, planning.compose_fragments(data[0], plans)[None, ...])
+                self._fragment_signature = signature
+        if not hasattr(self, "_fragment_foregrounds"):
+            self._fragment_foregrounds = {}
+        for view in slicer.util.getNodesByClass("vtkMRMLSliceCompositeNode"):
+            if plans and view.GetBackgroundVolumeID() == volume.GetID():
+                if view.GetForegroundVolumeID() != preview.GetID():
+                    self._fragment_foregrounds[view.GetID()] = (view.GetForegroundVolumeID(), view.GetForegroundOpacity())
+                    view.SetForegroundVolumeID(preview.GetID())
+                    view.SetForegroundOpacity(1.0)
+            elif preview and view.GetForegroundVolumeID() == preview.GetID():
+                previous, opacity = self._fragment_foregrounds.pop(view.GetID(), (None, 0.0))
+                view.SetForegroundVolumeID(previous)
+                view.SetForegroundOpacity(opacity)
+        if not plans:
+            slicer.mrmlScene.RemoveNode(preview)
+            self._fragment_preview = self._fragment_signature = None
 
     def _update_side_implant_head(self, results: Any, side_key: Any) -> None:
         """Fit the implant head circle from three points and update its center and displayed circle.

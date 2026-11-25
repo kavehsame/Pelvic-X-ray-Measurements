@@ -9,10 +9,12 @@ import math
 from pathlib import Path
 import tempfile
 from threading import Thread
+from time import monotonic, sleep
 
+import websocket
 from PIL import Image, ImageChops
 
-from check_chrome import CHROME, isolated_chrome
+from check_chrome import CHROME, Chrome, isolated_chrome
 from check_core import QA
 from serve_local import SiteHandler
 
@@ -198,6 +200,194 @@ def check_case_jump(browser, root):
     assert browser.js("document.querySelector('#comments').value") == "Keep this working case"
 
 
+def turn_planning_handle(browser, preview=None):
+    start, end = browser.js("""(() => {
+        const [pivot, handle] = viewer.rotationHandle(viewer.selectedPlanRole);
+        const rect = viewer.canvas.getBoundingClientRect();
+        return [[rect.left + handle[0], rect.top + handle[1]],
+                [rect.left + pivot[0] - (handle[1] - pivot[1]), rect.top + pivot[1] + (handle[0] - pivot[0])]];
+    })()""")
+    for event, point, buttons in (("mousePressed", start, 1), ("mouseMoved", end, 1), ("mouseReleased", end, 0)):
+        browser.call("Input.dispatchMouseEvent", type=event, x=point[0], y=point[1],
+                     button="left", buttons=buttons, clickCount=1)
+        if event == "mouseMoved" and preview:
+            browser.wait(preview, "Live angle and pixel preview before releasing the handle")
+
+
+def check_overlay_guide(browser, root):
+    # Keep a measured case open while the help and its downloads are used offline.
+    scene = browser.js("JSON.stringify([snap.image, snap.markups])")
+    case_target = browser.call("Target.getTargetInfo")["targetInfo"]["targetId"]
+    guide_url = browser.js("document.getElementById('overlay-guide').href")
+    assert guide_url.startswith("blob:")
+    assert browser.js("document.querySelector('#manual a[href^=\"blob:\"]').href") == guide_url
+    browser.call("Network.emulateNetworkConditions", offline=True, latency=0, downloadThroughput=0, uploadThroughput=0)
+    try:
+        browser.click("#overlay-guide")
+        deadline = monotonic() + 10
+        while True:
+            pages = browser.call("Target.getTargets")["targetInfos"]
+            tab = next((p for p in pages if p["type"] == "page" and p["url"] == guide_url), None)
+            if tab or monotonic() >= deadline:
+                break
+            sleep(0.05)
+        assert tab and tab["targetId"] != case_target, "The guide must open in its own tab."
+        address = f'ws://127.0.0.1:{browser.port}/devtools/page/{tab["targetId"]}'
+        ws = websocket.create_connection(address, timeout=10, suppress_origin=True)
+        try:
+            guide = Chrome(ws)
+            guide.wait("document.readyState === 'complete'")
+            assert guide.js("document.querySelector('h1').textContent") == "How implant overlays work"
+            assert guide.js("window.opener === null && document.referrer === ''")
+            assert guide.js("Array.from(document.images).every(i => i.complete && i.naturalWidth > 0)")
+            guide.screenshot(root / "implant_overlay_guide.png")
+            guide.call("Emulation.setDeviceMetricsOverride", width=360, height=800, deviceScaleFactor=1, mobile=True)
+            assert guide.js("document.documentElement.scrollWidth <= innerWidth")
+            guide.click('nav a[href="#pack"]')
+            guide.wait("location.hash === '#pack'")
+            directory = root / "guide-downloads"
+            directory.mkdir()
+            guide.call("Page.setDownloadBehavior", behavior="allow", downloadPath=str(directory))
+            for filename in ("overlay-example.json", "overlay.schema.json"):
+                guide.click(f'a[download="{filename}"]')
+                saved = directory / filename
+                expected = Path(__file__).resolve().parents[2] / "docs" / filename
+                end = monotonic() + 8
+                while not saved.is_file() and monotonic() < end:
+                    sleep(0.05)
+                assert saved.read_bytes() == expected.read_bytes()
+            guide.call("Page.setDownloadBehavior", behavior="default")
+        finally:
+            ws.close()
+            browser.call("Target.closeTarget", targetId=tab["targetId"])
+    finally:
+        browser.call("Network.emulateNetworkConditions", offline=False, latency=0, downloadThroughput=-1, uploadThroughput=-1)
+    assert browser.js("JSON.stringify([snap.image, snap.markups])") == scene
+
+
+def check_planning(browser, root):
+    browser.click("#side-left")
+    browser.wait("!busy")
+    browser.js("viewer.fit()")
+    assert browser.js("document.querySelector('#tool-template_stem').disabled")
+    browser.annotate("calibration", [(10, 20), (20, 10), (30, 20)])
+    browser.annotate("implant_head", [(40, 40), (50, 30), (60, 40)])
+    browser.annotate("cup_center", [(35, 44), (53, 26), (71, 44)])
+    wear = browser.js("snap.state.pelvic_result_left_inlay_wear")
+    assert wear.endswith(" mm") and abs(float(wear.split()[0]) - 6.25) < 0.4, wear
+    assert browser.js("snap.state.pelvic_result_right_inlay_wear") == "—"
+    assert browser.js("""(() => {
+        const fragment = document.getElementById("tool-bone_fragment");
+        const manual = document.getElementById("trace-fragment-manually").getBoundingClientRect();
+        const field = document.getElementById("fragment-rotation");
+        const angle = field.getBoundingClientRect();
+        const load = document.getElementById("import-overlays");
+        const link = document.getElementById("overlay-guide");
+        const guide = link.getBoundingClientRect(), button = load.getBoundingClientRect();
+        const cup = document.getElementById("tool-template_cup").parentElement;
+        return fragment.textContent === "Retained Bone Fragment Placement" && !document.getElementById("tool-fragment_pose")
+          && field.disabled && manual.right <= angle.left && Math.min(manual.bottom, angle.bottom) > Math.max(manual.top, angle.top)
+          && load.parentElement.nextElementSibling === cup
+          && link.textContent === "How It Works" && link.target === "_blank" && link.rel.includes("noopener")
+          && load.parentElement === link.parentElement && button.right <= guide.left
+          && Math.abs(button.top - guide.top) < 2 && Math.abs(guide.right - cup.getBoundingClientRect().right) < 2;
+    })()""")
+    browser.annotate("straight_resection", [(40, 60), (50, 60)])
+    browser.click("#tool-bone_fragment")
+    browser.wait("!busy && snap.fragments.length===1")
+    assert not browser.js("snap.markups.some(m=>m.role.endsWith('fragmentBoundary')||m.role.endsWith('fragmentSourceOutline'))")
+    assert browser.js("viewer.selectedPlanRole === 'left_fragmentTarget' && !!viewer.rotationHandle(viewer.selectedPlanRole)")
+    assert browser.js("""(() => {
+        const canvas = document.createElement('canvas');
+        canvas.width = viewer.bitmap.width;
+        canvas.height = viewer.bitmap.height;
+        const ctx = canvas.getContext('2d', {willReadFrequently: true});
+        ctx.drawImage(viewer.bitmap, 0, 0);
+        const before = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+        viewer.drawFragmentPixels(ctx, viewer.bitmap, snap.fragments, 0, 0, canvas.width, canvas.height);
+        return ctx.getImageData(0, 0, canvas.width, canvas.height).data.every((value, i) => value === before[i]);
+    })()"""), "Selecting a fragment at its original pose must preserve every image pixel."
+    browser.js("document.getElementById('tool-bone_fragment').scrollIntoView({block:'center'})")
+    browser.screenshot(root / "fragment_controls.png")
+    turn_planning_handle(browser, "Math.abs(Number(document.getElementById('fragment-rotation').value)-90)<2 && !!viewer.pointPreview?.fragments.length && snap.state.pelvic_fragment_angle===0")
+    browser.wait("!busy && Math.abs(snap.state.pelvic_fragment_angle-90)<2")
+    assert browser.js("Math.abs(snap.fragments[0].matrix[0][0])<0.035")
+    browser.js("""(() => { const angle=document.getElementById('fragment-rotation'); angle.value=0; angle.dispatchEvent(new Event('change')); })()""")
+    browser.wait("!busy && snap.state.pelvic_fragment_angle===0")
+    browser.mouse_at("mousePressed",85,80)
+    browser.mouse_at("mouseMoved",91,76)
+    browser.mouse_at("mouseReleased",91,76)
+    browser.wait("!busy && Math.abs(snap.fragments[0].matrix[0][2]-6)<0.4", "Drag fragment by its tissue")
+    browser.click("#tool-bone_fragment")
+    browser.wait("!busy && snap.fragments.length===0")
+    browser.annotate("stepped_resection", [(40, 60), (43, 64), (51, 64)])
+    browser.click("#trace-fragment-manually")
+    browser.wait("document.querySelector('#decision-dialog').open")
+    browser.js("Array.from(document.querySelectorAll('#decision-actions button')).find(b=>b.textContent==='Straight').click()")
+    browser.wait("!busy && !!snap.active_role")
+    browser.point(50, 77)
+    browser.point(40, 77)
+    browser.finish()
+    browser.wait("!busy && !!viewer.rotationHandle('left_fragmentTarget')")
+    assert browser.js("viewer.selectedPlanRole==='left_fragmentTarget'")
+    browser.mouse_at("mousePressed",45,60)
+    browser.mouse_at("mouseMoved",90,60)
+    browser.mouse_at("mouseReleased",90,60)
+    browser.wait("!busy && Math.abs(snap.rotation_handles.left_fragmentTarget[0][0]-90)<0.4")
+    translated_pivot = browser.js("snap.rotation_handles.left_fragmentTarget[0]")
+    turn_planning_handle(browser)
+    browser.wait("!busy && Math.abs(snap.state.pelvic_fragment_angle-90)<2")
+    assert browser.js("snap.rotation_handles.left_fragmentTarget[0]") == translated_pivot
+    browser.js("""(() => { const angle=document.getElementById('fragment-rotation'); angle.value=0; angle.dispatchEvent(new Event('change')); })()""")
+    browser.wait("!busy && snap.state.pelvic_fragment_angle===0")
+    assert len(browser.js("snap.fragments")) == 1
+    shades = browser.js("""(async () => {
+      const blob = await viewer.exportPNG({...snap, markups:[]}, [], '', false);
+      const bitmap = await createImageBitmap(blob);
+      const c = document.createElement('canvas'); c.width=bitmap.width; c.height=bitmap.height;
+      const ctx=c.getContext('2d'); ctx.drawImage(bitmap,0,0);
+      const shade=(x,y)=>ctx.getImageData(Math.round((x+.5)*bitmap.width/128),
+          Math.round((y+.5)*bitmap.height/96),1,1).data[0];
+      return [shade(45,70),shade(90,70)];
+    })()""")
+    assert shades[0] == 0 and shades[1] > 80, shades
+    browser.click("#hide-bone_fragment")
+    browser.wait("!busy")
+    assert browser.js("snap.fragments.length===0 && !snap.rotation_handles.left_fragmentTarget && !snap.markups.some(m=>m.role==='left_fragmentTarget')")
+    browser.click("#hide-bone_fragment")
+    browser.wait("!busy")
+    for kind in ("cup", "stem"):
+        key = "template_" + kind
+        if not browser.js("implantCatalog.length"):
+            assert browser.js(f"document.querySelector('#tool-{key}').disabled")
+            continue
+        browser.js(f"""(() => {{
+           const choice=tools.get('{key}').group.querySelector('select[aria-label="Implant family"]');
+           choice.selectedIndex=choice.options.length-1;
+           choice.dispatchEvent(new Event('change',{{bubbles:true}}));
+        }})()""")
+        browser.wait("!busy")
+        browser.annotate(key, [(55, 38)])
+        browser.js(f"""(() => {{
+           const angle=tools.get('{key}').group.querySelector('input[type="number"]');
+           angle.value=-15; angle.dispatchEvent(new Event('change',{{bubbles:true}}));
+        }})()""")
+        browser.wait("!busy")
+        assert browser.js(f"snap.state.pelvic_{key}.angle") == -15
+        role = "left_planning" + kind.title() + "AnchorOutline"
+        assert browser.js(f"""(() => {{
+          const m=snap.markups.find(mark=>mark.role==='{role}');
+          return m.artwork ? m.points.length===4 && !!viewer.implants.get(m.artwork)?.bitmap : m.points.length>=4;
+        }})()""")
+        turn_planning_handle(browser)
+        browser.wait(f"!busy && Math.abs(snap.state.pelvic_{key}.angle+15)>60", "Direct implant rotation")
+    example = Path(__file__).resolve().parents[2]/"docs/overlay-example.json"
+    browser.files("#overlay-file", [example])
+    browser.wait("!busy && implantCatalog.some(t=>t.id==='example/asymmetric-stem/1')","Import session overlay")
+    assert browser.js("Array.from(tools.get('template_stem').group.querySelector('select').options).some(o=>o.text==='Synthetic demonstration')")
+    browser.screenshot(root / "planning_workflow.png")
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--chrome", type=Path, default=CHROME)
@@ -317,6 +507,10 @@ def main():
                 check_magnified_pan(browser)
                 checked.append("The hand appears only during panning; high-zoom pixel boundaries stay sharp before, during and after a fractional pan.")
                 check_case_jump(browser, root)
+                check_planning(browser, root)
+                check_overlay_guide(browser, root)
+                checked.append("How It Works opened a separate offline tab, left the measured case intact, and supplied the example and schema on a narrow screen.")
+                checked.append("The fragment rotated around its translated pivot using the field and the live handle. The consolidated Planning controls, implant placement and rotation, moved pixels in the PNG and projected head-to-shell wear were checked on a synthetic film.")
                 checked.append("The jump field below the case count accepts Enter and Go, jumps directly to cases 500 and 1,000, rejects invalid numbers and restores unsaved work on return.")
 
         finally:

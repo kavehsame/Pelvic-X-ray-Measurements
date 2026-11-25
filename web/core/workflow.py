@@ -6,7 +6,9 @@ from dataclasses import dataclass
 from typing import Callable
 from contextlib import contextmanager
 
+import json
 import numpy as np
+from . import planning
 from .scene import CurvePath as vtkPolyData, vtkVector3d, ellipse_path as ellipsoid_surface_polydata
 
 from .schema import NODE_SPECS, ROLE_ATTRIBUTE, POINT_GLYPH_FACTOR, side_role
@@ -151,13 +153,19 @@ WORKFLOW_SECTIONS: tuple[tuple[str, tuple[PlacementWorkflow, ...]], ...] = (
         ),
     ),
     (
-        "3: Post-Operative (THA)",
+        "3: Planning",
+        tuple(PlacementWorkflow(key, spec[0], (PlacementStep(spec[1], spec[4], persistent=True),))
+              for key, spec in planning.TOOLS.items() if key != "cup_center"),
+    ),
+    (
+        "4: Post-Operative (THA)",
         (
             PlacementWorkflow(
                 "implant_head",
                 "Implant Head Center",
                 (_points("implantHeadPoints", "Place 3 points on the implant-head boundary."),),
             ),
+            PlacementWorkflow("cup_center", "Cup Center", (_points("cupShellPoints", planning.TOOLS["cup_center"][4]),)),
             PlacementWorkflow(
                 "inclination",
                 "Acetabular Inclination Angle (Free Hand)",
@@ -208,7 +216,7 @@ WORKFLOW_SECTIONS: tuple[tuple[str, tuple[PlacementWorkflow, ...]], ...] = (
         ),
     ),
     (
-        "5: Contours",
+        "6: Contours",
         tuple(
             PlacementWorkflow(
                 key,
@@ -247,7 +255,7 @@ shaft_workflow = PlacementWorkflow(
     ),
 )
 WORKFLOW_SECTIONS = tuple(
-    (section, tuple(shaft_workflow if w.key == "shaft_contour" else w for w in workflows))
+    (section, tuple(shaft_workflow if w.key == "shaft_contour" else w for w in workflows if w.key != "fragment_pose"))
     for section, workflows in WORKFLOW_SECTIONS
 )
 WORKFLOWS["shaft_contour"] = shaft_workflow
@@ -362,6 +370,7 @@ class BrowserPlacementController(CustomMeasurementMixin, LandmarkReuseMixin):
             steps = steps[:1]
         self._steps = [(side_role(side, step.base_role) if step.bilateral else step.base_role, step) for step in steps]
         previous = self.node_for_role(self._steps[0][0])
+        plan_attrs = {attr: previous.GetAttribute(attr) for attr in (planning.TEMPLATE_ATTRIBUTE, planning.FRAGMENT_CUT, planning.FRAGMENT_ANGLE, planning.VIEW_AXES)} if previous is not None and workflow_key in planning.TOOLS else {}
         next_shared = previous.GetAttribute(NEXT_SHARED_ATTRIBUTE) if previous is not None else None
         use_shared = (next_shared == "1") if next_shared is not None else True
         for role, _step in self._steps:
@@ -404,9 +413,14 @@ class BrowserPlacementController(CustomMeasurementMixin, LandmarkReuseMixin):
             f"{side.title()} {workflow.label}" if workflow.steps[0].bilateral else workflow.label
         )
         self.server.state.pelvic_active_key = workflow_key
-        self._hidden_workflows.discard(workflow_key)
+        self._hidden_workflows.discard(self.visibility_key(workflow_key, side))
         self.server.state[f"pelvic_hide_{workflow_key}"] = False
         self._activate_step()
+        if plan_attrs:
+            source = self.node_for_role(self._steps[0][0])
+            for attr, value in plan_attrs.items():
+                if value is not None:
+                    source.SetAttribute(attr, value)
         if workflow_key in SHARED_POINT_TOOLS:
             self.node_for_role(self._steps[0][0]).SetAttribute(NEXT_SHARED_ATTRIBUTE, "0" if use_shared else "1")
         self.update_derived()
@@ -445,6 +459,17 @@ class BrowserPlacementController(CustomMeasurementMixin, LandmarkReuseMixin):
             center = "femurHeadCenter" if key == "neck_axis" else "implantHeadCenter"
             if self.axis_options(side, kind)[0] and not self.points_for_role(side_role(side, center)):
                 missing.append("the active-side " + ("Femur Head" if key == "neck_axis" else "Implant Head"))
+        if key.startswith("template_"):
+            component = key.removeprefix("template_")
+            if self._template_scale() is None:
+                missing.append("patient pixel spacing or a defined Calibration Ball")
+            if not planning.default_template(component, side):
+                missing.append("a local AP template library")
+        if key in ("bone_fragment", "fragment_pose"):
+            if not planning.available_cuts(lambda base: self.points_for_role(side_role(side, base))):
+                missing.append("the selected neck resection")
+            if key == "fragment_pose" and len(self.points_for_role(side_role(side, "fragmentBoundary"))) < 2:
+                missing.append("a traced bone fragment")
         if key == "morphology" and self._calibration_scale() is None:
             missing.append("a defined Calibration Ball")
         return missing
@@ -644,12 +669,14 @@ class BrowserPlacementController(CustomMeasurementMixin, LandmarkReuseMixin):
                 for base, center_role, circle_role in (
                     ("femurHeadPoints", "femurHeadCenter", "femurHeadCircle"),
                     ("implantHeadPoints", "implantHeadCenter", "implantHeadCircle"),
+                    ("cupShellPoints", "cupShellCenter", "cupShellCircle"),
                 ):
                     source_role = side_role(side, base)
                     self._refresh_circle(source_role, side_role(side, circle_role), side_role(side, center_role))
                     source = self.node_for_role(source_role)
                     if source is not None:
                         self._watch_circle_source(source_role, source)
+                self._update_planning(side)
                 self._update_axes_for_side(side)
                 self._update_morphology_for_side(side)
                 self._refresh_cup_opening_ellipse(side)
@@ -687,6 +714,8 @@ class BrowserPlacementController(CustomMeasurementMixin, LandmarkReuseMixin):
                 "calibration": "calibrationCircle",
                 "femur_head": "femurHeadCircle",
                 "implant_head": "implantHeadCircle",
+                "cup_center": "cupShellCircle",
+                **{f"template_{k}": planning.TOOLS[f"template_{k}"][1] + "Outline" for k in planning.COMPONENTS},
                 "cup_opening": "cupOpeningEllipse",
             }.get(key)
             if model_base:
@@ -1104,6 +1133,180 @@ class BrowserPlacementController(CustomMeasurementMixin, LandmarkReuseMixin):
             for index in range(len(points)):
                 node.SetNthControlPointLabel(index, f"FemoralShaft_{label}_{index + 1}")
 
+    def planning_node(self, side, key, create=False):
+        role = side_role(side, planning.TOOLS[key][1])
+        node = self.node_for_role(role)
+        if node is None and create:
+            self.put_points(role, [])
+            node = self.node_for_role(role)
+        return node
+
+    def retained_bone(self, mode="auto", kind=None):
+        side = str(self.server.state.pelvic_active_side)
+        get = lambda base: self.points_for_role(side_role(side, base))
+        volume = self.current_image_node()
+        if volume is None:
+            raise ValueError("Open a radiograph first.")
+        choices = planning.available_cuts(get)
+        previous = self.fragment_options(side)[0]
+        self.finish(silent=True)
+        if mode == "auto" and get("fragmentBoundary"):
+            for base in ("fragmentBoundary", "fragmentTarget"):
+                self._remove_role(side_role(side, base))
+            self.update_derived()
+            self.server.state.pelvic_instruction = "Fragment reset. Click Retained Bone Fragment Placement to select it again."
+            return
+        if not choices:
+            raise ValueError("Draw a neck cut on the active side first.")
+        if kind is None:
+            if len(choices) > 1 and not get("fragmentBoundary"):
+                raise ValueError("Choose the straight or stepped cut for this fragment.")
+            kind = previous if previous in choices else choices[0]
+        if kind not in choices:
+            raise ValueError("The chosen neck cut is incomplete.")
+        cut = get(planning.CUT_ROLES[kind])
+        if mode == "auto":
+            pts = planning.automatic_trace(get, kind, volume.GetDimensions(), np.linalg.norm(volume.affine[:3,:2],axis=0),
+                                           volume.to_image, volume.from_image, side)
+        elif mode != "manual":
+            raise ValueError("Unknown fragment selection mode.")
+        self.set_workflow_hidden("bone_fragment", False)
+        self._remove_role(side_role(side, "fragmentTarget"))
+        node = self.planning_node(side, "bone_fragment", create=True)
+        node.SetAttribute(planning.FRAGMENT_CUT, kind)
+        if mode == "manual":
+            self.start("bone_fragment")
+            self.server.state.pelvic_instruction = "Trace from the lateral end, including the margin if needed. Right-click to close at the medial end."
+            return
+        node.SetCurveType(0)
+        self.put_points(side_role(side, "fragmentBoundary"), pts)
+        self.put_points(side_role(side, "fragmentTarget"), [(cut[0] + cut[-1])/2])
+        self.update_derived()
+        self.server.state.pelvic_instruction = "Drag the fragment to move it or drag its round handle to rotate."
+
+    def finish_fragment(self):
+        side = str(self.server.state.pelvic_active_side)
+        boundary = self.points_for_role(side_role(side, "fragmentBoundary"))
+        if len(boundary) < 2:
+            self.server.state.pelvic_instruction = "Place at least two boundary points before finishing."
+            return
+        cut = self.points_for_role(side_role(side, planning.CUT_ROLES[self.fragment_options(side)[0]]))
+        self.finish(silent=True)
+        self.put_points(side_role(side, "fragmentTarget"), [(cut[0] + cut[-1])/2])
+        self.update_derived()
+        self.server.state.pelvic_instruction = "Drag the fragment to move it or drag its round handle to rotate."
+
+    def fragment_options(self, side):
+        boundary = self.planning_node(side, "bone_fragment")
+        target = self.planning_node(side, "fragment_pose")
+        cut = boundary.GetAttribute(planning.FRAGMENT_CUT) if boundary else None
+        angle = target.GetAttribute(planning.FRAGMENT_ANGLE) if target else None
+        return cut or "straight", float(angle or 0)
+
+    def planning_options(self, args):
+        side = str(self.server.state.pelvic_active_side)
+        key = args["key"]
+        node = self.planning_node(side, key, create=True)
+        if key.startswith("template_"):
+            choice = planning.template_choice(key.removeprefix("template_"), args["choice"], side)
+            node.SetAttribute(planning.TEMPLATE_ATTRIBUTE, json.dumps(choice))
+        elif key == "bone_fragment" and args["cut"] in planning.CUT_ROLES:
+            node.SetAttribute(planning.FRAGMENT_CUT, args["cut"])
+        elif key == "fragment_pose" and abs(float(args["angle"])) <= 180:
+            node.SetAttribute(planning.FRAGMENT_ANGLE, str(float(args["angle"])))
+        else:
+            raise ValueError("Invalid planning option.")
+        self.update_derived()
+
+    def _template_scale(self):
+        image = self.current_image_node()
+        return planning.template_scale(self._calibration_scale(), image is not None and image.planning_metric)
+
+    def _update_planning(self, side):
+        points = lambda base: self.points_for_role(side_role(side, base))
+        def draw(base, path):
+            role = side_role(side, base)
+            if path:
+                model = self._model_for_role(role)
+                model.SetAndObservePolyData(vtkPolyData(path))
+            else:
+                self._clear_circle_model(role)
+        step = points("resectionStepped")
+        draw("resectionSteppedOutline", step if len(step) >= 2 else [])
+        cut_key, angle = self.fragment_options(side)
+        cut = points(planning.CUT_ROLES[cut_key])
+        boundary = points("fragmentBoundary")
+        tracing = self._active_node is not None and self._active_node.GetAttribute(ROLE_ATTRIBUTE) == side_role(side, "fragmentBoundary")
+        draw("fragmentSourceOutline", [*cut, *boundary, cut[0]] if tracing and len(cut) >= 2 and boundary else [])
+        target = self.planning_node(side, "fragment_pose")
+        if target and target.GetNumberOfControlPoints():
+            planning.plan_axes(target, [-1, 0, 0], [0, 1, 0])
+        active = side == self.server.state.pelvic_active_side
+        if active:
+            self.server.state.pelvic_available_cuts = planning.available_cuts(points)
+            self.server.state.pelvic_has_fragment = len(boundary) >= 2
+            self.server.state.pelvic_fragment_cut = cut_key
+            self.server.state.pelvic_fragment_angle = angle
+            self.server.state.pelvic_fragment_positioned = bool(
+                len(boundary) >= 2 and target and target.GetNumberOfControlPoints()
+                and len(cut) == (2 if cut_key == "straight" else 3) and not tracing
+            )
+        scale = self._template_scale()
+        for kind in planning.COMPONENTS:
+            key = "template_" + kind
+            node = self.planning_node(side, key)
+            choice = planning.template_choice(kind, node.GetAttribute(planning.TEMPLATE_ATTRIBUTE) if node else None, side, allow_missing=True)
+            if node and choice and node.GetNumberOfControlPoints() and not node.GetAttribute(planning.TEMPLATE_ATTRIBUTE):
+                node.SetAttribute(planning.TEMPLATE_ATTRIBUTE, json.dumps(choice))
+            if active:
+                self.server.state["pelvic_" + key] = choice
+            role = planning.TOOLS[key][1]
+            anchors = points(role)
+            path = []
+            if anchors:
+                axes = planning.plan_axes(node, *self.current_image_node().planning_axes)
+                path = planning.outline(choice, anchors[0], side, *axes, scale)
+            draw(role + "Outline", path)
+            model = self._existing_model_for_role(side_role(side, role + "Outline"))
+            if model is not None:
+                model.SetAttribute("PXM.TemplateArtwork", planning.ITEMS.get(choice["id"], {}).get("image") if choice else None)
+        head, shell = points("implantHeadCenter"), points("cupShellCenter")
+        wear_role = side_role(side, "inlayWearLine")
+        values = planning.cut_lengths(points("resectionStraight"), step)
+        if head and shell:
+            values["inlay_wear"] = float(np.linalg.norm((head[0] - shell[0])[:2]))
+            self.put_points(wear_role, [shell[0], head[0]], derived=True)
+        else:
+            self._remove_role(wear_role)
+        for key, _name, _label in planning.LENGTH_FIELDS:
+            raw = values.get(key)
+            self._store_result(f"pelvic_result_{side}_{key}", raw * scale if scale and raw is not None else raw,
+                               " mm" if scale else " su")
+
+    def fragment_plans(self):
+        volume = self.current_image_node()
+        if volume is None or "bone_fragment" in self._hidden_workflows:
+            return []
+        plans = []
+        for side in ("left", "right"):
+            cut, angle = self.fragment_options(side)
+            def points(role, active_side=side):
+                return self.points_for_role(side_role(active_side, role))
+            target = self.planning_node(side, "fragment_pose")
+            if target is None or not target.GetNumberOfControlPoints():
+                continue
+            angle = planning.fragment_rotation(target, angle, [-1, 0, 0], [0, 1, 0])
+            cut_points = points(planning.CUT_ROLES[cut])
+            if len(cut_points) != (2 if cut == "straight" else 3):
+                continue
+            plan = planning.fragment_projection(cut_points, points("fragmentBoundary"),
+                                               points("fragmentTarget"), angle, volume.to_image,
+                                               np.linalg.norm(volume.affine[:3, :2], axis=0), rows_down=True)
+            if plan:
+                plan["side"] = side
+                plans.append(plan)
+        return plans
+
     def _format_result(self, value: float | None, suffix: str) -> str:
         if value is None or not np.isfinite(value):
             return "—"
@@ -1265,20 +1468,33 @@ class BrowserPlacementController(CustomMeasurementMixin, LandmarkReuseMixin):
                 width = abs(projection[2] - projection[0])
                 store("extrusion", 100.0 * (projection[2] - projection[1]) / width if width > 1e-8 else None, "%")
 
+    @staticmethod
+    def visibility_key(key, side):
+        return f"{key}:{side}" if key.startswith("template_") else key
+
     def set_workflow_hidden(self, workflow_key: str, hidden: bool) -> None:
+        if workflow_key == "fragment_pose":
+            workflow_key = "bone_fragment"
+        self.server.state[f"pelvic_hide_{workflow_key}"] = hidden
+        key = self.visibility_key(workflow_key, self.server.state.pelvic_active_side)
         if hidden:
-            self._hidden_workflows.add(workflow_key)
+            self._hidden_workflows.add(key)
         else:
-            self._hidden_workflows.discard(workflow_key)
+            self._hidden_workflows.discard(key)
         self._update_visibility()
 
     def _update_visibility(self) -> None:
         hidden_roles = set()
         known_roles = set()
         for key, workflow in WORKFLOWS.items():
-            hidden = key in self._hidden_workflows
+            visibility_key = "bone_fragment" if key == "fragment_pose" else key
+            if key.startswith("template_"):
+                active_key = self.visibility_key(key, self.server.state.pelvic_active_side)
+                self.server.state[f"pelvic_hide_{key}"] = active_key in self._hidden_workflows
             roles = [step.base_role for step in workflow.steps]
             # Include constructions derived from the tool itself.
+            if key in planning.TOOLS:
+                roles.extend(planning.extra_roles(key))
             roles += {
                 "calibration": ["calibrationCircle"],
                 "femur_head": ["femurHeadCenter", "femurHeadCircle"],
@@ -1307,7 +1523,7 @@ class BrowserPlacementController(CustomMeasurementMixin, LandmarkReuseMixin):
                     else [side_role("left", role), side_role("right", role)]
                 ):
                     known_roles.add(candidate)
-                    if hidden:
+                    if self.visibility_key(visibility_key, candidate.partition("_")[0]) in self._hidden_workflows:
                         hidden_roles.add(candidate)
         for candidate in known_roles:
             visible = candidate not in hidden_roles

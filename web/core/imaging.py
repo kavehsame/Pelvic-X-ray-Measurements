@@ -74,6 +74,7 @@ class Radiograph:
     window: tuple | None = None
     padding: float | None = None
     physical_spacing: bool = False
+    planning_axes: tuple | None = None
 
     @property
     def shape(self):
@@ -366,8 +367,9 @@ def dicom(raw):
     window = (
         (center - width / 2, center + width / 2) if center is not None and width is not None and width > 0 else None
     )
-    measured = ds.get("PixelSpacing", ds.get("ImagerPixelSpacing"))
-    spacing = spacing_pair(measured[::-1]) if measured is not None else (1.0, 1.0)
+    from .planning import dicom_spacing, dicom_ap_axes
+    spacing, metric = dicom_spacing(ds.get("PixelSpacing"), ds.get("ImagerPixelSpacing"))
+    axes = dicom_ap_axes(ds.get("ImageOrientationPatient"), ds.get("PatientOrientation"))
     source = None
     if ds.get("ImageOrientationPatient") and ds.get("ImagePositionPatient"):
         row, column = np.asarray(ds.ImageOrientationPatient, dtype=float).reshape(2, 3)
@@ -380,7 +382,8 @@ def dicom(raw):
         ds.PhotometricInterpretation == "MONOCHROME1",
         window,
         None if padding is None else padding * slope + intercept,
-        measured is not None,
+        metric,
+        axes,
     )
 
 

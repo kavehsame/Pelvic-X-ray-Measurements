@@ -23,6 +23,8 @@ for (const target of document.querySelectorAll("[data-icon]")) target.innerHTML 
 const tools = new Map(), valueBoxes = new Map();
 const resultLabels = {
   calibration: "Calibration", reference: "Reference", lld: "LLD",
+  straight_resection: "Straight cut", step_medial: "Stepped cut · medial", step_lateral: "Stepped cut · lateral",
+  stepped_resection: "Stepped cut · total", inlay_wear: "Inlay wear estimate",
   head: "Head Dia.", ccd: "CCD Angle", tonnis: "AI (Tönnis)", sharp: "Sharp", lce: "LCE",
   acetabular_offset: "Acetab. Off.", femoral_offset: "Femoral Off.", global_offset: "Global Off.",
   extrusion: "Extr. Idx", ccr: "CCR", cti: "CTI", cfi: "CFI",
@@ -31,7 +33,7 @@ const resultLabels = {
   post_acetabular_offset: "Post Acetab. Off.", post_femoral_offset: "Post Femoral Off.", post_global_offset: "Post Global Off.",
 };
 const resultOrder = ["head", "ccd", "tonnis", "sharp", "lce", "acetabular_offset", "femoral_offset", "global_offset", "extrusion",
-  "ccr", "cti", "cfi", "implant_head", "inclination", "ellipse_inclination", "cup_version", "implant_ccd", "stem_alignment",
+  "ccr", "cti", "cfi", "straight_resection", "step_medial", "step_lateral", "stepped_resection", "implant_head", "inlay_wear", "inclination", "ellipse_inclination", "cup_version", "implant_ccd", "stem_alignment",
   "post_acetabular_offset", "post_femoral_offset", "post_global_offset"];
 const ioError = (error) => error?.name === "AbortError";
 
@@ -171,6 +173,7 @@ const viewer = new RadiographViewer($("radiograph"), {
   place: (point) => doAction("place", point, {dirty: true}),
   move: (point) => doAction("move", point, {dirty: true}),
   previewMove: (point) => request("preview_move", point),
+  artwork: (digest) => request("template_image", {digest}),
   window: (window) => doAction("window", window, {dirty: true}),
   previewWindow: (window) => request("preview_window", window),
   previewWindowValues: (window) => {
@@ -179,7 +182,19 @@ const viewer = new RadiographViewer($("radiograph"), {
     $("window-low").value = value.low;
     $("window-high").value = value.high;
   },
-  previewResults: (state) => renderResults(state ?? snap.state),
+  previewResults: (state) => {
+    const shown = state ?? snap.state;
+    renderResults(shown);
+    const fragmentAngle = $("fragment-rotation");
+    if (fragmentAngle && fragmentAngle !== document.activeElement && Number.isFinite(shown.pelvic_fragment_angle)) {
+      fragmentAngle.value = String(Math.round(shown.pelvic_fragment_angle * 10) / 10);
+    }
+    for (const kind of ["cup","stem"]) {
+      const input = tools.get("template_"+kind)?.group.querySelector('input[type="number"]');
+      const angle = shown["pelvic_template_"+kind]?.angle;
+      if (input && Number.isFinite(angle) && input !== document.activeElement) input.value = String(Math.round(angle*10)/10);
+    }
+  },
   finish: () => { if (snap?.active_role) doAction("finish"); },
   panModeChanged: (enabled) => $("pan-button").setAttribute("aria-pressed", String(enabled)),
   zoom: (zoom) => {
@@ -209,7 +224,13 @@ function makeTool(section, key, label, custom = false) {
   toolButton.dataset.key = key;
   const kind = custom ? key.slice(6) : null;
   toolButton.addEventListener("click", async () => {
-    await doAction(custom ? "custom" : "tool", custom ? {kind} : {key}, {dirty: true});
+    if (key === "bone_fragment") await chooseFragment("auto");
+    else {
+      viewer.selectedPlanRole = key.startsWith("template_")
+        ? snap.state.pelvic_active_side + "_planning" + (key.endsWith("cup") ? "Cup" : "Stem") + "Anchor"
+        : null;
+      await doAction(custom ? "custom" : "tool", custom ? {kind} : {key}, {dirty: true});
+    }
     viewer.canvas.focus({preventScroll: true});
   });
   let count;
@@ -244,17 +265,133 @@ function makeTool(section, key, label, custom = false) {
   tools.set(key, {group, button: toolButton, hide, count, custom, kind, options});
 }
 
+async function chooseFragment(mode) {
+  const side = snap.state.pelvic_active_side;
+  const cuts = snap.state.pelvic_available_cuts || [];
+  if (!cuts.length) return;
+  let cut;
+  if (cuts.length === 1) cut = cuts[0];
+  else if (mode === "manual" || !snap.state.pelvic_has_fragment) {
+    cut = await decision("Choose the neck cut", "Both cuts are available on the " + side + " side.", [
+      {label:"Straight",value:"straight"}, {label:"Stepped",value:"stepped"}, {label:"Cancel",value:"cancel"}]);
+    if (!["straight","stepped"].includes(cut)) return;
+  }
+  viewer.selectedPlanRole = mode === "auto" && snap.state.pelvic_has_fragment ? null : side + "_fragmentTarget";
+  await doAction("fragment", {mode, cut}, {dirty: true});
+}
+const planningControls = new Map();
+let implantCatalog = [];
+function planningFields(group, key) {
+  const row = add(group, "div", "", "tool-options plan-options");
+  function field(title, select = true) {
+    const label = add(row, "label", title);
+    const input = add(label, select ? "select" : "input");
+    input.setAttribute("aria-label", title);
+    if (!select) { input.type = "number"; input.min = "-180"; input.max = "180"; input.step = "1"; }
+    return input;
+  }
+  function setOptions(select, items, selected) {
+    const signature = JSON.stringify(items);
+    if (select.dataset.items !== signature) {
+      select.replaceChildren(...items.map(([value, label]) => new Option(label, value)));
+      select.dataset.items = signature;
+    }
+    select.value = selected;
+  }
+  const save = (params) => doAction("planning_options", {key, ...params}, {dirty: true});
+  if (key === "bone_fragment") {
+    row.classList.add("fragment-controls");
+    const manual = add(row, "button", "Trace manually", "quiet");
+    manual.id = "trace-fragment-manually";
+    manual.onclick = () => chooseFragment("manual");
+    const angle = field("Rotation (°)", false);
+    angle.id = "fragment-rotation";
+    angle.step = "0.1";
+    angle.setAttribute("aria-label", "Fragment rotation in degrees");
+    angle.onchange = () => {
+      if (!angle.validity.valid || angle.value === "") {
+        angle.value = snap.state.pelvic_fragment_angle ?? 0;
+        return;
+      }
+      viewer.selectedPlanRole = snap.state.pelvic_active_side + "_fragmentTarget";
+      doAction("planning_options", {key: "fragment_pose", angle: Number(angle.value)}, {dirty: true});
+    };
+    planningControls.set(key, state => {
+      manual.disabled = busy || !snap?.loaded || !state.pelvic_available_cuts?.length;
+      angle.disabled = busy || !state.pelvic_fragment_positioned || state.pelvic_hide_bone_fragment;
+      angle.value = Math.round((state.pelvic_fragment_angle ?? 0) * 10) / 10;
+    });
+  } else {
+    const kind = key.substring(9);
+    const family = field("Implant family"), size = field("Size and reference"), angle = field("Rotation (°)", false);
+    family.parentElement.classList.add("plan-family");
+    function options() {
+      const side = snap?.state?.pelvic_active_side ?? "left";
+      return implantCatalog.filter(x => x.component === kind && (x.side === "both" || x.side === side));
+    }
+    const update = () => save({choice: {id: size.value, angle: Number(angle.value)}});
+    family.onchange = () => {
+      const choices = options().filter(x => x.family === family.value);
+      if (!choices.length) return;
+      setOptions(size, choices.map(x => [x.id, x.size]), choices[0].id);
+      update();
+    };
+    size.onchange = angle.onchange = update;
+    planningControls.set(key, (state) => {
+      const available = options();
+      const choice = state["pelvic_" + key];
+      if (choice?.id && !available.some(x => x.id === choice.id))
+        available.push({id: choice.id, family: "Unavailable template", size: choice.id});
+      const item = available.find(x => x.id === choice?.id) || available[0];
+      const families = [...new Set(available.map(x => x.family))];
+      setOptions(family, families.map(x => [x, x]), item?.family ?? "");
+      setOptions(size, available.filter(x => x.family === item?.family).map(x => [x.id,x.size]), item?.id ?? "");
+      angle.value = choice?.angle ?? 0;
+    });
+  }
+}
+function makeOverlayImport(section) {
+  const row = add(section, "div", "", "tool-row overlay-import-row");
+  const button = add(row, "button", "Import overlay pack…", "tool-button");
+  button.insertAdjacentHTML("afterbegin", icons.folder);
+  button.id = "import-overlays";
+  button.type = "button";
+  const guide = add(row, "a", "How It Works", "overlay-guide-link");
+  guide.id = "overlay-guide";
+  guide.href = overlayGuideURL;
+  guide.target = "_blank";
+  guide.rel = "noopener noreferrer";
+  const picker = add(row, "input");
+  picker.type = "file";
+  picker.accept = ".json,application/json";
+  picker.hidden = true;
+  picker.id = "overlay-file";
+  button.onclick = () => picker.click();
+  picker.onchange = () => run("", async () => {
+    const file = picker.files[0];
+    picker.value = "";
+    if (!file) return;
+    if (file.size > 12 * 1024 * 1024) throw new Error("Choose a pack of 12 MiB or less.");
+    await command("import_overlays", {}, {files: [["overlays", await file.arrayBuffer()]]});
+  });
+}
+
 function renderControls(initial) {
+  implantCatalog = initial.planning_catalog || [];
   const list = $("measurement-tools");
   initial.sections.forEach((section, index) => {
-    if (index === 3) {
+    if (section.label === "6: Contours") {
       const custom = add(list, "section", "", "tool-section");
-      add(custom, "h2", "4: Points & Lines & Angles");
+      add(custom, "h2", "5: Points & Lines & Angles");
       for (const name of ["Point", "Line", "Angle"]) makeTool(custom, "other_" + name.toLowerCase(), name, true);
     }
     const row = add(list, "section", "", "tool-section");
     add(row, "h2", section.label);
-    section.tools.forEach(({key, label}) => makeTool(row, key, label));
+    section.tools.forEach(({key, label}) => {
+      if (key === "template_cup") makeOverlayImport(row);
+      makeTool(row, key, label);
+      if (key.startsWith("template_") || key === "bone_fragment") planningFields(tools.get(key).group, key);
+    });
   });
   function result(container, key, bilateral) {
     const row = add(container, "div", "", "result-row" + (bilateral ? "" : " global"));
@@ -275,6 +412,16 @@ function renderControls(initial) {
 function renderAvailability() {
   const state = snap?.state || {};
   const loaded = !!snap?.loaded;
+  for (const [key, render] of planningControls) {
+    render(state);
+    if (key === "bone_fragment") continue;
+    const unavailable = key.startsWith("template_") && !implantCatalog.length;
+    const choice = state["pelvic_" + key];
+    for (const field of tools.get(key).group.querySelectorAll(".plan-options select, .plan-options input")) {
+      const missing = field.type === "number" && choice?.id && !implantCatalog.some(x => x.id === choice.id);
+      field.disabled = busy || !loaded || unavailable || !!missing;
+    }
+  }
   for (const [key, tool] of tools) {
     const {button, hide, count, custom, kind, group, options} = tool;
     const enabled = custom ? state[`pelvic_other_${kind}_enabled`] : state[`pelvic_enabled_${key}`];
@@ -315,6 +462,7 @@ function renderAvailability() {
 
 async function refresh(next, reset, sync) {
   snap = next;
+  if (next.planning_catalog) implantCatalog = next.planning_catalog;
   const state = next.state;
   $("empty-view").hidden = next.loaded;
   $("side-badge").hidden = !next.loaded;
@@ -850,6 +998,13 @@ for (const button of document.querySelectorAll("[data-export]")) {
   button.addEventListener("click", () => run("", () => exportCase(button.dataset.export, button.dataset.advance === "true")));
 }
 
+// A local document keeps the guide and both example downloads available offline.
+const overlayGuideURL = URL.createObjectURL(new Blob([APP_CONFIG.overlayGuide], {type: "text/html;charset=utf-8"}));
+for (const link of $("manual").querySelectorAll('a[href^="implant-overlays.html"]')) {
+  link.href = overlayGuideURL + link.hash;
+  link.target = "_blank";
+  link.rel = "noopener noreferrer";
+}
 click("manual-button", () => $("manual").showModal());
 for (const btn of document.querySelectorAll("[data-close]")) btn.addEventListener("click", () => btn.closest("dialog").close());
 for (const btn of document.querySelectorAll("[data-jump]")) btn.addEventListener("click", () => $(btn.dataset.jump).scrollIntoView({block: "start"}));

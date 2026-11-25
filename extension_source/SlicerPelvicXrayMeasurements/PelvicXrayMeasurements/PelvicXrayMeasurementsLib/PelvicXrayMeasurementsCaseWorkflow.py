@@ -639,7 +639,10 @@ def load_export_csv_rows(csv_path: str | Path) -> list[dict[str, str]]:
     """Load one exported measurement CSV with the same UTF-8 BOM handling used by the extension."""
 
     with open(filesystem_path(csv_path), newline="", encoding=CSV_EXPORT_ENCODING) as stream:
-        return list(csv.DictReader(stream))
+        reader = csv.DictReader(stream)
+        if not {"section", "name"}.issubset(reader.fieldnames or ()):
+            raise ValueError("Choose a Pelvic X-ray Measurements coordinate CSV.")
+        return list(reader)
 
 
 def _default_neck_axis_options() -> dict[MeasurementKey, dict[SideKey, dict[str, bool]]]:
@@ -680,6 +683,7 @@ def parse_saved_case_metadata(csv_rows: list[dict[str, str]]) -> SavedCaseMetada
         "ImplantNeckAxis_Right_UseSingleGuide": (MeasurementKey.IMPLANT_NECK_AXIS, SideKey.RIGHT, "useSingleGuide"),
     }
 
+    diameters = {}
     for row in csv_rows:
         section = str(row.get("section", "")).strip()
         name = str(row.get("name", "")).strip()
@@ -698,12 +702,15 @@ def parse_saved_case_metadata(csv_rows: list[dict[str, str]]) -> SavedCaseMetada
             metadata["neckAxisOptions"][measurement_key][side_key][option_key] = (
                 str(row.get("raw_value", "0")).strip() == "1"
             )
-        elif section == "measurement" and name == "CalibrationBall_KnownDiameter":
-            value_text = str(row.get("corrected_value_mm", "")).strip()
+        elif section in {"metadata", "measurement"} and name == "CalibrationBall_KnownDiameter":
+            value_text = row.get("corrected_value_mm") or row.get("raw_value") or row.get("details")
+            value_text = str(value_text or "").strip()
             if value_text:
                 diameter = float(value_text)
                 if not math.isfinite(diameter) or diameter <= 0:
                     raise ValueError("The saved calibration-ball diameter must be finite and positive.")
-                metadata["calibrationBallDiameterMm"] = diameter
+                diameters[section] = diameter
 
+    if diameters:
+        metadata["calibrationBallDiameterMm"] = diameters.get("metadata", diameters.get("measurement"))
     return metadata

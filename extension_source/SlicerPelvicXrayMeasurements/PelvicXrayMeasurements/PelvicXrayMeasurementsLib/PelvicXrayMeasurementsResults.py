@@ -6,6 +6,7 @@ small mixin makes result consumers explicit and prevents UI/export code from inv
 from __future__ import annotations
 
 from PelvicXrayMeasurementsConstants import SIDE_KEYS
+from PelvicXrayMeasurementsPlanning import LENGTH_FIELDS, TOOLS
 
 ResultMap = dict[str, object]
 
@@ -19,6 +20,8 @@ class MeasurementResultsMixin:
         """
 
         return {
+            **{key: {"defined": False, "rawValue": None, "correctedValue": None} for key in
+               (*TOOLS, *(key for key, _csv, _label in LENGTH_FIELDS))},
             "femurHead": {
                 "defined": False,
                 "rawValue": None,

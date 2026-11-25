@@ -122,7 +122,10 @@ class Markup:
         return self.attributes.get(key)
 
     def SetAttribute(self, key, value):
-        self.attributes[key] = str(value)
+        if value is None:
+            self.attributes.pop(key, None)
+        else:
+            self.attributes[key] = str(value)
 
     def GetAttributeNames(self, array):
         array.values[:] = sorted(self.attributes)
@@ -199,6 +202,8 @@ class Markup:
 class Volume:
     def __init__(self, pixels, matrix):
         self.pixels = pixels
+        self.planning_metric = False
+        self.planning_axes = ((-1., 0., 0.), (0., 1., 0.))
         self.affine = matrix
         self.inverse = np.linalg.inv(matrix)
 

@@ -11,6 +11,8 @@ import xml.etree.ElementTree as ET
 
 import numpy as np
 
+from . import planning
+from .planning import catalog_menu, transformed_attributes, validate_attributes
 from .auto_placement import feature_specs
 from .csv_export import MEASUREMENTS, write_case_csv
 from .imaging import decode, default_window, display_png, reorient
@@ -20,7 +22,7 @@ from .schema import ROLE_ATTRIBUTE
 from .suggestions import SuggestionController
 from .workflow import WORKFLOWS, WORKFLOW_SECTIONS, BrowserPlacementController
 
-VERSION = "1.7.1"
+VERSION = "1.8.0"
 CUSTOM_KINDS = ("point", "line", "angle")
 CUSTOM_LOCKS = tuple(
     f"pelvic_other_{kind}_{mode}" for kind in ("line", "angle") for mode in ("parallel", "perpendicular")
@@ -78,6 +80,8 @@ class BrowserPlacement(BrowserPlacementController):
                     node = self.node_for_role(role)
                 if role.endswith(("_neckGuideProximal", "_implantNeckGuideProximal")):
                     self.store_axis_options()
+                if role.endswith("_fragmentBoundary"):
+                    node.SetCurveType(0)
                 self._active_node = node
                 self.server.state.pelvic_instruction = step.instruction
                 return
@@ -111,6 +115,9 @@ class BrowserPlacement(BrowserPlacementController):
     def expire_placement(self):
         if self._active_node is None:
             return
+        if self._workflow_key == "bone_fragment":
+            self.finish_fragment()
+            return
         if self._active_node.IsA("vtkMRMLMarkupsCurveNode"):
             self.start(self._workflow_key)
         else:
@@ -125,7 +132,7 @@ class BrowserPlacement(BrowserPlacementController):
         spec = self._node_spec(role)
         pixels = self.current_image_node()
         w, h, _ = pixels.GetDimensions()
-        if not (0 <= x <= w - 1 and 0 <= y <= h - 1):
+        if not np.isfinite([x, y]).all() or (not role.endswith("_fragmentBoundary") and not (0 <= x <= w - 1 and 0 <= y <= h - 1)):
             return False
         required = int(spec.get("completionCount", self._default_completion(spec)))
         coords = pixels.from_image([x, y])
@@ -146,12 +153,28 @@ class BrowserPlacement(BrowserPlacementController):
         return True
 
     def move(self, role, index, x, y):
+        if role.endswith("Rotation"):
+            anchor_role = role.removesuffix("Rotation")
+            side, _, base = anchor_role.partition("_")
+            kind = next((k for k, value in planning.ROTATION_ROLES.items() if value == base), None)
+            if kind is None or side != self.server.state.pelvic_active_side or index != 0 or not np.isfinite([x, y]).all():
+                return False
+            node = self.node_for_role(anchor_role)
+            if node is None or not node.visible or not node.points:
+                return False
+            control = planning.rotation_control(node, kind, side, [-1, 0, 0], [0, 1, 0])
+            if control is None:
+                return False
+            delta = self.current_image_node().from_image([x, y]) - node.points[0]
+            control.drag(node, delta)
+            self.update_derived()
+            return True
         node = self.node_for_role(role)
         if node is None or node.locked or not 0 <= index < len(node.points):
             return False
         volume = self.current_image_node()
         w, h, _ = volume.GetDimensions()
-        xy = np.clip([x, y], [0, 0], [w - 1, h - 1])
+        xy = [x, y] if role.endswith(("_fragmentBoundary","_fragmentTarget")) else np.clip([x, y], [0, 0], [w - 1, h - 1])
         if node.IsA("vtkMRMLMarkupsCurveNode") and self._is_anatomy_edge_contour_role(role):
             candidate = self._edge_snap_candidate_ijk(volume.pixels[np.newaxis, ...], np.array([*xy, 0.0]))
             if candidate is not None:
@@ -235,7 +258,12 @@ class Session:
 
     def orient(self):
         self.image = reorient(self.base_image, self.turns, self.mirrored)
-        self.scene.volume = Volume(self.image.pixels, self.image.native_affine())
+        volume = self.scene.volume = Volume(self.image.pixels, self.image.native_affine())
+        volume.planning_metric = self.image.physical_spacing
+        original_axes = np.asarray(self.base_image.planning_axes if self.base_image.planning_axes is not None else planning.STANDARD_AP)
+        to_original = index_transform(self.base_image.shape, self.turns, self.mirrored)[:2, :2]
+        directions = volume.affine[:3, :2] / self.image.spacing
+        volume.planning_axes = original_axes @ to_original @ directions.T
 
     def has_points(self):
         return any(
@@ -295,6 +323,10 @@ class Session:
         for options in settings.get("axis_options", {}).values():
             if not isinstance(options, (list, tuple)) or len(options) != 2 or any(type(x) is not bool for x in options):
                 raise ValueError("Saved neck-axis options must contain two checkbox values.")
+        for role in tracks:
+            validate_attributes(role, saved.get("attributes", {}).get(role, {}))
+        if saved.get("dimensions") is not None and saved["dimensions"] != list(reversed(self.base_image.shape)):
+            raise ValueError("The CSV and the open image have different dimensions.")
         layout = settings.get("web_layout")
         if layout and not stored_pixels:
             full = reorient(self.base_image, layout["turns"], layout["mirrored"])
@@ -305,21 +337,26 @@ class Session:
         if not 0 < diameter < 1000 or not np.isfinite(diameter):
             raise ValueError("The saved calibration-ball diameter is invalid.")
         affine = saved.get("matrix")
+        if affine is None and saved.get("native_csv"):
+            affine = self.base_image.source_affine
         pixels_from_world = None if affine is None else np.linalg.inv(affine)
         if layout and not stored_pixels:
             self.turns, self.mirrored = int(layout["turns"]) % 4, bool(layout["mirrored"])
             self.orient()
+        transform = np.eye(4)
+        if pixels_from_world is not None:
+            if not layout or stored_pixels:
+                orientation = index_transform(self.base_image.shape, self.turns, self.mirrored)
+                pixels_from_world = np.linalg.solve(orientation, pixels_from_world)
+            transform = self.scene.volume.affine @ pixels_from_world
+        attributes = {role: transformed_attributes(saved.get("attributes", {}).get(role, {}), transform) for role in tracks}
         c.reset_scene_state()
         self.scene.markups.clear()
         for role, track in tracks.items():
-            if pixels_from_world is not None:
-                ij = (pixels_from_world @ np.column_stack((track, np.ones(len(track)))).T).T
-                if not layout or stored_pixels:
-                    ij = (np.linalg.inv(index_transform(self.base_image.shape, self.turns, self.mirrored)) @ ij.T).T
-                track = (self.scene.volume.affine @ ij.T).T[:, :3]
+            track = (transform @ np.column_stack((track, np.ones(len(track)))).T).T[:, :3]
             c.put_points(role, track)
             node = c.node_for_role(role)
-            for key, value in saved.get("attributes", {}).get(role, {}).items():
+            for key, value in attributes[role].items():
                 if key != ROLE_ATTRIBUTE and key.startswith("PelvicXrayMeasurements."):
                     node.SetAttribute(key, value)
             node.SetCurveType(int(saved.get("curve_types", {}).get(role, 1)))
@@ -334,11 +371,19 @@ class Session:
         for side in ("left", "right"):
             for kind in ("neck", "implant_neck"):
                 key = f"{side}_{kind}"
-                if key in settings.get("axis_options", {}):
-                    c._axis_options[side, kind] = tuple(map(bool, settings["axis_options"][key]))
-        c._hidden_workflows = set(settings.get("hidden_workflows", ())) & WORKFLOWS.keys()
+                c._axis_options[side, kind] = tuple(settings.get("axis_options", {}).get(key, (False, False)))
+        saved_hidden = set(settings.get("hidden_workflows", ()))
+        # Older web scenes used one checkbox for both implants. Expand that
+        # setting on import, then allow each side to be shown independently.
+        c._hidden_workflows = {
+            c.visibility_key(key, side) for key in WORKFLOWS for side in ("left", "right")
+            if key in saved_hidden or c.visibility_key(key, side) in saved_hidden
+        }
+        if "fragment_pose" in c._hidden_workflows:
+            c._hidden_workflows.discard("fragment_pose")
+            c._hidden_workflows.add("bone_fragment")
         for key in WORKFLOWS:
-            state[f"pelvic_hide_{key}"] = key in c._hidden_workflows
+            state[f"pelvic_hide_{key}"] = c.visibility_key(key, state.pelvic_active_side) in c._hidden_workflows
         for kind in CUSTOM_KINDS:
             state[f"pelvic_hide_other_{kind}"] = kind in settings.get("hidden_custom", ())
         lo, hi = settings.get("window", (self.low, self.high))
@@ -359,6 +404,8 @@ class Session:
                 if not node.visible:
                     continue
                 role = node.GetAttribute(ROLE_ATTRIBUTE)
+                if role.endswith("_fragmentBoundary") and node is not controller._active_node:
+                    continue
                 model = node.classname == "vtkMRMLModelNode"
                 path = node.path.points if model else node.points
                 if path:
@@ -371,8 +418,10 @@ class Session:
                         if node.classname.endswith("LineNode")
                         else "points"
                     )
+                    image = node.GetAttribute("PXM.TemplateArtwork") if model else None
                     markups.append(
                         dict(
+                            **({"artwork": image} if image else {}),
                             role=role,
                             name=node.GetName(),
                             kind=kind,
@@ -384,9 +433,27 @@ class Session:
                         )
                     )
         active = controller._active_node
+        handles = {}
+        visible = {m["role"] for m in markups}
+        fragments = controller.fragment_plans()
+        fragment_sides = {plan["side"] for plan in fragments}
+        for side in ("left", "right"):
+            for kind, base in planning.ROTATION_ROLES.items():
+                role = f"{side}_{base}"
+                drawn = side in fragment_sides if kind == "fragment" else role + "Outline" in visible
+                if role not in visible or not drawn:
+                    continue
+                node = controller.node_for_role(role)
+                pivot = node.points[0]
+                control = planning.rotation_control(node, kind, side, [-1, 0, 0], [0, 1, 0])
+                if control is not None:
+                    handles[role] = [volume.to_image(pivot), volume.to_image(pivot + control.ray())]
         return dict(
+            rotation_handles=handles,
+            template_handles={role: ray for role, ray in handles.items() if role.endswith("Anchor")},
             state=dict(state),
             markups=markups,
+            fragments=fragments,
             loaded=volume is not None,
             annotated=self.has_points(),
             active_role=active.GetAttribute(ROLE_ATTRIBUTE) if active else None,
@@ -431,6 +498,13 @@ def operation(action, args):
     s, result, render = session, {}, False
     c = s.controller
     state = s.settings
+    if action == "template_image":
+        from PIL import Image
+        png = planning.artwork_bytes(args["digest"])
+        with Image.open(BytesIO(png)) as drawing:
+            grid = planning.artwork_hit_grid(np.asarray(drawing.convert("RGBA").getchannel("A")))
+        return {"grid": list(grid.shape), "files": {"png": write_transfer("implant.png", png),
+                "hit": write_transfer("implant-hit.bin", grid.astype(np.uint8).tobytes())}}
     if action == "configure":
         result.update(
             version=VERSION,
@@ -439,6 +513,7 @@ def operation(action, args):
                 for label, rows in WORKFLOW_SECTIONS
             ],
             result_keys=list(MEASUREMENTS),
+            planning_catalog=catalog_menu(),
             file_suffixes=FILE_SUFFIXES,
         )
     elif action == "load":
@@ -471,8 +546,20 @@ def operation(action, args):
         s.restore(read_csv(read_transfer("annotations")))
         s.settings.pelvic_instruction = "Saved coordinates and comments restored."
         render = True
+    elif action == "import_overlays":
+        count = planning.import_overlays(read_transfer("overlays"))
+        c.update_derived()
+        result["planning_catalog"] = catalog_menu()
+        state.pelvic_instruction = f"{count} overlay entries available for this session."
+    elif action == "fragment":
+        c.retained_bone(args.get("mode", "auto"), args.get("cut"))
+    elif action == "planning_options":
+        c.planning_options(args)
     elif action == "tool":
-        c.start(args["key"])
+        if args["key"] == "bone_fragment":
+            c.retained_bone(kind=args.get("cut"))
+        else:
+            c.start(args["key"])
     elif action == "place":
         result["edited"] = c.place(float(args["x"]), float(args["y"]))
     elif action in {"move", "preview_move"}:
@@ -494,7 +581,6 @@ def operation(action, args):
     elif action == "hide":
         key, hidden = args["key"], bool(args["hidden"])
         if key in WORKFLOWS:
-            state[f"pelvic_hide_{key}"] = hidden
             c.set_workflow_hidden(key, hidden)
         elif key in {f"other_{kind}" for kind in CUSTOM_KINDS}:
             c.set_custom_hidden(key.removeprefix("other_"), hidden)

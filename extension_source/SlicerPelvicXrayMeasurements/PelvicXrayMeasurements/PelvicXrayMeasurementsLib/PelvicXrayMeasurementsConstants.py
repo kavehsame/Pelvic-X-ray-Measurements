@@ -10,6 +10,9 @@ import re
 from enum import Enum
 
 
+from PelvicXrayMeasurementsPlanning import LENGTH_FIELDS, TOOLS as PLANNING_TOOLS, extra_roles
+
+
 class StringEnum(str, Enum):
     """Compatibility-safe string enum for Slicer's Python runtime.
 
@@ -34,6 +37,13 @@ class SideKey(StringEnum):
 class MeasurementKey(StringEnum):
     """Stable identifiers for logical measurement families throughout the module."""
 
+    STRAIGHT_RESECTION = "straight_resection"
+    STEPPED_RESECTION = "stepped_resection"
+    BONE_FRAGMENT = "bone_fragment"
+    FRAGMENT_POSE = "fragment_pose"
+    CUP_CENTER = "cup_center"
+    TEMPLATE_CUP = "template_cup"
+    TEMPLATE_STEM = "template_stem"
     CALIBRATION = "calibration"
     REFERENCE_LINE = "referenceLine"
     LLD = "lld"
@@ -82,7 +92,7 @@ LIB_DIR = os.path.dirname(__file__)
 MODULE_DIR = os.path.dirname(LIB_DIR)
 
 MODULE_NAME = "PelvicXrayMeasurements"
-MODULE_VERSION = "V1.7.1"
+MODULE_VERSION = "V1.8.0"
 ROLE_ATTRIBUTE = f"{MODULE_NAME}.Role"
 ACTIVE_SIDE_BADGE_ROLE = "activeSideBadge"
 CALIBRATION_BALL_DIAMETER_MM = 25.0
@@ -167,6 +177,7 @@ NECK_AXIS_MEASUREMENT_KEYS = (
 )
 
 SIDE_MEASUREMENT_KEYS = (
+    *(MeasurementKey(key) for key in PLANNING_TOOLS),
     MeasurementKey.FEMUR_HEAD,
     MeasurementKey.SHAFT_AXIS,
     MeasurementKey.NECK_AXIS,
@@ -195,6 +206,7 @@ SIDE_MEASUREMENT_KEYS = (
 )
 
 MEASUREMENT_ROLE_GROUPS = {
+    **{MeasurementKey(key): [spec[1], *extra_roles(key)] for key, spec in PLANNING_TOOLS.items()},
     MeasurementKey.CALIBRATION: ["calibrationPoints", "calibrationCircle"],
     MeasurementKey.REFERENCE_LINE: ["referenceLine"],
     MeasurementKey.LLD: [
@@ -258,6 +270,7 @@ MEASUREMENT_ROLE_GROUPS = {
 }
 
 MEASUREMENT_RESULT_GROUPS = {
+    **{MeasurementKey(key): ("side", key) for key in PLANNING_TOOLS},
     MeasurementKey.CALIBRATION: ("global", "calibration"),
     MeasurementKey.REFERENCE_LINE: ("global", "referenceLine"),
     MeasurementKey.LLD: ("global", "lld"),
@@ -314,6 +327,7 @@ IMAGE_OVERLAY_MEASUREMENT_ORDER = (
     ("sideRatio", "canalThicknessIndex", "CTI"),
     ("sideRatio", "canalFlareIndex", "CFI"),
     ("globalLength", "lld", "LLD"),
+    *(("sideLength", key, title) for key, _csv, title in LENGTH_FIELDS),
     ("sideLength", "implantHead", "ImplHead"),
     ("sideAngle", "acetabularInclinationAngle", "Incl FH"),
     ("sideAngle", "cupOpeningEllipseInclinationAngle", "Incl E"),

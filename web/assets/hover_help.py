@@ -1,6 +1,12 @@
 """Concise web hover text; full workflows are in the user manual."""
 
 HELP = {
+    "straight_resection": ("Straight Neck Resection", "Mark the medial and lateral cut ends."),
+    "stepped_resection": ("Stepped Neck Resection", "Mark the medial end, the step and the lateral end."),
+    "bone_fragment": ("Retained Bone Fragment Placement", "Drag the fragment or its point to move it. Drag the round handle to rotate. Click the button again to reset."),
+    "cup_center": ("Cup Center", "Fit three points on the spherical outer shell, away from the opening ellipse."),
+    "template_stem": ("Place Stem Template", "Drag the stem to move it. Drag the round handle to rotate it."),
+    "template_cup": ("Place Cup Template", "Drag the cup to move it. Drag the round handle to rotate it."),
     "calibration": (
         "Calibration Ball",
         "Enter the known ball diameter, then place three points around its boundary.",
@@ -142,6 +148,11 @@ HELP = {
 }
 
 RESULTS = {
+    "straight_resection": ("Straight cut", "Distance between the two cut ends."),
+    "step_medial": ("Medial segment", "Distance from the medial end to the corner."),
+    "step_lateral": ("Lateral segment", "Distance from the corner to the lateral end."),
+    "stepped_resection": ("Stepped cut", "Sum of its two segment lengths."),
+    "inlay_wear": ("Inlay wear estimate", "Projected head-to-shell centre distance on this film. Serial films are needed to measure change."),
     "head": ("Native Head Diameter", "Diameter of the fitted native-head circle."),
     "ccd": ("CCD Angle", "Obtuse angle between native neck and shaft axes."),
     "tonnis": (

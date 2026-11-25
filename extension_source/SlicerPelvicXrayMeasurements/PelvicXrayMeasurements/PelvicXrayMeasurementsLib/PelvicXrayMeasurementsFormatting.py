@@ -164,7 +164,7 @@ def _side_overlay_entries(results: ResultsMap, formatter_by_kind: Mapping[str, A
             continue
 
         for side_key in IMAGE_OVERLAY_SIDE_ORDER:
-            measurement = results["sides"][side_key][result_key]
+            measurement = results["sides"][side_key].get(result_key, {})
             value_text = formatter(measurement)
             if value_text:
                 entries.append(f"{SIDE_LABELS[side_key][0]} {label} {value_text}")

@@ -8,6 +8,8 @@ extension.
 from __future__ import annotations
 
 
+from .planning import node_specs as planning_specs
+
 ROLE_ATTRIBUTE = "PelvicXrayMeasurements.Role"
 POINT_GLYPH_FACTOR = 0.55 * 1.25
 EXPORTED_POINT_RADIUS = 4.4 * 1.25
@@ -296,3 +298,5 @@ def _add_bilateral_specs() -> None:
 
 
 _add_bilateral_specs()
+for _side in SIDE_LABELS:
+    NODE_SPECS.update(planning_specs(_side))

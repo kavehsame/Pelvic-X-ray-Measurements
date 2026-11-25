@@ -883,6 +883,8 @@ class WorkflowActionsMixin:
             not bool(checked),
             self._measurement_side_key(measurement_key),
         )
+        if measurement_key in (MeasurementKey.BONE_FRAGMENT, MeasurementKey.FRAGMENT_POSE):
+            self.logic.update_fragment_display(self.current_image_node())
         self.refresh_ui()
 
     def _warn(self, message: Any) -> None:

@@ -6,9 +6,11 @@ workflow actions live in focused companion modules inside `PelvicXrayMeasurement
 """
 from __future__ import annotations
 
+import json
 import logging
 import os
 import sys
+import webbrowser
 from pathlib import Path
 from typing import Any
 
@@ -65,7 +67,10 @@ from PelvicXrayMeasurementsConstants import (
     SIDE_LABELS,
     SIDE_MEASUREMENT_KEYS,
 )
+import PelvicXrayMeasurementsPlanning as planning
+from PelvicXrayMeasurementsPlanInteraction import PlanInteractionMixin
 from PelvicXrayMeasurementsCalculations import MeasurementCalculationMixin
+import PelvicXrayMeasurementsTemplateDisplay as template_display
 from PelvicXrayMeasurementsAutoPlacement import (
     enforce_morphology_side_constraints,
     feature_specs,
@@ -83,6 +88,7 @@ from PelvicXrayMeasurementsCaseWorkflow import (
     path_exists,
 )
 from PelvicXrayMeasurementsCaseExport import CaseExportMixin
+from PelvicXrayMeasurementsCSVImport import apply_csv, prepare_csv
 from PelvicXrayMeasurementsFormatting import (
     build_measurement_overlay_text,
     format_calibration_summary,
@@ -140,6 +146,7 @@ class PelvicXrayMeasurements(ScriptedLoadableModule):
 
 
 class PelvicXrayMeasurementsWidget(
+    PlanInteractionMixin,
     WorkflowActionsMixin,
     AnnotationImageExportMixin,
     ScriptedLoadableModuleWidget,
@@ -212,13 +219,16 @@ class PelvicXrayMeasurementsWidget(
         """
 
         self._restore_standard_application_layout()
+        self._detach_plan_view()
         self.removeObservers()
+        self.logic = None  # Ignore deferred scene refreshes after the Qt controls are destroyed.
 
     def enter(self) -> None:
         """Widget helper for enter. Keeping UI responsibilities in small methods makes the large
         measurement interface easier to follow and maintain.
         """
 
+        self._plan_view_enabled = True
         self._set_default_extension_layout()
         self.logic.ensure_nodes()
         self._observe_scene_and_nodes()
@@ -229,6 +239,8 @@ class PelvicXrayMeasurementsWidget(
     def exit(self) -> None:
         """Restore Slicer's default multi-panel layout when the user leaves this module."""
 
+        self._plan_view_enabled = False
+        self._detach_plan_view()
         self._restore_standard_application_layout()
 
     def _build_ui(self) -> None:
@@ -372,6 +384,10 @@ class PelvicXrayMeasurementsWidget(
         ball_controls_layout.addWidget(self.ball_not_present_check)
         ball_controls_layout.addStretch(1)
         case_layout.addRow("Ball Diameter", ball_controls)
+        self.open_csv_button = qt.QPushButton("Open a CSV…")
+        self.open_csv_button.setToolTip("Restore annotations for the open image from a PXM measurements CSV.")
+        self.open_csv_button.connect("clicked(bool)", self.on_open_csv)
+        case_layout.addRow(self.open_csv_button)
 
         self.instructions_label = qt.QLabel(
             "Start with the calibration ball using the diameter entered above, "
@@ -399,6 +415,12 @@ class PelvicXrayMeasurementsWidget(
     def _initialize_measurement_controls(self) -> None:
         """Instantiate measurement and export action widgets without applying scene state."""
 
+        self.planning_buttons = {
+            MeasurementKey(key): qt.QPushButton(spec[0])
+            for key, spec in planning.TOOLS.items() if key != "fragment_pose"
+        }
+        self.planning_fields = {}
+        self.planning_combo_choices = {}
         self.calibration_button = qt.QPushButton("Calibration Ball")
         self.reference_line_button = qt.QPushButton("Reference Line")
         self.auto_place_button = qt.QPushButton("Auto-place points…")
@@ -495,6 +517,7 @@ class PelvicXrayMeasurementsWidget(
             self.export_image_button,
         ]
         self.measurement_buttons = {
+            **self.planning_buttons,
             MeasurementKey.CALIBRATION: self.calibration_button,
             MeasurementKey.REFERENCE_LINE: self.reference_line_button,
             MeasurementKey.FEMUR_HEAD: self.femur_head_button,
@@ -535,6 +558,7 @@ class PelvicXrayMeasurementsWidget(
         """Connect button callbacks and apply their baseline styling."""
 
         buttons = [
+            *((btn, lambda _checked=False, key=key: self._start_planning(key)) for key, btn in self.planning_buttons.items()),
             (self.calibration_button, self.on_calibration_clicked),
             (self.reference_line_button, self.on_reference_line_clicked),
             (self.auto_place_button, self.on_auto_place_clicked),
@@ -751,7 +775,9 @@ class PelvicXrayMeasurementsWidget(
             0,
         )
         row_index += 1
-        workflow_layout.addWidget(self._measurement_title_label("3: Post-Operative (THA)"), row_index, 0)
+        workflow_layout.addWidget(self._planning_panel(), row_index, 0)
+        row_index += 1
+        workflow_layout.addWidget(self._measurement_title_label("4: Post-Operative (THA)"), row_index, 0)
         row_index += 1
         workflow_layout.addWidget(
             self._measurement_row_widget(
@@ -761,6 +787,8 @@ class PelvicXrayMeasurementsWidget(
             row_index,
             0,
         )
+        row_index += 1
+        workflow_layout.addWidget(self._measurement_row_widget(self.planning_buttons[MeasurementKey.CUP_CENTER], MeasurementKey.CUP_CENTER), row_index, 0)
         row_index += 1
         workflow_layout.addWidget(
             self._measurement_row_widget(
@@ -829,7 +857,7 @@ class PelvicXrayMeasurementsWidget(
             0,
         )
         row_index += 1
-        workflow_layout.addWidget(self._measurement_title_label("4: Points & Lines & Angles"), row_index, 0)
+        workflow_layout.addWidget(self._measurement_title_label("5: Points & Lines & Angles"), row_index, 0)
         row_index += 1
         workflow_layout.addWidget(
             self._counted_measurement_row_widget(
@@ -863,7 +891,7 @@ class PelvicXrayMeasurementsWidget(
             0,
         )
         row_index += 1
-        workflow_layout.addWidget(self._measurement_title_label("5: Contours"), row_index, 0)
+        workflow_layout.addWidget(self._measurement_title_label("6: Contours"), row_index, 0)
         row_index += 1
         for contour_button, contour_key in [
             (self.iliopectineal_line_button, MeasurementKey.ILIOPECTINEAL_LINE),
@@ -892,9 +920,195 @@ class PelvicXrayMeasurementsWidget(
         self._populate_results_layout(results_layout)
         return results_section
 
+    def _start_planning(self, key):
+        title, base, _count, _colour, instruction = planning.TOOLS[key]
+        side = self.current_side_key()
+        role = self.logic.side_role(base, side)
+        if key == MeasurementKey.BONE_FRAGMENT:
+            self._retain_bone()
+            return
+        if str(key).startswith("template_"):
+            self._selected_plan_kind = str(key).removeprefix("template_")
+        self.logic.reset_roles([role], self.current_image_node())
+        self._start_workflow(f"{side.title()} {title}",
+            [{"role": role, "persistent": True, "instruction": instruction}], instruction,
+            measurement_key=key, side_key=side)
+
+    def _planning_panel(self):
+        panel = qt.QWidget()
+        layout = qt.QVBoxLayout(panel)
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setSpacing(4)
+        layout.addWidget(self._measurement_title_label("3: Planning"))
+
+        self.import_overlay_button = qt.QPushButton("Import overlay pack…")
+        self.import_overlay_button.connect("clicked(bool)", self._import_overlay_file)
+        self.import_overlay_button.setSizePolicy(qt.QSizePolicy.Expanding, qt.QSizePolicy.Fixed)
+        self.import_overlay_button.setMinimumHeight(32)
+        self.import_overlay_button.setIcon(panel.style().standardIcon(qt.QStyle.SP_DirOpenIcon))
+        self.import_overlay_button.setStyleSheet(
+            "QPushButton { background: palette(alternate-base); color: palette(text); "
+            "border: 1px solid #718da3; border-radius: 6px; padding: 5px 10px; font-weight: 600; } "
+            "QPushButton:hover { border-color: #4f7594; } "
+            "QPushButton:focus { border: 2px solid palette(highlight); }"
+        )
+        for key, button in self.planning_buttons.items():
+            if key == MeasurementKey.CUP_CENTER:
+                continue
+            if key in (MeasurementKey.BONE_FRAGMENT, MeasurementKey.TEMPLATE_STEM):
+                layout.addSpacing(3)
+            if key == MeasurementKey.TEMPLATE_CUP:
+                layout.addSpacing(4)
+                divider = qt.QFrame()
+                divider.setFrameShape(qt.QFrame.HLine)
+                divider.setFrameShadow(qt.QFrame.Plain)
+                divider.setStyleSheet("color: palette(mid);")
+                layout.addWidget(divider)
+                layout.addSpacing(2)
+                import_row = qt.QWidget()
+                controls = qt.QHBoxLayout(import_row)
+                controls.setContentsMargins(0, 0, 0, 0)
+                controls.setSpacing(6)
+                controls.addWidget(self.import_overlay_button, 1)
+                self.overlay_guide_button = qt.QPushButton("How It Works")
+                self.overlay_guide_button.setMinimumHeight(32)
+                self.overlay_guide_button.connect("clicked(bool)", self._open_overlay_guide)
+                controls.addWidget(self.overlay_guide_button)
+                layout.addWidget(import_row)
+            layout.addWidget(self._measurement_row_widget(button, key))
+            extra = self._planning_controls(str(key))
+            if extra is not None:
+                layout.addWidget(extra)
+        return panel
+
+    def _open_overlay_guide(self, _checked=False):
+        guide = Path(MODULE_DIR) / "Resources" / "implant-overlays.html"
+        if not guide.is_file():
+            slicer.util.errorDisplay("The implant overlay guide is missing from this installation.")
+            return
+        if not webbrowser.open_new_tab(guide.resolve().as_uri()):
+            if not qt.QDesktopServices.openUrl(qt.QUrl.fromLocalFile(str(guide))):
+                slicer.util.errorDisplay(f"Open this guide in your browser:\n{guide}")
+
+    def _planning_controls(self, key):
+        if not (key.startswith("template_") or key == "bone_fragment"):
+            return None
+        widget = qt.QWidget()
+        layout = qt.QGridLayout(widget)
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setHorizontalSpacing(10)
+        layout.setVerticalSpacing(3)
+        layout.setColumnStretch(0, 1)
+        layout.setColumnMinimumWidth(1, 84)
+        fields = self.planning_fields[key] = {}
+        fields["angle"] = angle = qt.QDoubleSpinBox()
+        angle.setRange(-180, 180)
+        angle.setSuffix("°")
+        angle.setDecimals(1)
+        angle.setMinimumHeight(28)
+
+        def add_label(text, control, row, col, span=1):
+            label = qt.QLabel(text)
+            label.setBuddy(control)
+            label.setStyleSheet("QLabel { font-size: 12px; }")
+            layout.addWidget(label, row, col, 1, span)
+
+        if key == "bone_fragment":
+            self.fragment_manual_button = qt.QPushButton("Trace manually")
+            self.fragment_manual_button.connect("clicked(bool)", lambda _checked=False: self._retain_bone("manual"))
+            self.fragment_manual_button.setMinimumHeight(28)
+            layout.addWidget(self.fragment_manual_button, 1, 0)
+            add_label("Rotation", angle, 0, 1)
+            layout.addWidget(angle, 1, 1)
+            angle.setAccessibleName("Fragment rotation in degrees")
+            angle.setSingleStep(0.1)
+        else:
+            for name, title, row, span in (("family", "Implant family", 0, 2), ("size", "Size and reference", 2, 1)):
+                fields[name] = control = qt.QComboBox()
+                control.setMinimumContentsLength(6)
+                control.setSizeAdjustPolicy(qt.QComboBox.AdjustToMinimumContentsLengthWithIcon)
+                control.setSizePolicy(qt.QSizePolicy.Expanding, qt.QSizePolicy.Fixed)
+                control.setMinimumHeight(28)
+                add_label(title, control, row, 0, span)
+                layout.addWidget(control, row + 1, 0, 1, span)
+                control.connect("currentIndexChanged(int)", lambda _i, name=name: self._edit_plan(key, name))
+            add_label("Rotation", angle, 2, 1)
+            layout.addWidget(angle, 3, 1)
+        angle.connect("valueChanged(double)", lambda _value: self._edit_plan(key, "angle"))
+        return widget
+
+    def _edit_plan(self, key, field):
+        if self.logic is None or self.current_image_node() is None:
+            return
+        side = self.current_side_key()
+        node = self._plan_node("fragmentTarget" if key == "bone_fragment" else planning.TOOLS[key][1])
+        controls = self.planning_fields[key]
+        if key == "bone_fragment":
+            self._selected_plan_kind = "fragment"
+            node.SetAttribute(planning.FRAGMENT_ANGLE, str(controls["angle"].value))
+        else:
+            ident = controls["size"].itemData(controls["size"].currentIndex)
+            if field == "family":
+                ident = next((x["id"] for x in planning.ITEMS.values() if x["family"] == controls["family"].itemData(controls["family"].currentIndex)
+                              and x["side"] in ("both", side)), None)
+            if ident not in planning.ITEMS:
+                return
+            choice = planning.template_choice(key.removeprefix("template_"), {"id": ident, "angle": controls["angle"].value}, side)
+            node.SetAttribute(planning.TEMPLATE_ATTRIBUTE, json.dumps(choice))
+        self._set_case_dirty(True)
+        self.logic.update_all_derived_measurements(self.current_image_node())
+        self.refresh_ui()
+
+    def _sync_planning_controls(self):
+        side = self.current_side_key()
+        for key, fields in self.planning_fields.items():
+            node = self._plan_node("fragmentTarget" if key == "bone_fragment" else planning.TOOLS[key][1])
+            for field in fields.values():
+                field.blockSignals(True)
+            try:
+                if key == "bone_fragment":
+                    self.fragment_manual_button.enabled = bool(self.current_image_node() and planning.available_cuts(
+                        lambda base: self.logic._defined_points(self._plan_node(base))))
+                    fields["angle"].enabled = side in getattr(self.logic, "_fragment_hit_plans", {})
+                    fields["angle"].setValue(float(node.GetAttribute(planning.FRAGMENT_ANGLE) or 0))
+                else:
+                    component = key.removeprefix("template_")
+                    choice = planning.template_choice(component, node.GetAttribute(planning.TEMPLATE_ATTRIBUTE), side, allow_missing=True)
+                    if not choice:
+                        continue
+                    item = planning.ITEMS.get(choice["id"], {"family": "Unavailable template", "id": choice["id"]})
+                    eligible = [x for x in planning.ITEMS.values() if x["side"] in ("both", side) and x["component"] == component]
+                    if choice["id"] not in planning.ITEMS:
+                        eligible.append(dict(item, size=choice["id"]))
+                    families = dict.fromkeys(x["family"] for x in eligible)
+                    for name, choices, selected in (
+                        ("family", [(f, f) for f in families], item["family"]),
+                        ("size", [(x["size"], x["id"]) for x in eligible if x["family"] == item["family"]], item["id"]),
+                    ):
+                        box = fields[name]
+                        if self.planning_combo_choices.get((key, name)) != choices:
+                            box.clear()
+                            for text, value in choices:
+                                box.addItem(text, value)
+                            self.planning_combo_choices[key, name] = choices
+                        box.setCurrentIndex(box.findData(selected))
+                    fields["angle"].setValue(choice["angle"])
+            finally:
+                for field in fields.values():
+                    field.blockSignals(False)
+
+    def _planning_result_row(self, layout, row, key, label):
+        layout.addWidget(qt.QLabel(label), row, 0)
+        for col, side in enumerate(("right", "left"), 1):
+            field = self.planning_values[side, key] = self._read_only_field()
+            if key == "inlay_wear":
+                field.setToolTip(planning.WEAR_HELP)
+            layout.addWidget(field, row, col)
+
     def _initialize_results_fields(self) -> None:
         """Instantiate the result display fields used by the results panel."""
 
+        self.planning_values = {}
         self.calibration_value = self._read_only_field()
         self.reference_value = self._read_only_field()
         self.left_extrusion_index_value = self._read_only_field()
@@ -1008,39 +1222,43 @@ class PelvicXrayMeasurementsWidget(
         results_layout.addWidget(self.left_cfi_value, 16, 2)
         results_layout.addWidget(qt.QLabel("LLD"), 17, 0)
         results_layout.addWidget(self.lld_value, 17, 1, 1, 2)
-        results_layout.addWidget(self._measurement_title_label("3: Post-Operative (THA)"), 18, 0, 1, 3)
-        results_layout.addWidget(postop_left_header, 19, 1)
-        results_layout.addWidget(postop_right_header, 19, 2)
-        results_layout.addWidget(qt.QLabel("Impl. Head Dia."), 20, 0)
-        results_layout.addWidget(self.right_implant_head_value, 20, 1)
-        results_layout.addWidget(self.left_implant_head_value, 20, 2)
-        results_layout.addWidget(qt.QLabel("Inclination (FH)"), 21, 0)
-        results_layout.addWidget(self.right_inclination_angle_value, 21, 1)
-        results_layout.addWidget(self.left_inclination_angle_value, 21, 2)
-        results_layout.addWidget(qt.QLabel("Inclination (E)"), 22, 0)
-        results_layout.addWidget(self.right_cup_opening_ellipse_inclination_value, 22, 1)
-        results_layout.addWidget(self.left_cup_opening_ellipse_inclination_value, 22, 2)
-        results_layout.addWidget(qt.QLabel("Cup Ant/Ret An."), 23, 0)
-        results_layout.addWidget(self.right_cup_anteversion_retroversion_value, 23, 1)
-        results_layout.addWidget(self.left_cup_anteversion_retroversion_value, 23, 2)
-        results_layout.addWidget(qt.QLabel("Impl. Fem. CCD"), 24, 0)
-        results_layout.addWidget(self.right_implant_femoral_ccd_value, 24, 1)
-        results_layout.addWidget(self.left_implant_femoral_ccd_value, 24, 2)
-        results_layout.addWidget(qt.QLabel("Stem Align."), 25, 0)
-        results_layout.addWidget(self.right_implant_alignment_value, 25, 1)
-        results_layout.addWidget(self.left_implant_alignment_value, 25, 2)
-        results_layout.addWidget(qt.QLabel("Acetab. Off."), 26, 0)
-        results_layout.addWidget(self.right_postop_acetabular_offset_value, 26, 1)
-        results_layout.addWidget(self.left_postop_acetabular_offset_value, 26, 2)
-        results_layout.addWidget(qt.QLabel("Femoral Off."), 27, 0)
-        results_layout.addWidget(self.right_postop_femoral_offset_value, 27, 1)
-        results_layout.addWidget(self.left_postop_femoral_offset_value, 27, 2)
-        results_layout.addWidget(qt.QLabel("Global Off."), 28, 0)
-        results_layout.addWidget(self.right_postop_global_offset_value, 28, 1)
-        results_layout.addWidget(self.left_postop_global_offset_value, 28, 2)
-        results_layout.addWidget(self._measurement_title_label("4: Points & Lines & Angles"), 29, 0, 1, 3)
-        results_layout.addWidget(self.other_results_container, 30, 0, 1, 3)
-        results_layout.addWidget(self._subtle_note_label("su = scene units"), 31, 0, 1, 3)
+        results_layout.addWidget(self._measurement_title_label("3: Planning"), 18, 0, 1, 3)
+        for row, (key, _name, label) in enumerate(planning.LENGTH_FIELDS[:-1], 19):
+            self._planning_result_row(results_layout, row, key, label)
+        results_layout.addWidget(self._measurement_title_label("4: Post-Operative (THA)"), 23, 0, 1, 3)
+        results_layout.addWidget(postop_left_header, 24, 1)
+        results_layout.addWidget(postop_right_header, 24, 2)
+        results_layout.addWidget(qt.QLabel("Impl. Head Dia."), 25, 0)
+        results_layout.addWidget(self.right_implant_head_value, 25, 1)
+        results_layout.addWidget(self.left_implant_head_value, 25, 2)
+        self._planning_result_row(results_layout, 26, "inlay_wear", "Inlay wear estimate")
+        results_layout.addWidget(qt.QLabel("Inclination (FH)"), 27, 0)
+        results_layout.addWidget(self.right_inclination_angle_value, 27, 1)
+        results_layout.addWidget(self.left_inclination_angle_value, 27, 2)
+        results_layout.addWidget(qt.QLabel("Inclination (E)"), 28, 0)
+        results_layout.addWidget(self.right_cup_opening_ellipse_inclination_value, 28, 1)
+        results_layout.addWidget(self.left_cup_opening_ellipse_inclination_value, 28, 2)
+        results_layout.addWidget(qt.QLabel("Cup Ant/Ret An."), 29, 0)
+        results_layout.addWidget(self.right_cup_anteversion_retroversion_value, 29, 1)
+        results_layout.addWidget(self.left_cup_anteversion_retroversion_value, 29, 2)
+        results_layout.addWidget(qt.QLabel("Impl. Fem. CCD"), 30, 0)
+        results_layout.addWidget(self.right_implant_femoral_ccd_value, 30, 1)
+        results_layout.addWidget(self.left_implant_femoral_ccd_value, 30, 2)
+        results_layout.addWidget(qt.QLabel("Stem Align."), 31, 0)
+        results_layout.addWidget(self.right_implant_alignment_value, 31, 1)
+        results_layout.addWidget(self.left_implant_alignment_value, 31, 2)
+        results_layout.addWidget(qt.QLabel("Acetab. Off."), 32, 0)
+        results_layout.addWidget(self.right_postop_acetabular_offset_value, 32, 1)
+        results_layout.addWidget(self.left_postop_acetabular_offset_value, 32, 2)
+        results_layout.addWidget(qt.QLabel("Femoral Off."), 33, 0)
+        results_layout.addWidget(self.right_postop_femoral_offset_value, 33, 1)
+        results_layout.addWidget(self.left_postop_femoral_offset_value, 33, 2)
+        results_layout.addWidget(qt.QLabel("Global Off."), 34, 0)
+        results_layout.addWidget(self.right_postop_global_offset_value, 34, 1)
+        results_layout.addWidget(self.left_postop_global_offset_value, 34, 2)
+        results_layout.addWidget(self._measurement_title_label("5: Points & Lines & Angles"), 35, 0, 1, 3)
+        results_layout.addWidget(self.other_results_container, 36, 0, 1, 3)
+        results_layout.addWidget(self._subtle_note_label("su = scene units"), 37, 0, 1, 3)
         results_layout.setColumnStretch(1, 1)
         results_layout.setColumnStretch(2, 1)
 
@@ -1913,7 +2131,8 @@ class PelvicXrayMeasurementsWidget(
     def _scene_image_nodes(self) -> list[Any]:
         """Return the scalar-volume nodes currently available in the active MRML scene."""
 
-        return list(slicer.util.getNodesByClass("vtkMRMLScalarVolumeNode") or [])
+        return [node for node in slicer.util.getNodesByClass("vtkMRMLScalarVolumeNode") or []
+                if not node.GetAttribute("PXM.FragmentPreview")]
 
     def _scene_image_node_for_path(self, image_path: Path | None=None) -> Any:
         """Return the scene image node that best matches one folder-managed image path."""
@@ -2226,7 +2445,7 @@ class PelvicXrayMeasurementsWidget(
         load just that file instead of scanning neighboring files for a stack or related series.
         """
 
-        return slicer.util.loadVolume(
+        node = slicer.util.loadVolume(
             str(image_path),
             {
                 "name": image_path.name,
@@ -2234,6 +2453,9 @@ class PelvicXrayMeasurementsWidget(
                 "show": True,
             },
         )
+
+        template_display.configure_volume(node, image_path, loading=True)
+        return node
 
     def _show_image_node_in_slice_views(self, image_node: Any) -> None:
         """Explicitly assign the active image node to Slicer's slice-view background layer.
@@ -2284,6 +2506,33 @@ class PelvicXrayMeasurementsWidget(
         if hasattr(slicer.util, "forceRenderAllViews"):
             slicer.util.forceRenderAllViews()
 
+    def on_open_csv(self, _checked=False):
+        volume = self.current_image_node()
+        if volume is None:
+            self._warn("Open the corresponding radiograph first.")
+            return
+        path = qt.QFileDialog.getOpenFileName(
+            slicer.util.mainWindow(), "Open the measurements for this image", str(self.output_folder_path or ""), "PXM CSV (*.csv)"
+        )
+        if not path:
+            return
+        try:
+            prepared = prepare_csv(self.logic, path, volume)
+            if not self._confirm_case_transition("restoring this CSV"):
+                return
+            self.logic.stop_placement_mode()
+            self.active_placement_queue = []
+            self.active_placement_measurement_key = None
+            self.active_placement_name = None
+            self.active_placement_side_key = None
+            apply_csv(self.logic, prepared, volume)
+            self._observe_scene_and_nodes()
+            self.refresh_ui()
+            self._set_case_dirty(True)
+            self.instructions_label.setText("Measurements restored from the CSV.")
+        except (ValueError, TypeError, KeyError, OSError, RuntimeError, ArithmeticError) as error:
+            self._warn(f"Could not restore measurements. {error}")
+
     def _restore_saved_case_runtime_state(
         self,
         target_image_path: Path | None=None,
@@ -2300,7 +2549,7 @@ class PelvicXrayMeasurementsWidget(
 
         self.logic.set_calibration_ball_present(True)
         self.logic.set_calibration_ball_diameter_mm(CALIBRATION_BALL_DIAMETER_MM)
-        if target_image_path is None or saved_scene_path is None or not self.output_folder_path:
+        if target_image_path is None or not self.output_folder_path:
             return
 
         csv_path = latest_saved_csv_path_for_image_filename(
@@ -2312,9 +2561,14 @@ class PelvicXrayMeasurementsWidget(
             return
 
         try:
+            if saved_scene_path is None:
+                volume = self.current_image_node()
+                apply_csv(self.logic, prepare_csv(self.logic, csv_path, volume), volume)
+                return
             saved_metadata = parse_saved_case_metadata(load_export_csv_rows(csv_path))
         except Exception:
-            logging.exception("Could not restore saved case metadata from %s", csv_path)
+            logging.exception("Could not restore saved case from %s", csv_path)
+            self._warn(f"Could not restore the annotations in {csv_path.name}. Check that it is a PXM CSV for this image.")
             return
 
         self.logic.set_calibration_ball_present(saved_metadata["calibrationBallPresent"])
@@ -2617,7 +2871,7 @@ class PelvicXrayMeasurementsWidget(
             else:
                 state = "idle"
             button.setStyleSheet(self._measurement_button_style(state))
-            tooltip_parts = []
+            tooltip_parts = [planning.TOOLS[measurement_key][4]] if measurement_key in planning.TOOLS else []
             if active:
                 tooltip_parts.append("Active placement")
             if applied:
@@ -2679,6 +2933,8 @@ class PelvicXrayMeasurementsWidget(
 
         self._sync_ball_controls()
         self._sync_neck_axis_option_controls()
+        self._sync_planning_controls()
+        self._sync_plan_view()
         self._sync_annotator_control()
         self._sync_comments_control()
         self._sync_directory_controls()
@@ -2691,6 +2947,8 @@ class PelvicXrayMeasurementsWidget(
     ) -> None:
         """Refresh every read-only result field from the current calculated measurements."""
 
+        for (side, key), field in self.planning_values.items():
+            field.setText(format_compact_length(results["sides"][side][key], self.logic.calibration_ball_present))
         self.calibration_value.setText(
             format_calibration_summary(results, self.logic.calibration_ball_diameter_mm)
         )
@@ -2840,6 +3098,7 @@ class PelvicXrayMeasurementsWidget(
     def _sync_measurement_enablement(self, results: Any, active_side_results: Any) -> None:
         """Refresh measurement-button enabled states from prerequisite measurements."""
 
+        self.open_csv_button.setEnabled(self.current_image_node() is not None)
         reference_ready = results["referenceLine"]["defined"]
         shaft_ready = active_side_results["femoralShaftAxis"]["defined"]
         femur_head_ready = active_side_results["femurHead"]["defined"]
@@ -2885,6 +3144,17 @@ class PelvicXrayMeasurementsWidget(
             self._dependency_tooltip(*morphology_missing),
         )
         self._set_measurement_enabled(MeasurementKey.LLD, reference_ready, reference_tooltip)
+        for key in self.planning_buttons:
+            allowed = self.current_image_node() is not None
+            reason = "Open a radiograph first."
+            if str(key).startswith("template_"):
+                scale = template_display.scale(self.current_image_node(), results["calibration"]["scaleFactor"])
+                allowed = allowed and scale is not None and bool(planning.default_template(str(key)[9:], self.current_side_key()))
+                reason = "Use patient pixel spacing or place a calibration ball to size AP templates."
+            if key == MeasurementKey.BONE_FRAGMENT:
+                allowed = allowed and any(active_side_results[k + "_resection"]["defined"] for k in planning.CUT_ROLES)
+                reason = "Draw a neck cut on this side first."
+            self._set_measurement_enabled(key, allowed, reason)
         self._set_measurement_enabled(MeasurementKey.IMPLANT_HEAD, True)
         self._set_measurement_enabled(MeasurementKey.INCLINATION_ANGLE, reference_ready, reference_tooltip)
         self._set_measurement_enabled(MeasurementKey.CUP_OPENING_ELLIPSE_FIT, reference_ready, reference_tooltip)
@@ -3424,6 +3694,8 @@ class PelvicXrayMeasurementsWidget(
         measurement rules remain centralized in the logic layer.
         """
 
+        self._selected_plan_kind = None
+        self._plan_drag = None
         self.refresh_ui()
 
     def on_neck_axis_lock_to_center_toggled(self, checked: Any) -> None:
@@ -3683,6 +3955,8 @@ class PelvicXrayMeasurementsWidget(
             for pending_role in list(pending_endpoints):
                 if pending_role not in workflow_roles:
                     pending_endpoints.pop(pending_role, None)
+        if measurement_key and not str(measurement_key).startswith("template_"):
+            self._selected_plan_kind = None
         self.active_placement_name = workflow_name
         self.active_placement_measurement_key = measurement_key
         self.active_placement_side_key = side_key

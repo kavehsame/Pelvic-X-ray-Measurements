@@ -140,6 +140,13 @@ def main():
     document.setTextWidth(image_width + 20)
     assert document.size.height() < image_width * 800 / 1440 + 200
     print("PASS: enlarged morphology help has a compact layout", flush=True)
+    from pathlib import Path
+    import sys
+    import PelvicXrayMeasurements
+    replay = Path(PelvicXrayMeasurements.__file__).resolve().parents[1] / "Testing/Python/end_to_end_replay"
+    sys.path.insert(0, str(replay))
+    from planning_workflow_checks import check_planning
+    check_planning(widget, volume, points, events)
     widget.cleanup()
     print("SLICER_WORKFLOW_CHECKS_PASSED", flush=True)
 

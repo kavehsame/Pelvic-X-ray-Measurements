@@ -336,7 +336,9 @@ class AnnotationImageExportMixin:
         if image_node is None:
             raise RuntimeError("No image selected for annotated image export.")
 
-        image_array = slicer.util.arrayFromVolume(image_node)
+        fragment = getattr(self.logic, "_fragment_preview", None)
+        use_preview = fragment is not None and fragment.GetScene() and fragment.GetAttribute("PXM.FragmentSource") == image_node.GetID()
+        image_array = slicer.util.arrayFromVolume(fragment if use_preview else image_node)
         if image_array is None:
             raise RuntimeError("Could not access the selected image data for export.")
 
@@ -424,6 +426,7 @@ class AnnotationImageExportMixin:
         """
 
         import ScreenCapture
+        import PelvicXrayMeasurementsTemplateDisplay as template_display
 
         if image_node is None:
             raise RuntimeError("No image selected for annotated image export.")
@@ -511,6 +514,9 @@ class AnnotationImageExportMixin:
                 corner_annotation = slice_view.cornerAnnotation()
                 for corner_index in range(4):
                     corner_annotation.SetText(corner_index, "")
+            overlay_actors = {}
+            template_display.sync_artwork(self.logic, slice_view.renderWindow().GetRenderers().GetFirstRenderer(),
+                                          target_node, overlay_actors)
             slice_view.forceRender()
             slicer.app.processEvents()
 
@@ -909,6 +915,12 @@ class AnnotationImageExportMixin:
                     implant_circle_node.GetDisplayNode(),
                     side_results["implantHead"]["defined"],
                 )
+
+            shell = self.logic.get_node(self.logic.side_role("cupShellCircle", side_key))
+            if shell is not None and shell.GetDisplayVisibility() and side_results["cup_center"]["defined"]:
+                fit = side_results["cup_center"]
+                self._draw_optional_circle_measurement(painter, image_node, ras_to_ijk_matrix, image_height, width_pixels,
+                    fit["center"], fit["rawValue"], shell.GetDisplayNode(), True)
 
             cup_ellipse_node = self.logic.get_node(
                 self.logic.side_role("cupOpeningEllipse", side_key), create_if_missing=False

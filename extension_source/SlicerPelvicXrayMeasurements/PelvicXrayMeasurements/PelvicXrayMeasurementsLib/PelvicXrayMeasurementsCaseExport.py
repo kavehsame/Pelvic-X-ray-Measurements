@@ -6,12 +6,14 @@ serialization focuses only on stable output names, rows, and scene persistence.
 from __future__ import annotations
 
 import csv
+import json
 import os
 import tempfile
 from datetime import datetime
 from typing import Any
 
 import slicer
+import vtk
 
 from PelvicXrayMeasurementsCaseWorkflow import (
     filesystem_path,
@@ -29,6 +31,7 @@ from PelvicXrayMeasurementsConstants import (
 )
 from PelvicXrayMeasurementsGeometry import sanitize_filename
 from PelvicXrayMeasurementsNodeSpecs import EXPORT_FIELDS
+from PelvicXrayMeasurementsPlanning import FRAGMENT_ANGLE, FRAGMENT_CUT, LENGTH_FIELDS, TEMPLATE_ATTRIBUTE, VIEW_AXES, TOOLS, default_template
 
 CSV_EXPORT_ENCODING = "utf-8-sig"
 CURVE_POINTS_TXT_EXPORT_ENCODING = "utf-8"
@@ -534,6 +537,28 @@ class CaseExportMixin:
             ),
         ]
 
+        if image_node is not None and image_node.GetStorageNode() is not None:
+            frame = vtk.vtkMatrix4x4()
+            image_node.GetIJKToRASMatrix(frame)
+            matrix = [[frame.GetElement(i, j) for j in range(4)] for i in range(4)]
+            dimensions = list(image_node.GetImageData().GetDimensions()[:2])
+            rows.extend((
+                self._row(section="metadata", name="ImageIJKToRAS", details=json.dumps(matrix)),
+                self._row(section="metadata", name="ImageDimensions", details=json.dumps(dimensions)),
+            ))
+        for side in SIDE_KEYS:
+            for key, spec in TOOLS.items():
+                role = self.side_role(spec[1], side)
+                node = self.get_node(role)
+                if node is None or not node.GetNumberOfDefinedControlPoints():
+                    continue
+                attrs = {k: node.GetAttribute(k) for k in (TEMPLATE_ATTRIBUTE, FRAGMENT_CUT, FRAGMENT_ANGLE, VIEW_AXES) if node.GetAttribute(k)}
+                if key.startswith("template_") and TEMPLATE_ATTRIBUTE not in attrs:
+                    choice = default_template(key.removeprefix("template_"), side)
+                    if choice:
+                        attrs[TEMPLATE_ATTRIBUTE] = json.dumps(choice)
+                if attrs:
+                    rows.append(self._row(section="metadata", name=role + "_attributes", details=json.dumps(attrs, sort_keys=True)))
         neck_axis_options = self.neck_axis_export_options()
         for measurement_key, export_prefix in (
             (MeasurementKey.NECK_AXIS, "FemoralNeckAxis"),
@@ -868,6 +893,12 @@ class CaseExportMixin:
         rows.extend(self._side_morphology_measurement_rows(side_label, side_results))
         rows.extend(self._side_preop_measurement_rows(side_label, side_results, length_units))
         rows.extend(self._side_postop_measurement_rows(side_label, side_results, length_units))
+        for key, name, _title in LENGTH_FIELDS:
+            result = side_results.get(key, {})
+            if result.get("defined"):
+                rows.append(self._row(section="measurement", name=f"{side_label}_{name}", raw_value=result["rawValue"],
+                                      corrected_value_mm=result["correctedValue"], units=length_units,
+                                      details="Projected head-to-shell centre distance on this film (inlay wear estimate)." if key == "inlay_wear" else ""))
         return rows
 
     def _other_line_measurement_rows(self, results: Any, length_units: str) -> list[Any]:
@@ -1003,6 +1034,9 @@ class CaseExportMixin:
                         "femurHeadCenter",
                         "implantHeadPoints",
                         "implantHeadCenter",
+                        *(spec[1] for spec in TOOLS.values()),
+                        "cupShellCenter",
+                        "inlayWearLine",
                         "cupOpeningEllipsePoints",
                         "cupOpeningEllipseMajorDiameter",
                         "cupOpeningEllipseMinorDiameter",

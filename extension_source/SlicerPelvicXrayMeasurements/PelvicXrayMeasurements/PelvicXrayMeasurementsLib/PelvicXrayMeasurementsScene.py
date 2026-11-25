@@ -845,6 +845,8 @@ class SceneNodeMixin:
         kept explicit so left and right visibility can differ safely.
         """
 
+        if measurement_key == MeasurementKey.FRAGMENT_POSE:
+            measurement_key = MeasurementKey.BONE_FRAGMENT
         if side_key is None or measurement_key in GLOBAL_MEASUREMENT_KEYS:
             return measurement_key
         return f"{measurement_key}:{side_key}"
@@ -1105,6 +1107,8 @@ class SceneNodeMixin:
             # without changing what the user sees after reload.
             node.SaveWithSceneOff()
         self._configure_model_display(node.GetDisplayNode(), spec["color"])
+        if spec.get("projectToSlice"):
+            node.GetDisplayNode().SetSliceDisplayMode(slicer.vtkMRMLModelDisplayNode.SliceDisplayProjection)
 
     def _configure_markup_display(
         self,

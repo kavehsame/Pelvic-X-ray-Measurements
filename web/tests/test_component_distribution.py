@@ -40,6 +40,8 @@ def test_invalid_component_inputs_are_rejected(content, size):
 
 
 def test_static_host_serves_only_expected_component_paths():
+    assert asset_for("/implant-overlays.html") == ("implant-overlays.html", "text/html; charset=utf-8")
+    assert asset_for("/other-guide.html") is None
     path = "/components/" + "a" * 64 + "/000.json"
     assert asset_for(path) == (path[1:], "application/json; charset=utf-8")
     for rejected in ("/runtime.bin", "/components/../private.json", path + "/extra", "/components/not-a-hash/000.json"):

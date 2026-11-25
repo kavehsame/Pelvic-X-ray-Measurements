@@ -15,6 +15,8 @@ from PelvicXrayMeasurementsConstants import (
     SIDE_LABELS,
 )
 
+from PelvicXrayMeasurementsPlanning import TOOLS, node_specs
+
 NodeSpec = dict[str, object]
 NodeSpecMap = dict[str, NodeSpec]
 
@@ -148,6 +150,7 @@ NODE_SPECS = {
 }
 
 BILATERAL_INPUT_BASE_ROLES = [
+    *(spec[1] for spec in TOOLS.values()),
     "femurHeadPoints",
     "implantHeadPoints",
     "shaftGuideProximal",
@@ -195,6 +198,7 @@ def build_bilateral_node_specs() -> NodeSpecMap:
 
     specs: NodeSpecMap = {}
     for side_key, side_label in SIDE_LABELS.items():
+        specs.update(node_specs(side_key))
         specs.update(_head_node_specs(side_key, side_label))
         specs.update(_axis_node_specs(side_key, side_label))
         specs.update(_offset_and_extrusion_node_specs(side_key, side_label))

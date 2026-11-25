@@ -12,9 +12,11 @@ from zipfile import ZIP_STORED, ZipFile
 
 import numpy as np
 
+from . import planning
 from .custom import custom_spec
 from .imaging import MAX_FILE, check_matrix, decode
 from .schema import NODE_SPECS, ROLE_ATTRIBUTE
+from .saved_csv import indexed_coordinates
 from .workflow import WORKFLOWS
 
 STATE_ATTRIBUTE = "PelvicXrayMeasurements.BrowserState"
@@ -65,9 +67,11 @@ def read_csv(raw):
     reader = csv.DictReader(lines)
     if not {"section", "name"}.issubset(reader.fieldnames or ()):
         raise ValueError("Choose a Pelvic X-ray Measurements coordinate CSV.")
-    by_name = {spec["name"]: role for role, spec in NODE_SPECS.items()}
+    rows = list(reader)
+    specs = {role: NODE_SPECS[role] for role in INPUT_ROLES}
+    records = indexed_coordinates(rows, specs, custom_spec)
     metadata, groups, curves, segments = {}, {}, {}, {}
-    for row in reader:
+    for row in rows:
         if row.get("section") == "metadata":
             # Flags exported by Slicer carry explanatory prose in details.
             metadata[row["name"]] = (
@@ -86,31 +90,16 @@ def read_csv(raw):
                 mode = next((value for value in ("parallel", "perpendicular") if f"locked {value}" in details), "none")
                 metadata.setdefault(role + "_lock", mode)
             continue
-        if row.get("section") not in {"point", "derived_point"}:
-            continue
-        role = row.get("role") or row.get("details", "").split(";", 1)[0] or by_name.get(row["name"], "")
-        if not supported_role(role):
-            continue
-        if row.get("point_index"):
-            index = int(row["point_index"]) - 1
-            point = [float(row[key]) for key in ("r", "a", "s")]
-        else:
-            index = int(row["index"])
-            point = [float(row[key]) for key in ("x_ras", "y_ras", "z_ras")]
-        track = groups.setdefault(role, {})
-        if index < 0 or index in track:
-            raise ValueError(f"Invalid or duplicate point index for {role}.")
-        track[index] = point
-        if row.get("curve_type"):
-            curves[role] = curve_type(row["curve_type"])
-        if row.get("curve_points_per_segment"):
-            size = int(row["curve_points_per_segment"])
-            if not 1 <= size <= 1000:
-                raise ValueError("Invalid saved curve sampling count.")
-            segments[role] = size
-    for role, track in groups.items():
-        if sorted(track) != list(range(len(track))):
-            raise ValueError(f"Saved point indices are incomplete for {role}.")
+    for role, track in records.items():
+        groups[role] = [point for point, _row in track]
+        for _point, row in track:
+            if row.get("curve_type"):
+                curves[role] = curve_type(row["curve_type"])
+            if row.get("curve_points_per_segment"):
+                size = int(row["curve_points_per_segment"])
+                if not 1 <= size <= 1000:
+                    raise ValueError("Invalid saved curve sampling count.")
+                segments[role] = size
     settings = json.loads(metadata.get("WebSceneState") or "{}")
     if not isinstance(settings, dict):
         raise ValueError("The saved scene settings must be an object.")
@@ -145,7 +134,9 @@ def read_csv(raw):
             attributes[role][attribute] = metadata[role + "_lock"]
     matrix = check_matrix(json.loads(metadata["ImageIJKToRAS"])) if metadata.get("ImageIJKToRAS") else None
     return {
-        "points": valid_tracks({role: [track[i] for i in range(len(track))] for role, track in groups.items()}),
+        "points": valid_tracks(groups),
+        "native_csv": "BrowserCSVSchema" not in metadata,
+        "dimensions": json.loads(metadata["ImageDimensions"]) if "ImageDimensions" in metadata else None,
         "attributes": attributes,
         "curve_types": curves,
         "curve_segments": segments,
@@ -214,6 +205,14 @@ def read_mrb(raw):
         image = decode(path, read_member(archive, path, MAX_FILE))
         if image.source_affine is None:
             raise ValueError("The saved radiograph does not contain a coordinate frame.")
+        info = attributes(element)
+        if planning.METRIC_ATTRIBUTE in info:
+            image.physical_spacing = info[planning.METRIC_ATTRIBUTE] == "1"
+        if planning.AP_AXES_ATTRIBUTE in info:
+            axes = np.asarray(json.loads(info[planning.AP_AXES_ATTRIBUTE]), float)
+            if axes.shape != (2, 2) or not np.allclose(axes @ axes.T, np.eye(2), atol=1e-4):
+                raise ValueError("The saved radiograph has invalid AP orientation.")
+            image.planning_axes = axes.tolist()
         settings = {}
         for node in root.findall("ScriptedModule"):
             attrs = attributes(node)
@@ -311,8 +310,12 @@ def write_mrb(image, controller, case_name, settings):
         activeVolumeID="vtkMRMLScalarVolumeNode1",
         references="activeVolume:vtkMRMLScalarVolumeNode1;",
     )
+    volume = controller.current_image_node()
+    basis = volume.affine[:3, :2] / np.linalg.norm(volume.affine[:3, :2], axis=0)
+    axes = (np.asarray(volume.planning_axes) @ basis).tolist()
     add(
         "Volume",
+        attributes=f"{planning.METRIC_ATTRIBUTE}:{int(volume.planning_metric)};{planning.AP_AXES_ATTRIBUTE}:{json.dumps(axes)}",
         id="vtkMRMLScalarVolumeNode1",
         name=case_name,
         labelMap="0",
