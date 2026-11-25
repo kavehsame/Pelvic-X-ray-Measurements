@@ -20,6 +20,8 @@ Each bundled raster record links to its source sheet through `scaleSheet`. The c
 
 ## Product and current scope
 
+Version 1.8.1 reports only implants with a placed pivot. Both editions use `node_template_choice` and `implant_report` in their matching planning modules. Each anchor keeps its catalogue ID, angle, family and size. For raster templates, preserve the saved rotation frame. Keep the ordinary CSV columns and the existing coordinate and attribute rows. The additional named metadata rows use `{Left|Right}_Planning_{Cup|Stem}_{Component|Family|Size|ID}`. The PNG prints one implant per line even with numeric results off. The resection tools still calculate and export the cut geometry and lengths. Keep those lengths out of the panel and PNG.
+
 The maintained editions are a 3D Slicer scripted extension and a static website
 whose measurement workspace runs entirely in the visitor's browser. Their common
 measurement definitions and saved-data meaning must agree. The web interface is

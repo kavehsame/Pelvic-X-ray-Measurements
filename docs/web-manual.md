@@ -8,6 +8,11 @@ medical software. Completed clinical validation is not claimed.
 
 ## Version history
 
+**1.8.1**
+
+- The PNG and CSV identify each placed cup and stem by side, implant family and size.
+- The CSV records the resection points and lengths. Cut lengths no longer appear in the results panel or PNG summary.
+
 **1.8.0**
 
 - Add straight and stepped femoral neck cuts, a movable bone fragment and 794 calibrated AP implant templates.
@@ -117,7 +122,7 @@ Select the side you want to work on. Use a calibration ball at hip level when av
 
 Each bundled implant uses the scale on its own manufacturer's drawing. A 40 mm interval on the drawing represents 40 mm on a calibrated image. The catalogue size can differ from the width of the drawn shell. For a manual comparison, use the mm value in the Line result after fitting the ball.
 
-1. **Straight Neck Resection**. Click the medial and lateral cortices at the proposed cut. The result is the distance between those points. For a **Stepped Neck Resection**, add the medial end, the corner and the lateral end in that order. The results show each segment and their sum. Drag a landmark to revise the cut.
+1. **Straight Neck Resection**. Click the medial and lateral ends of the cut. For a **Stepped Neck Resection**, click the medial end, the corner and the lateral end in that order. Drag a point to revise the cut. The CSV stores the coordinates in placement order, the straight cut length and, for a stepped cut, both segment lengths and their sum.
 2. **Retained Bone Fragment Placement**. Click once after completing a neck cut. If both cuts are present, choose the one to use. PXM follows the cut, clears the trochanter regions and uses the image borders to enclose the distal femur. Existing head, lesser-trochanter and shaft landmarks help orient the region. This geometric selection can include soft tissue or overlapping pelvic anatomy. Drag the fragment or its point to move it. Drag the round handle to rotate about that point, or enter an angle in **Rotation** beside **Trace manually**. Click **Retained Bone Fragment Placement** again to clear the fragment and its movement on this side. If you edit the cut or shaft landmarks, clear and select the fragment again to recalculate its boundary.
 3. **Trace manually** lets you adjust which tissue moves. The boundary starts at the lateral cut end. Place points around the retained bone, including beyond the film edge when necessary. Right-click to close at the medial end. The original straight or stepped cut completes the border. The tracing disappears after selection.
 4. **Import overlay pack…** opens a local JSON file of AP outlines in millimetres. Imported sizes remain available across cases for this session. If you reopen a plan that uses an external template, import the same pack to display it again. Select **How It Works** beside the import button to open the guide in your browser.
@@ -127,7 +132,11 @@ Each bundled implant uses the scale on its own manufacturer's drawing. A 40 mm i
 
 The local library contains 794 AP entries from Medacta and Mathys. Cups and reinforcement cages appear under **Place Cup Template**. Complete stems and proximal or distal components appear under **Place Stem Template**. The two slots on each side hold one acetabular and one femoral drawing at a time. Rotation starts in the printed AP position. PXM mirrors a neutral drawing for the opposite hip and offers a side-specific reference only on its designated side. Check the radiograph’s side marker, especially on an image without orientation metadata.
 
-The drawings retain their original size and guide marks. Dots, crosshairs and extended lines can project outside the implant. Use the shell or stem body when judging fit. Export the annotated PNG to show the plan. Use the CSV or MRB to resume editing with the same library installed.
+The drawings retain their original size and guide marks. Dots, crosshairs and extended lines can project outside the implant. Use the shell or stem body when judging fit.
+
+The PNG labels each placed cup or stem with its side, family and catalogue size. The CSV records those details and the template ID in named metadata rows. For example, `Left_Planning_Cup_Size` gives the size as listed in the selector. Choosing a template adds it to the exports once you place its pivot. Hiding the drawing keeps the implant in the record.
+
+Reopen a CSV or MRB to continue the plan. For a session-only implant, import the same pack to draw it again. If a 1.8.0 file names a custom template whose pack is missing, PXM preserves its ID and reports the size as unavailable until the pack is restored.
 
 ### Implant references
 
@@ -186,7 +195,7 @@ Right-click or press Escape to finish a contour. **Femoral Shaft** collects four
 
 The **Results** section shows both sides and the custom measurements. Calibrated lengths use millimetres. Uncalibrated lengths use scene units (**su**). For ordinary raster files, one scene unit corresponds to a pixel. Medical file spacing can define a different scale. The CSV preserves the calculation frame and records the original image frame when available.
 
-Add **Comments** and complete **Annotator Name**. **Export All** saves a coordinate and measurement CSV, an MRB scene and an annotated PNG. With an output folder selected, **Export All / Load Next Image** advances after saving. The individual export buttons save one format. The PNG includes the annotator and can include the measurement values.
+Add **Comments** and complete **Annotator Name**. **Export All** saves a coordinate and measurement CSV, an MRB scene and an annotated PNG. With an output folder selected, **Export All / Load Next Image** advances after saving. The individual export buttons save one format. The PNG always identifies the annotator and any placed implants. Use the measurement checkbox to include numeric results.
 
 PNG exports use at least 2,048 pixels on the long edge for ordinary image proportions.
 Landmarks, contours and text are drawn at the export resolution, so they remain

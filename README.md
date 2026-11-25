@@ -12,13 +12,13 @@ for diagnosis, treatment planning or other clinical decision-making.
 · [User manuals](docs/README.md)
 · [Software checks](https://kavehsame.github.io/Pelvic-X-ray-Measurements/tests/)
 
-## Hip templating in version 1.8.0
+## Hip templating in version 1.8.1
 
 In **Planning**, **How It Works** explains how to prepare and verify an implant overlay. [Implant overlay guide](docs/implant-overlays.html)
 
 The catalogue uses *MEDACTA Templates* (Medacta International) and *Mathys Templates* (Mathys Ltd. Bettlach), distributed with the OsiriX Team and volz.io’s *Hip Arthroplasty Templating Plugin*, version 3.6.5. [References and licence](docs/implant-overlays.html#sources)
 
-Both editions include 794 AP implant entries from 51 families. Place and rotate a cup or stem, position the retained bone fragment after a straight or stepped cut, or import your own outline pack. The post-op tools can estimate inlay wear on one radiograph from the distance between the fitted head and cup-shell centres.
+Both editions include 794 AP implant entries from 51 families. Place and rotate a cup or stem, position the retained bone fragment after a straight or stepped cut, or import your own outline pack. The PNG and CSV identify each placed implant by side, component, family and size. The CSV also preserves its ID and the cut coordinates and lengths. The post-op tools can estimate inlay wear on one radiograph from the distance between the fitted head and cup-shell centres.
 
 ## Choose an edition
 
@@ -52,7 +52,7 @@ starting estimate, not an anatomical assessment.
 
 ## Install in Slicer
 
-Download **PelvicXrayMeasurements_1.8.0_Slicer_extension.zip** from the release.
+Download **PelvicXrayMeasurements_1.8.1_Slicer_extension.zip** from the release.
 Extract it and keep the complete folder together. In Slicer, add the inner
 **PelvicXrayMeasurements** folder containing **PelvicXrayMeasurements.py** through
 **Application Settings → Modules → Additional module paths**, then restart Slicer.
@@ -72,9 +72,9 @@ The source retains one selected run for each edition:
 - [Slicer unit tests and full CSV replay](extension_source/SlicerPelvicXrayMeasurements/test_reports/current/index.html).
 - [Web unit tests and Chrome workflow replay](web/test_reports/current/index.html).
 
-The release check covers 117 Slicer unit tests, 69 web unit tests, all 413 rows of
+The release check covers 118 Slicer unit tests, 70 web unit tests, all 413 rows of
 the native synthetic CSV replay, 18 Chrome workflow groups and 11 component-download
-scenarios. The presentation checks also cover implant and fragment placement, inlay wear and the offline implant guide. A separate cross-edition replay checks Planning landmarks, template vertices and measurements after reordering a CSV.
+scenarios. The presentation checks cover implant and fragment placement, implant captions on the exported PNG, inlay wear and the offline implant guide. A separate cross-edition replay checks Planning landmarks, template vertices and measurements after reordering a CSV.
 The web measurement replay compares 58 measurements and 81 numeric values with a fixed reference.
 Interactive checks include multi-guide placement, shaft morphology, four shaft
 contours, shared landmarks, Smart Point Placement, visibility, export and resume.

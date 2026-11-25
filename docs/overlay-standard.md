@@ -2,7 +2,7 @@
 
 The [illustrated guide to implant overlays](implant-overlays.html) explains how to prepare a pack, check scale and review a placed template. The original collections are Medacta International’s *MEDACTA Templates* and Mathys Ltd. Bettlach’s *Mathys Templates*, distributed with the OsiriX plugin (version 3.6.5). The guide includes references for both collections, the plugin’s terms and a working example.
 
-An overlay pack is a local UTF-8 JSON file. In **3: Planning**, choose **Import overlay pack…** in the web app or Slicer. Imported entries are available for all cases during that session. Reopen the same pack in a new session to display its saved template references. A CSV or scene retains the reference, pivot placement and rotation. The drawings stay on the device.
+An overlay pack is a local UTF-8 JSON file. In **3: Planning**, choose **Import overlay pack…** in the web app or Slicer. Imported entries are available for all cases during that session. Reopen the same pack in a new session to display its drawings. The PNG prints the component, family and size for each side where a template was placed. The CSV also saves its ID. Both the CSV and scene retain the family and size labels, pivot and rotation. The drawings stay on the device.
 
 ## File and coordinates
 

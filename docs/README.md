@@ -12,6 +12,7 @@
 - [Agent handover](agent-handover.md): architecture, data contracts, invariants, commands and release continuity.
 - [Publishing](publishing.md): GitHub Releases, GitHub Pages and the separate Slicer catalogue process.
 - [Restricted networks](network-access.md): startup errors and information for IT support.
+- [Version 1.8.1 release notes](releases/v1.8.1.md).
 - [Version 1.8.0 release notes](releases/v1.8.0.md).
 - [Version 1.7.1 release notes](releases/v1.7.1.md).
 - [Version 1.7.0 release notes](releases/v1.7.0.md).

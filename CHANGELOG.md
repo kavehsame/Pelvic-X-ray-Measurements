@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.8.1
+
+- Export the side, component, family and catalogue size of every placed implant on the annotated PNG. The CSV also records the template ID.
+- Keep straight and stepped resection landmarks and lengths in the CSV and remove the cut-length rows from the results panel and PNG summary.
+- Recover implant labels from the catalogue for 1.8.0 CSVs and retain the labels when reopening a new CSV without its session pack.
+
 ## 1.8.0
 
 - Add automatic retained-bone selection, manual border tracing, rotation handles for fragments and implants, and local session overlay packs.

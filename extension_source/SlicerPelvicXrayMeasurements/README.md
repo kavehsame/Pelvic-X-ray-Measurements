@@ -12,7 +12,7 @@ In **Planning**, **How It Works** explains how to prepare and verify an implant 
 
 The catalogue uses *MEDACTA Templates* (Medacta International) and *Mathys Templates* (Mathys Ltd. Bettlach), distributed with the OsiriX Team and volz.io’s *Hip Arthroplasty Templating Plugin*, version 3.6.5. [References and licence](PelvicXrayMeasurements/Resources/implant-overlays.html#sources)
 
-Version 1.8.0 includes 794 AP implant entries, straight and stepped cuts, retained-fragment placement and a single-film estimate of inlay wear. The full workflow is in [the extension manual](documentation.md#3-planning).
+Version 1.8.1 labels each placed cup and stem in the PNG and CSV. The CSV keeps the resection coordinates and lengths. The Planning section includes 794 AP implant entries, straight and stepped cuts, retained-fragment placement and a single-film estimate of inlay wear. The full workflow is in [the extension manual](documentation.md#3-planning).
 
 ## Install the extension bundle
 
@@ -44,7 +44,7 @@ landmark, option and export format. Tests are included under **Testing**.
 
 ## License, credit and evidence
 
-**Selected software checks: 117 unit tests; a full replay covering all 413 reference
+**Selected software checks: 118 unit tests; a full replay covering all 413 reference
 CSV rows; Smart Point Placement; and live multi-guide, morphology, leg-length,
 circle-visibility and shaft-contour workflows.** The selected results are available
 in the source tree's [interactive test review](test_reports/current/index.html),

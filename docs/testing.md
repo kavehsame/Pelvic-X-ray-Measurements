@@ -10,7 +10,7 @@ clinical validity or regulatory approval is not claimed.
 
 The Planning checks place both cuts, trace and move a fragment, fit the spherical cup shell and choose concrete implant references on synthetic images. A head offset of three pixels in one direction and four in the other yields five pixels, or 6.25 mm at 1.25 mm per pixel. A concentric fit gives zero. A collinear shell fit leaves the value undefined.
 
-The interchange check rotates and mirrors an oblique image, saves a browser CSV, reorders its rows and columns, opens it in Slicer and returns a Slicer CSV to the web engine. It compares eight groups of landmarks and template vertices, the wear estimate and sampled fragment intensities. Both editions also open historical CSV fixtures. The accepted numerical replay for the published version remains a separate regression check.
+The interchange check rotates and mirrors an oblique image, saves a browser CSV, reorders its rows and columns, opens it in Slicer and returns a Slicer CSV to the web engine. It compares eight groups of landmarks and template vertices, the wear estimate and sampled fragment intensities. Both editions also reopen actual web and Slicer 1.8.0 exports of this synthetic case with the rows and columns reordered. The tests check the implant families and sizes, the saved cut points and the captions on annotated PNGs with numeric values on and off. The accepted numerical replay for the published version remains a separate regression check.
 
 ## Selected evidence
 
@@ -19,10 +19,10 @@ links the selected Slicer and web runs. Each edition retains one selected eviden
 folder in source. New development runs go to an ignored build folder. Generated
 results do not enter the downloadable Slicer or web bundles.
 
-- **Slicer:** 117 unit tests; a full CSV replay matching 413 reference rows; Smart
+- **Slicer:** 118 unit tests; a full CSV replay matching 413 reference rows; Smart
   Point Placement; live multi-guide axes, morphology, bilateral leg-length lines,
   circle visibility and advancement through four shaft contours.
-- **Web:** 69 unit tests covering import, image frames, editing regressions and
+- **Web:** 70 unit tests covering import, image frames, editing regressions and
   component packaging; a core measurement replay; and 18 Chrome workflow groups that exercise the built
   app, including offline operation, export, resume and compressed image decoding.
 - **Startup:** 11 browser scenarios covering blocked binary routes, temporary and

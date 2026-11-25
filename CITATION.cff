@@ -6,7 +6,7 @@ authors:
   - family-names: Same
     given-names: Kaveh
     affiliation: "Michael Ogon Laboratory for Orthopedic Research, Orthopedic Hospital Speising, Vienna, Austria"
-version: 1.8.0
+version: 1.8.1
 license: Apache-2.0
 references:
   - type: software

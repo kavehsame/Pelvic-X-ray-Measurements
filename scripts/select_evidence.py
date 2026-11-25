@@ -109,7 +109,7 @@ def main():
         assert load(interchange)["status"] == "passed"
         shutil.copyfile(interchange, target / "planning_interchange.json")
         body = config + f"<p>All {len(rows)} unit tests passed.</p>"
-        body += '<p>The <a href="planning_interchange.json">Planning CSV round trip</a> checks template coordinates, wear and fragment pixels from web to Slicer and back.</p>'
+        body += '<p>The <a href="planning_interchange.json">Planning CSV round trip</a> checks template coordinates, implant identity, wear and fragment pixels from web to Slicer and back. Both editions also reopen the 1.8.0 planning fixtures.</p>'
         if edition == "slicer":
             body += (
                 "<p>Slicer "
